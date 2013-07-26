@@ -74,8 +74,11 @@ source 'https://rubygems.org'
 	gem 'state_machine'
 
 # Renommer l'application en une commande
-	gem 'rename'
+	gem 'rename' 
 	# Usage : rails g rename:app_to Nouveau_Nom
+
+# Ajout de l'encodage UTF-8 sur tous les fichiers
+	gem 'magic_encoding'
 
 # Gems "Pourquoi pas ?"
 	# Pour faciliter la troncature de phrase
