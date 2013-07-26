@@ -1,0 +1,27 @@
+!!! 5
+%html
+	%head
+		%title= full_title(yield(:title))
+		%meta{'http-equiv' => 'Content-Type', :content => 'text/html;charset=UTF-8'}
+			= stylesheet_link_tag    "application", media: "all"
+			= javascript_include_tag "application"
+			= csrf_meta_tags
+			-# = render 'layouts/shim'
+	%body
+		= render 'layouts/header'
+		.container-fluid
+			= bootstrap_flash
+
+			.row-fluid
+				-unless :side_bar != ""
+					.span3.hero-unit
+						= yield :side_bar
+					.span9.hero-unit
+						= yield 
+				-else
+					.span12.hero-unit
+						= yield 
+
+
+		
+		- # = debug(params) if Rails.env.development?

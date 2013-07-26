@@ -1,0 +1,23 @@
+%h1 Listing computers
+
+%table
+  %tr
+    %th Mac address
+    %th Adherent
+    %th Alias
+    %th
+    %th
+    %th
+
+  - @computers.each do |computer|
+    %tr
+      %td= computer.mac_address
+      %td= computer.adherent_id
+      %td= computer.alias
+      %td= link_to 'Show', computer
+      %td= link_to 'Edit', edit_computer_path(computer)
+      %td= link_to 'Destroy', computer, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Computer', new_computer_path

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  value: 1.5
+  paid_value: 1.5
+  mean: MyString
+  comment: MyText
+  archived: false
+
+two:
+  value: 1.5
+  paid_value: 1.5
+  mean: MyString
+  comment: MyText
+  archived: false

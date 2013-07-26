@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Type:
+  = @generic_dns_entry.type
+%p
+  %b Name:
+  = @generic_dns_entry.name
+%p
+  %b Return:
+  = @generic_dns_entry.return
+%p
+  %b External:
+  = @generic_dns_entry.external
+%p
+  %b Archived:
+  = @generic_dns_entry.archived
+
+= link_to 'Edit', edit_generic_dns_entry_path(@generic_dns_entry)
+\|
+= link_to 'Back', generic_dns_entries_path

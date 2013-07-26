@@ -1,0 +1,23 @@
+%h1 Listing computer_dns_entries
+
+%table
+  %tr
+    %th Name
+    %th Computer
+    %th Archived
+    %th
+    %th
+    %th
+
+  - @computer_dns_entries.each do |computer_dns_entry|
+    %tr
+      %td= computer_dns_entry.name
+      %td= computer_dns_entry.computer_id
+      %td= computer_dns_entry.archived
+      %td= link_to 'Show', computer_dns_entry
+      %td= link_to 'Edit', edit_computer_dns_entry_path(computer_dns_entry)
+      %td= link_to 'Destroy', computer_dns_entry, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Computer dns entry', new_computer_dns_entry_path

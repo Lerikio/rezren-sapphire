@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  value: 1.5
+  next_debit: 2013-07-21
+  archived: false
+
+two:
+  value: 1.5
+  next_debit: 2013-07-21
+  archived: false

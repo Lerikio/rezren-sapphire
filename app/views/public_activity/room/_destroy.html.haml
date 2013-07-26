@@ -1,0 +1,8 @@
+- if activity.trackable
+	La chambre
+	= link_to activity.trackable do
+		= activity.trackable.building
+		= activity.trackable.number
+	a été archivée.
+- else
+	Une chambre a été archivée, mais a été supprimée depuis.

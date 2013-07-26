@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Mac address:
+  = @computer.mac_address
+%p
+  %b Adherent:
+  = @computer.adherent_id
+%p
+  %b Alias:
+  = @computer.alias
+
+= link_to 'Edit', edit_computer_path(@computer)
+\|
+= link_to 'Back', computers_path

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  type: 
+  name: MyString
+  return: MyString
+  external: false
+  archived: false
+
+two:
+  type: 
+  name: MyString
+  return: MyString
+  external: false
+  archived: false

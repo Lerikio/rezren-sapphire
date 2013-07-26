@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Number:
+  = @vlan.number
+%p
+  %b Name:
+  = @vlan.name
+
+= link_to 'Edit', edit_vlan_path(@vlan)
+\|
+= link_to 'Back', vlans_path

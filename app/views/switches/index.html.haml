@@ -1,0 +1,19 @@
+%h1 Listing switches
+
+%table
+  %tr
+    %th Community
+    %th
+    %th
+    %th
+
+  - @switches.each do |switch|
+    %tr
+      %td= switch.community
+      %td= link_to 'Show', switch
+      %td= link_to 'Edit', edit_switch_path(switch)
+      %td= link_to 'Destroy', switch, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Switch', new_switch_path

@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Value:
+  = @payment.value
+%p
+  %b Paid value:
+  = @payment.paid_value
+%p
+  %b Mean:
+  = @payment.mean
+%p
+  %b Comment:
+  = @payment.comment
+%p
+  %b Archived:
+  = @payment.archived
+
+= link_to 'Edit', edit_payment_path(@payment)
+\|
+= link_to 'Back', payments_path

@@ -1,0 +1,268 @@
+/*  Voir la documentation de bootstrap pour une liste des variables : 
+ *  http://twitter.github.io/bootstrap/customize.html#variables 
+ */
+
+
+@import "bootstrap";
+@import "bootstrap-responsive";
+@import "font-awesome";
+@import "dataTables/jquery.dataTables";
+@import "dataTables/jquery.dataTables.bootstrap";
+
+/* mixins, variables, etc. */
+
+$grayMediumLight: #eaeaea;
+
+@mixin box_sizing {
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+}
+
+.navbar-search .search-query {
+  width: 80%;
+}
+
+#hero_home {
+   min-height:350px;
+}
+
+/* universal */
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 60px;
+  background-color: #0A0A0A;
+  color: #fff;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.center {
+  text-align: center;
+  h1 {
+    margin-bottom: 10px;
+  }
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: -2px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.4em;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: $grayDark;
+} 
+
+p {
+  font-size: 1em;
+  line-height: 1.7em;
+}
+
+
+/* header */
+
+#logo {
+  margin-left: 10px;
+  float: left;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: black;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  line-height: 1;
+  transition: color 0.5s;
+  &:hover {
+    color: #0067A5;
+    text-decoration: none;
+    transition: color 0.5s;
+    background-color: transparent;
+  }
+}
+
+#title {
+
+  float: right;
+  margin-right: 15px;
+  font-size: 1.3em;
+  color: #BABABA;
+  padding-top: 12px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+
+/* miscellaneous */
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
+
+ul.nav li.dropdown:hover > ul.dropdown-menu{
+    display: block;    
+}
+
+/* sidebar */
+
+aside {
+  section {
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:first-child {
+      border: 0;
+      padding-top: 0;
+    }
+    span {
+      display: block;
+      margin-bottom: 3px;
+      line-height: 1;
+    }
+    h1 {
+      font-size: 1.6em;
+      text-align: left;
+      letter-spacing: -1px;
+      margin-bottom: 3px;
+    }
+  }
+}
+
+/* forms */
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+ }
+ 
+  
+.nav .nav-header {
+  display: block;
+  padding: 3px 15px; 
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 18px;
+  color: #999999;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  text-transform: uppercase; 
+} 
+.nav li .nav-header {
+  margin-top: 9px;
+}
+
+/*  .navbar-inverse .navbar-inner {
+*      background: linear-gradient(to bottom, rgb(64, 64, 64), rgb(17, 17, 17));
+*   }
+*/ 
+/* admins index */
+
+.users {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0;
+    border-top: 1px solid $grayLighter;
+    &:last-child {
+      border-bottom: 1px solid $grayLighter;
+    }
+  }
+}
+
+.dropdown-menu {
+  margin-top: 0px;
+}
+
+.table th, .table td {
+  padding: 8px;
+  vertical-align: middle;
+  text-align: center;
+}
+.table thead {
+  background: $grayLight;
+}
+
+.sidebar-nav {
+  padding: 9px;
+}
+
+/* Datatables */
+
+table.dataTable thead th {
+  padding: 8px;
+  border-bottom: none;
+}
+
+.btn {
+  .btn-custom {
+    background-color: hsl(30, 100%, 8%) !important;
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f47a00", endColorstr="#281400");
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#f47a00), to(#281400));
+    background-image: -moz-linear-gradient(top, #f47a00, #281400);
+    background-image: -ms-linear-gradient(top, #f47a00, #281400);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f47a00), color-stop(100%, #281400));
+    background-image: -webkit-linear-gradient(top, #f47a00, #281400);
+    background-image: -o-linear-gradient(top, #f47a00, #281400);
+    background-image: linear-gradient(#f47a00, #281400);
+    border-color: #281400 #281400 hsl(30, 100%, 0%);
+    color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.66);
+    -webkit-font-smoothing: antialiased;
+  }
+  .btn-primary{
+    background-color: hsl(260, 50%, 18%) !important;
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#825ec9", endColorstr="#261644");
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#825ec9), to(#261644));
+    background-image: -moz-linear-gradient(top, #825ec9, #261644);
+    background-image: -ms-linear-gradient(top, #825ec9, #261644);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #825ec9), color-stop(100%, #261644));
+    background-image: -webkit-linear-gradient(top, #825ec9, #261644);
+    background-image: -o-linear-gradient(top, #825ec9, #261644);
+    background-image: linear-gradient(#825ec9, #261644);
+    border-color: #261644 #261644 hsl(260, 50%, 8%);
+    color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.66);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.dl-horizontal dt 
+{
+    white-space: normal;
+    width: 200px; 
+}

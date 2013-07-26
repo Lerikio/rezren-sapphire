@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Community:
+  = @switch.community
+
+= link_to 'Edit', edit_switch_path(@switch)
+\|
+= link_to 'Back', switches_path

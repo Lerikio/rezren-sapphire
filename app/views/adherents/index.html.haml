@@ -1,0 +1,17 @@
+%h1 Listing adherents
+
+%table
+  %tr
+    %th
+    %th
+    %th
+
+  - @adherents.each do |adherent|
+    %tr
+      %td= link_to 'Show', adherent
+      %td= link_to 'Edit', edit_adherent_path(adherent)
+      %td= link_to 'Destroy', adherent, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Adherent', new_adherent_path

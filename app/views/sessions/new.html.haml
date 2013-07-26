@@ -1,0 +1,6 @@
+= simple_form_for @admin, :url => sessions_path, :method => :post  do |f|
+	= f.label "Nom d'utilisateur"
+	= f.input_field :username, required: true
+	= f.label "Mot de passe"
+	= f.input_field :password, required: true
+	= f.button :submit, "Connexion"

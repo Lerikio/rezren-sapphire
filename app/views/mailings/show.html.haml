@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @mailing.name
+%p
+  %b Emails:
+  = @mailing.emails
+%p
+  %b Adherent:
+  = @mailing.adherent_id
+%p
+  %b Archived:
+  = @mailing.archived
+
+= link_to 'Edit', edit_mailing_path(@mailing)
+\|
+= link_to 'Back', mailings_path

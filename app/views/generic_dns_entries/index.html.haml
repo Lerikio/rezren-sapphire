@@ -1,0 +1,27 @@
+%h1 Listing generic_dns_entries
+
+%table
+  %tr
+    %th Type
+    %th Name
+    %th Return
+    %th External
+    %th Archived
+    %th
+    %th
+    %th
+
+  - @generic_dns_entries.each do |generic_dns_entry|
+    %tr
+      %td= generic_dns_entry.type
+      %td= generic_dns_entry.name
+      %td= generic_dns_entry.return
+      %td= generic_dns_entry.external
+      %td= generic_dns_entry.archived
+      %td= link_to 'Show', generic_dns_entry
+      %td= link_to 'Edit', edit_generic_dns_entry_path(generic_dns_entry)
+      %td= link_to 'Destroy', generic_dns_entry, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Generic dns entry', new_generic_dns_entry_path

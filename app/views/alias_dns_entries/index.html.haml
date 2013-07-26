@@ -1,0 +1,23 @@
+%h1 Listing alias_dns_entries
+
+%table
+  %tr
+    %th Name
+    %th Computer dns entry
+    %th Archived
+    %th
+    %th
+    %th
+
+  - @alias_dns_entries.each do |alias_dns_entry|
+    %tr
+      %td= alias_dns_entry.name
+      %td= alias_dns_entry.computer_dns_entry_id
+      %td= alias_dns_entry.archived
+      %td= link_to 'Show', alias_dns_entry
+      %td= link_to 'Edit', edit_alias_dns_entry_path(alias_dns_entry)
+      %td= link_to 'Destroy', alias_dns_entry, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Alias dns entry', new_alias_dns_entry_path

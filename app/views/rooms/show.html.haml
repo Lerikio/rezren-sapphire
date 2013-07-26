@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Building:
+  = @room.building
+%p
+  %b Number:
+  = @room.number
+%p
+  %b Adherent:
+  = @room.adherent
+
+= link_to 'Edit', edit_room_path(@room)
+\|
+= link_to 'Back', rooms_path

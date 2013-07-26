@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mac_address: MyString
+  adherent_id: 1
+  alias: MyString
+
+two:
+  mac_address: MyString
+  adherent_id: 1
+  alias: MyString

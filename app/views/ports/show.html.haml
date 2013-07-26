@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Number:
+  = @port.number
+
+= link_to 'Edit', edit_port_path(@port)
+\|
+= link_to 'Back', ports_path

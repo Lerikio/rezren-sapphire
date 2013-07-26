@@ -1,0 +1,8 @@
+- if activity.trackable
+	La chambre
+	= link_to activity.trackable do
+		= activity.trackable.building
+		= activity.trackable.number
+	a été créée
+- else
+	Une chambre a été créée, mais a été supprimée depuis.

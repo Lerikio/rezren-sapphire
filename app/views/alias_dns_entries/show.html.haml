@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @alias_dns_entry.name
+%p
+  %b Computer dns entry:
+  = @alias_dns_entry.computer_dns_entry_id
+%p
+  %b Archived:
+  = @alias_dns_entry.archived
+
+= link_to 'Edit', edit_alias_dns_entry_path(@alias_dns_entry)
+\|
+= link_to 'Back', alias_dns_entries_path

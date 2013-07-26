@@ -1,0 +1,19 @@
+%h1 Listing ports
+
+%table
+  %tr
+    %th Number
+    %th
+    %th
+    %th
+
+  - @ports.each do |port|
+    %tr
+      %td= port.number
+      %td= link_to 'Show', port
+      %td= link_to 'Edit', edit_port_path(port)
+      %td= link_to 'Destroy', port, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Port', new_port_path

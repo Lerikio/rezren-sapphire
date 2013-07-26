@@ -1,0 +1,25 @@
+%h1 Listing mailings
+
+%table
+  %tr
+    %th Name
+    %th Emails
+    %th Adherent
+    %th Archived
+    %th
+    %th
+    %th
+
+  - @mailings.each do |mailing|
+    %tr
+      %td= mailing.name
+      %td= mailing.emails
+      %td= mailing.adherent_id
+      %td= mailing.archived
+      %td= link_to 'Show', mailing
+      %td= link_to 'Edit', edit_mailing_path(mailing)
+      %td= link_to 'Destroy', mailing, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Mailing', new_mailing_path

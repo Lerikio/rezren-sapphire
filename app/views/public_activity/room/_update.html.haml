@@ -1,0 +1,8 @@
+- if activity.trackable
+	La chambre
+	= link_to activity.trackable do
+		= activity.trackable.building
+		= activity.trackable.number
+	a été mise à jour.
+- else
+	Une chambre a été mise à jour, mais a été supprimée depuis.
