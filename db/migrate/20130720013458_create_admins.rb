@@ -8,7 +8,7 @@ class CreateAdmins < ActiveRecord::Migration
 
       t.string     :username, null: false, index: true
       
-      t.integer    :adherent_id, null: false, index: true
+      t.integer    :adherent_id
 
       t.boolean    :archived, default: false
       t.datetime   :last_login

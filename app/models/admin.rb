@@ -18,7 +18,7 @@ class Admin < ActiveRecord::Base
 # Validations
 	validates :password, confirmation: true, presence: true, length: {minimum: 6}
 	validates :username, presence: true, uniqueness: true, length: {minimum: 3}
-	validates :adherent, presence: true
+	#validates :adherent, presence: true
 
 # Méthodes de classe
 	def self.authenticate(username, password)
