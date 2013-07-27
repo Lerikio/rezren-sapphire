@@ -25,11 +25,10 @@ private
 	# Renvoie faux si une chambre a le même building et le même number
 	def uniqueness_of_address
 		Room.all.each do |other_room|
-			same_number = other_room.number == self.number
-			same_building = other_room.building == self.building
+			return false if other_room.number == self.number && other_room.building == self.building
 		end
 		
-		not(same_number && same_building)
+		return true
 	end
 
 end
