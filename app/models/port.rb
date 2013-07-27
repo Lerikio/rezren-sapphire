@@ -8,7 +8,8 @@ class Port < ActiveRecord::Base
 
 	attr_accessible :number, :switch_id
 
-	has_many :vlans, through: :connexion
+	has_many :connexions
+	has_many :vlans, through: :connexions
 	has_one :room
 	belongs_to :switch, dependent: :destroy
 
@@ -25,14 +26,14 @@ class Port < ActiveRecord::Base
 		vlans_nums = snmp_interface.vlans_ids
 
 		vlans_nums.each do |vlan_number|
-			if interface.is_on_vlan?(self.number,vlan_number) && !self.vlans.find_by number: vlan_number
-				self.vlans << Vlan.find_by number: vlan_number
+			if snmp_interface.is_on_vlan?(self.number,vlan_number) && !self.vlans.find_by_number(vlan_number)
+				self.vlans << Vlan.find_by_number(vlan_number)
 			end
 		end
 
 		self.connexions.each do |connexion|
 			vlan_number = connexion.vlan.number
-			unless interface.is_on_vlan?(self.number,vlan_number)
+			unless snmp_interface.is_on_vlan?(self.number,vlan_number)
 				connexion.destroy
 				return
 			end
@@ -52,20 +53,17 @@ class Port < ActiveRecord::Base
 		vlans_nums = snmp_interface.vlans_ids
 
 		vlans_nums.each do |vlan_number|
-			if interface.is_on_vlan?(self.number,vlan_number) && !self.vlans.find_by number: vlan_number
-				self.vlans << Vlan.find_by number: vlan_number
+			if snmp_interface.is_on_vlan?(self.number,vlan_number) && !self.vlans.find_by_number(vlan_number)
+				snmp_interface.del_vlan(self.number,vlan_number)
 			end
 		end
 
 		self.connexions.each do |connexion|
 			vlan_number = connexion.vlan.number
-			unless interface.is_on_vlan?(self.number,vlan_number)
-				connexion.destroy
-				return
-			end
-			if vlans_nums.include? vlan_num 
-				connexion.tagged=snmp_interface.is_on_tagged_vlan?(self.number,vlan_number)
-				connexion.save
+			if connexion.tagged
+				snmp_interface.add_vlan_tagged(self.number,vlan_number)
+			else
+				snmp_interface.add_vlan_untagged(self.number,vlan_number)
 			end
 		end
 		self.enabled=snmp_interface.enabled?(self.number)

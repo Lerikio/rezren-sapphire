@@ -43,12 +43,12 @@ namespace :populate do
 	end
 
 	desc "Génère tous les ports d'un switch, en passant le switch et le nombre de port en entrée"
-	task :ports, [:switch_id, :nbr_of_ports] => :environment do
+	task :ports, [:switch_id, :nbr_of_ports] => :environment do |t, args|
 
-		for port_number in 1..:nbr_of_ports.to_i
+		for port_number in 1..args.nbr_of_ports.to_i
 
 			current_port = Port.new
-			current_port.switch_id = :switch_id
+			current_port.switch_id = args.switch_id
 			current_port.number = port_number
 			current_port.save
 
@@ -58,13 +58,15 @@ namespace :populate do
 
 	desc "Génère des switchs TOUS SIMILAIRES en terme de nombre de ports, à partir du nombre de switches à créer et le nombre de port à leur attribuer.
 		  Attention : il faudra définir l'IP et la community du switch à la main à travers l'interface web."
-	task :switches, [:nbr_of_switches, :nbr_of_ports] => :environment do
+	task :switches, [:nbr_of_switches, :nbr_of_ports] => :environment do |t, args|
 
-		for switch in 1..:nbr_of_switches.to_i
+		for switch in 1..args.nbr_of_switches.to_i
 
 			current_switch = Switch.new
-			current_port.save(false) # Ne sauvegarde que l'id du switch. 
-			Rake::Task["populate:ports[#{current_switch.id}, #{:nbr_of_ports}]"].invoke
+			current_switch.community = "private"
+			current_switch.ip_admin = "0.0.0.0"
+			current_switch.save(:validate => false)
+			Rake::Task["populate:ports[#{current_switch.id},#{args.nbr_of_ports}]"].invoke
 			
 		end
 	end

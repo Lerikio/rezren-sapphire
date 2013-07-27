@@ -21,9 +21,11 @@ class Switch < ActiveRecord::Base
       if @interface
         return @interface
       else
-        interfaceClass=(self.read_attribute(:model) + "_interface").camelize.constantize
-        @interface=interfaceClass.new(ip)
-        return @interface
+        #interfaceClass=(self.read_attribute(:model) + "_interface").camelize.constantize
+        #@interface=interfaceClass.new(ip)
+        #return @interface
+
+        @interface=DummyInterface.new
       end
     end
 end
