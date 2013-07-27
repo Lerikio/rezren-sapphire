@@ -1,23 +1,40 @@
-%h1 Listing rooms
+- content_for :title do
+  Liste des chambres
 
-%table
-  %tr
-    %th Building
-    %th Number
-    %th Adherent
-    %th
-    %th
-    %th
 
-  - @rooms.each do |room|
+%table#rooms
+  %thead
     %tr
-      %td= room.building
-      %td= room.number
-      %td= room.adherent
-      %td= link_to 'Show', room
-      %td= link_to 'Edit', edit_room_path(room)
-      %td= link_to 'Destroy', room, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th Adresse
+      %th Locataire
+      %th Connexion
+      %th 
+        = link_to new_room_path, class:"btn btn-inverse" do
+          %i.icon-plus
+          Nouvelle chambre
+  %tbody
+    -@rooms.each do |room|
+      %tr
+        %td
+          = room.full_address
+        %td
+          - if room.adherent
+            = link_to room.adherent.full_name, room.adherent
+          - else
+            \--
+        %td
+          - if room.port
+            = link_to room.port.switch.ip_admin + ":" + room.port.number, room.port
+          - else
+            \--
+        %td.actions
+          = link_to room_path(room.id), class:"btn btn-success" do
+            %i.icon-eye-open.icon-large
+            Voir
+          = link_to edit_room_path(room.id), class:"btn btn-warning" do
+            %i.icon-pencil.icon-large
+            Editer
+          = link_to room_path(room.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + room.full_address + "? Cette opération est irréversible.") } do
+            %i.icon-trash.icon-large
+            Supprimer
 
-%br
-
-= link_to 'New Room', new_room_path

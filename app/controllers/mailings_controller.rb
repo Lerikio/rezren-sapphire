@@ -7,7 +7,7 @@ load_and_authorize_resource
   # GET /mailings
   # GET /mailings.json
   def index
-    @mailings = Mailing.all
+    @mailings = Mailing.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

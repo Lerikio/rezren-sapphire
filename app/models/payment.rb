@@ -20,7 +20,7 @@ class Payment < ActiveRecord::Base
 
 	validates :comment, presence: true, unless: self.paid_value==self.value
 
-	validates :mean_is_correct
+	validate :mean_is_correct
 	validates :bank_name, presence: true, if: self.mean == "cheque"
 
 	validates :credit, presence: true

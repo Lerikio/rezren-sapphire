@@ -31,11 +31,16 @@ source 'https://rubygems.org'
 # Développement
 	group :development do
 		# Serveur de développement rails
-		gem 'thin'
+			gem 'thin'
 		# Générateur de documentation
-		gem 'annotate', '2.5.0'
+			gem 'annotate', '2.5.0'
 		# Impression dans la console via la commande "ap"
-		gem 'awesome_print'
+			gem 'awesome_print'
+		# Renommer l'application en une commande
+			gem 'rename' 
+			# Usage : rails g rename:app_to Nouveau_Nom
+		# Ajout de l'encodage UTF-8 sur tous les fichiers
+			gem 'magic_encoding'
 	end
 
 # Jquery & CSS
@@ -73,12 +78,9 @@ source 'https://rubygems.org'
 # Machine d'état
 	gem 'state_machine'
 
-# Renommer l'application en une commande
-	gem 'rename' 
-	# Usage : rails g rename:app_to Nouveau_Nom
+# Settings, permet de garder en mémoire des valeurs de config
+	gem "rails-settings-cached", "0.2.4"
 
-# Ajout de l'encodage UTF-8 sur tous les fichiers
-	gem 'magic_encoding'
 
 # Gems "Pourquoi pas ?"
 	# Pour faciliter la troncature de phrase

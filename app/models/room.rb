@@ -16,6 +16,10 @@ class Room < ActiveRecord::Base
 	validate :uniqueness_of_address
 	validates :port, presence: true
 
+def full_address
+	self.building + self.number
+end
+
 private
 
 	# Renvoie faux si une chambre a le même building et le même number

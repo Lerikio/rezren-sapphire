@@ -12,15 +12,8 @@
 		.container-fluid
 			= bootstrap_flash
 
-			.row-fluid
-				-unless :side_bar != ""
-					.span3.hero-unit
-						= yield :side_bar
-					.span9.hero-unit
-						= yield 
-				-else
-					.span12.hero-unit
-						= yield 
+			.hero-unit
+				= yield 
 
 
 		

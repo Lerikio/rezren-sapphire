@@ -7,7 +7,7 @@ load_and_authorize_resource
   # GET /generic_dns_entries
   # GET /generic_dns_entries.json
   def index
-    @generic_dns_entries = GenericDnsEntry.all
+    @generic_dns_entries = GenericDnsEntry.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

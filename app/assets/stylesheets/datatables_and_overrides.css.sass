@@ -3,9 +3,14 @@
 @import jquery-ui/dark-hive
 
 .dataTables_wrapper
-	:margin-top 20px
+	:margin-top 0
+	:padding-top 0
 	:background none
 	:border-radius 7px
+
+	table
+		:border-radius 8px
+		:overflow hidden
 
 	label
 		:font-size 0 
@@ -34,12 +39,15 @@
 		a.fg-button
 			:margin 2px
 
-	tr.odd
+	tr
 		td
 			:text-align center
 			:background-color #2C3E50
 		td.sorting_1
 			:background-color #34495E !important
+
+		td.actions
+			:width 290px
 
 	a
 		:color #D1EEEE
@@ -50,3 +58,5 @@
 			:color #0A0A0A
 			:transition color 0.2s
 
+	a.btn 
+		:color #fff

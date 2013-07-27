@@ -7,7 +7,7 @@ load_and_authorize_resource
   # GET /vlans
   # GET /vlans.json
   def index
-    @vlans = Vlan.all
+    @vlans = Vlan.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

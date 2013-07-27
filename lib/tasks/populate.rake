@@ -18,6 +18,7 @@ namespace :populate do
 						current_room = Room.new
 						current_room.building = building
 						current_room.number = story.to_s + string_number
+						current_room.archived = false
 						current_room.save(validate: false) # Evite les validations : normalement, une chambre devrait aussi avoir un port
 					end
 				end
@@ -33,6 +34,7 @@ namespace :populate do
 						current_room = Room.new
 						current_room.building = building
 						current_room.number = story + string_number
+						current_room.archived = false
 						current_room.save(validate: false) # Evite les validations : normalement, une chambre devrait aussi avoir un port
 					end
 				end

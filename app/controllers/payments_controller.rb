@@ -6,7 +6,7 @@ load_and_authorize_resource
 
   # Get /payments
   def index_all
-    @payments = Payment.all
+    @payments = Payment.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

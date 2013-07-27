@@ -7,7 +7,7 @@ load_and_authorize_resource
   # GET /switches
   # GET /switches.json
   def index
-    @switches = Switch.all
+    @switches = Switch.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

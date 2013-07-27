@@ -7,7 +7,7 @@ load_and_authorize_resource
   # GET /adherents
   # GET /adherents.json
   def index
-    @adherents = Adherent.all
+    @adherents = Adherent.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -6,7 +6,7 @@ load_and_authorize_resource nested: :adherent
 
 
   def index_all
-    @computers = Computer.all
+    @computers = Computer.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

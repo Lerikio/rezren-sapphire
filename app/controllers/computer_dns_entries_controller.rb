@@ -7,7 +7,7 @@ load_and_authorize_resource
   # GET /computer_dns_entries
   # GET /computer_dns_entries.json
   def index
-    @computer_dns_entries = ComputerDnsEntry.all
+    @computer_dns_entries = ComputerDnsEntry.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

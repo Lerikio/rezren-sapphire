@@ -10,8 +10,7 @@ class RoomsController < ApplicationController
   # GET /rooms
   # GET /rooms.json
   def index
-    @rooms = Room.all
-
+    @rooms = Room.where(:archived => params[:archived].to_bool)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @rooms }

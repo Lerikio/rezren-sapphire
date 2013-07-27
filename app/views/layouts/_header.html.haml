@@ -24,13 +24,9 @@
 							%i.icon-cog.icon-white  
 							Gestion simple
 						%ul.dropdown-menu
-							%li= link_to "Adhérents", adherents_path
-							%li.divider
-							%li= link_to "Ordinateurs", computers_path
-							%li.divider
-							%li= link_to "Chambres", rooms_path
-							%li.divider
-							%li= link_to "Mailings", mailings_path
+							%li= link_to "Adhérents", adherents_path(:archived => false)
+							%li= link_to "Ordinateurs", computers_path(:archived => false)
+							%li= link_to "Mailings", mailings_path(:archived => false)
 
 					%li.divider-vertical
 
@@ -39,11 +35,14 @@
 							%i.icon-cogs.icon-white 
 							Gestion avancée
 						%ul.dropdown-menu
-							%li= link_to "Switchs", switches_path
-							%li= link_to "VLANs", vlans_path
+							%li.nav-header Architecture		
+							%li= link_to "Chambres", rooms_path(:archived => false)
+							%li= link_to "Switchs", switches_path(:archived => false)
+							%li= link_to "VLANs", vlans_path(:archived => false)
+							%li.divider
 							%li.nav-header Entrées DNS
-							%li= link_to "Ordinateurs", computer_dns_entries_path
-							%li= link_to "Autres", generic_dns_entries_path
+							%li= link_to "Ordinateurs", computer_dns_entries_path(:archived => false)
+							%li= link_to "Autres", generic_dns_entries_path(:archived => false)
 
 					%li.divider-vertical
 
@@ -52,7 +51,7 @@
 							%i.icon-eur.icon-white 
 							Trésorerie
 						%ul.dropdown-menu
-							%li= link_to "Paiements", payments_path
+							%li= link_to "Paiements", payments_path(:archived => false)
 							%li= link_to "Statistiques", "#"
 
 					%li.divider-vertical
@@ -64,9 +63,8 @@
 						%ul.dropdown-menu
 							%li= link_to "Votre compte", admin_path(current_admin.id)
 							%li.divider
-							%li.nav-header Gestion des admins
-							%li= link_to "Nouvel admin", new_admin_path	
-							%li= link_to "Voir les admins", admins_path
+							%li= link_to "Nouvel admin", new_admin_path
+							%li= link_to "Voir les admins", admins_path(:archived => false)
 					%li.divider-vertical
 
 					%li

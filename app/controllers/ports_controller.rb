@@ -7,7 +7,7 @@ load_and_authorize_resource
   # GET /ports
   # GET /ports.json
   def index
-    @ports = Port.all
+    @ports = Port.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb
