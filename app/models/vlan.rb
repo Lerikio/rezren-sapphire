@@ -8,7 +8,8 @@ class Vlan < ActiveRecord::Base
 
 	attr_accessible :name, :number
 
-	has_many :ports, through: :connexion
+	has_many :connexions
+	has_many :ports, through: :connexions
 
 # Validations
 
