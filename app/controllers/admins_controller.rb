@@ -23,6 +23,7 @@ load_and_authorize_resource
 			redirect_to root_path, notice: "L'administrateur a été créé."
 		else
 			render "new"
+		end
 	end
 
 	def edit

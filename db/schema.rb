@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20130726220922) do
     t.string   "password_hash",                    :null => false
     t.string   "password_salt",                    :null => false
     t.string   "username",                         :null => false
-    t.integer  "adherent_id",                      :null => false
+    t.integer  "adherent_id"
     t.boolean  "archived",      :default => false
     t.datetime "last_login"
     t.datetime "created_at",                       :null => false

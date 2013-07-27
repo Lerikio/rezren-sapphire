@@ -87,3 +87,6 @@ source 'https://rubygems.org'
 # Gems "Pourquoi pas ?"
 	# Pour faciliter la troncature de phrase
 		#gem 'html-truncator'
+
+# Pour faciliter l'écriture des task rake
+	gem 'highline'
