@@ -15,4 +15,15 @@ class Switch < ActiveRecord::Base
 	validates :community, presence: true
 	validates :ip_admin, presence: true, uniqueness: true
 
+
+	#Renvoie une interface SNMP pour manager le switch/wifiAp à distance
+    def snmp_interface(options={})
+      if @interface
+        return @interface
+      else
+        interfaceClass=(self.read_attribute(:model) + "_interface").camelize.constantize
+        @interface=interfaceClass.new(ip)
+        return @interface
+      end
+    end
 end

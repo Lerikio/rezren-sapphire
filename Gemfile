@@ -81,6 +81,8 @@ source 'https://rubygems.org'
 # Settings, permet de garder en mémoire des valeurs de config
 	gem "rails-settings-cached", "0.2.4"
 
+# SNMP, pour l'administration des switchs
+	gem 'snmp'
 
 # Gems "Pourquoi pas ?"
 	# Pour faciliter la troncature de phrase
