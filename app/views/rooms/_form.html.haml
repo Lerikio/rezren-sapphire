@@ -1,19 +1,14 @@
-= form_for @room do |f|
-  - if @room.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@room.errors.count, "error")} prohibited this room from being saved:"
-      %ul
-        - @room.errors.full_messages.each do |msg|
-          %li= msg
+- if @room.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@room.errors.count, "erreur")} ont empéché la chambre d'être sauvegardée :"
+    %ul
+      - @room.errors.full_messages.each do |msg|
+        %li= msg
 
-  .field
-    = f.label :building
-    = f.text_field :building
-  .field
-    = f.label :number
-    = f.text_field :number
-  .field
-    = f.label :adherent
-    = f.text_field :adherent
-  .actions
-    = f.submit 'Save'
+
+
+= f.input :building, :required => true do
+  = f.input_field :building, as: :select, class: "label-field short-field", :placeholder => "Fournisseur", collection: @building_list, prompt: "Bâtiment", value: @room.building
+
+= f.input :number, :required => true do
+  = f.input_field :number, class: "label-field", :placeholder => "Numéro de la chambre"

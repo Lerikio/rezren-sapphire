@@ -1,5 +1,9 @@
-%h1 New room
+.alert.alert-block
+    %h4 
+        %i.icon-warning-sign.icon-large
+        Attention   
+    Les chambres devraient être généré via la commande rake populate:rooms. Modifiez ce script si l'architecture de la rez change.
 
-= render 'form'
-
-= link_to 'Back', rooms_path
+= simple_form_for @room do |f|
+    = render partial: "form", locals: {f: f}  
+    = f.submit "Ajouter", {class: "btn btn-primary btn-large btn-block"}

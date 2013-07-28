@@ -88,5 +88,5 @@ source 'https://rubygems.org'
 	# Pour faciliter la troncature de phrase
 		#gem 'html-truncator'
 
-# Pour faciliter l'écriture des task rake
+# Bibliothèque d'utilisation de la console en rake
 	gem 'highline'

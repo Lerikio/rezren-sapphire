@@ -226,6 +226,12 @@ fr:
     models:
       admin: "Administrateur"
       adherent: "Adhérent"
+      alias_dns_entry: "Alias DNS"
+      computer: "Ordinateur"
+      computer_dns_entry: "DNS Ordinateur"
+      generic_dns_entry: "Entrée DNS"
+      payment: "Paiement"
+      room: "Chambre"
     attributes:
       admin:
         adherent: "Identité"
@@ -238,3 +244,7 @@ fr:
         username: "Pseudo"
         password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
+      room:
+        building: "Bâtiment"
+        number: "Numéro"
+        adherent: "Propriétaire"

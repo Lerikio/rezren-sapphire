@@ -8,7 +8,7 @@ class Adherent < ActiveRecord::Base
 
 	attr_accessible :full_name, :password, :password_confirmation, :email, :username,
 		:rezoman, :externe, :supelec,
-		:computeur_attributes, :credit_attributes
+		:computer_attributes, :credit_attributes
 			# La première ligne correspond à l'identité à proprement dit de l'adhérent
 			# La seconde ligne à des booléens qui permettent d'identifier les droits de l'adhérent
 				# Rezoman : permet de se connecter dans toutes les chambres, et de ne pas payer sa connexion.

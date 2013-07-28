@@ -9,7 +9,7 @@ class Computer < ActiveRecord::Base
 	attr_accessible :adherent_id, :mac_address, :ip_address
 
 	belongs_to :adherent, dependent: :destroy
-	has_many :dns_entries
+	has_one :computer_dns_entry
 
 # Actions avant sauvegarde
 	before_save self.ip_address = generate_ip_address
@@ -53,8 +53,7 @@ private
 		end
 
 		def to_ip(array_ip)
-			is_ipable = array_ip[0].is_a? Integer && array_ip[1].is_a? Integer && array_ip[2].is_a? Integer && array_ip[3].is_a? Integer
-						&& array_ip[0]<=255 && array_ip[0]<=255 && array_ip[0]<=255 && array_ip[0]<=253
+			is_ipable = array_ip[0].is_a?(Integer) && array_ip[1].is_a?(Integer) && array_ip[2].is_a?(Integer) && array_ip[3].is_a?(Integer) && array_ip[0]<=255 && array_ip[0]<=255 && array_ip[0]<=255 && array_ip[0]<=253
 			
 			unless is_ipable 
 				raise "The argument of to_ip method should be an array of the form [ int, int, int, int]" 
