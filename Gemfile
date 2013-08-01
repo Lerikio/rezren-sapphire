@@ -84,9 +84,5 @@ source 'https://rubygems.org'
 # SNMP, pour l'administration des switchs
 	gem 'snmp'
 
-# Gems "Pourquoi pas ?"
-	# Pour faciliter la troncature de phrase
-		#gem 'html-truncator'
-
 # Bibliothèque d'utilisation de la console en rake
 	gem 'highline'

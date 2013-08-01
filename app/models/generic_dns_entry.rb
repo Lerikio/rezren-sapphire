@@ -10,7 +10,7 @@ class GenericDnsEntry < ActiveRecord::Base
 
 # Avant validation
 	
-	before_validation self.name = self.name.downcase
+	before_validation name.downcase
 
 # Validations
 

@@ -5,8 +5,8 @@ class Credit < ActiveRecord::Base
 
 	attr_accessible :next_debit, :value
 
-	has_many :payments
-	belongs_to :adherent, dependent: :destroy
+	has_many :payments, inverse_of: :credit
+	belongs_to :adherent, dependent: :destroy, inverse_of: :credit
 
 # Validations
 

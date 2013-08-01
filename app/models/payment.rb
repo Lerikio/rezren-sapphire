@@ -8,8 +8,8 @@ class Payment < ActiveRecord::Base
 
 	attr_accessible :comment, :mean, :paid_value, :value, :bank_name
 
-	belongs_to :credit
-	belongs_to :admin
+	belongs_to :credit, inverse_of: :payments
+	belongs_to :admin, inverse_of: :payments
 	has_one :adherent, through: :credit
 
 

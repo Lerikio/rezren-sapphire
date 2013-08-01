@@ -81,17 +81,9 @@ ActiveRecord::Schema.define(:version => 20130726220922) do
     t.datetime "updated_at",                     :null => false
   end
 
-  create_table "connexions", :force => true do |t|
-    t.integer  "vlan_id"
-    t.integer  "port_id"
-    t.boolean  "tagged",     :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-  end
-
   create_table "credits", :force => true do |t|
     t.float    "value",       :default => 0.0
-    t.date     "next_debit",  :default => '2013-07-28'
+    t.date     "next_debit",  :default => '2013-07-30'
     t.boolean  "archived",    :default => false
     t.integer  "adherent_id",                           :null => false
     t.datetime "created_at",                            :null => false
@@ -172,10 +164,10 @@ ActiveRecord::Schema.define(:version => 20130726220922) do
     t.datetime "updated_at",                    :null => false
   end
 
-  create_table "vlans", :force => true do |t|
-    t.integer  "number"
-    t.string   "name"
-    t.boolean  "archived",   :default => false
+  create_table "vlan_connections", :force => true do |t|
+    t.integer  "port_id",                       :null => false
+    t.integer  "vlan",                          :null => false
+    t.boolean  "tagged",     :default => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
   end

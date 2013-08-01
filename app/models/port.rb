@@ -8,10 +8,9 @@ class Port < ActiveRecord::Base
 
 	attr_accessible :number, :switch_id
 
-	has_many :connexions
-	has_many :vlans, through: :connexions
-	has_one :room
-	belongs_to :switch, dependent: :destroy
+	has_many :vlan_connections, inverse_of: :port
+	has_one :room, inverse_of: :port
+	belongs_to :switch, dependent: :destroy, inverse_of: :ports
 
 # Validations
 

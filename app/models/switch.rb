@@ -8,7 +8,7 @@ class Switch < ActiveRecord::Base
 
 	attr_accessible :community, :ip_admin
 
-	has_many :ports, dependent: :destroy
+	has_many :ports, dependent: :destroy, inverse_of: :switch
 
 # Validations
 

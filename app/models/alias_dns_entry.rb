@@ -8,12 +8,12 @@ class AliasDnsEntry < ActiveRecord::Base
 
 	attr_accessible :computer_dns_entry_id, :name
 
-	belongs_to :computer_dns_entry, dependent: :destroy
+	belongs_to :computer_dns_entry, dependent: :destroy, inverse_of: :alias_dns_entries
 	has_one :computer, through: :computer_dns_entry
 
 # Avant validation
 	
-	before_validation self.name = self.name.downcase
+	before_validation name.downcase
 
 # Validations
 

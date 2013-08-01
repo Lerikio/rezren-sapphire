@@ -15,25 +15,7 @@ namespace :populate_dev do
 		ActiveRecord::Base.transaction do
 			Rake::Task["populate:rooms"].invoke
 			Rake::Task["populate:switches"].invoke
-			Rake::Task["populate_dev:vlan"].invoke
 		end
-	end
-
-	desc "Crée un VLAN"
-	task "vlan" => :environment do
-		require 'highline/import'
-
-		vlan = Vlan.new
-		vlan.number = ask('VLAN number:')
-		vlan.name = ask('VLAN name:')
-		vlan.save!
-
-		unless Port.all == nil
-			Port.all.each do |port|
-				vlan.ports << port
-			end
-		end
-
 	end
 
 	desc "Crée un adhérent et son premier ordinateur"
@@ -47,26 +29,32 @@ namespace :populate_dev do
 		adherent.password = "mdpTest"
 		adherent.username = "jean.dupont"
 
-		credit = adherent.build_credit
+		credit = Credit.new
+		adherent.credit = credit
 
-		computer = adherent.computers.build
-		computer.mac_address = "00:00:00:00:00"
+		computer = Computer.new
+		computer.mac_address = "00:00:00:00:00:00"
+		adherent.computers << computer
 
-		dns_entry = computer.build_computer_dns_entry(name: "jean.dupont")
 
-		dns_alias = dns_entry.alias_dns_entries.build(name: "thefirstcomp")
+		dns_entry = ComputerDnsEntry.new :name => "jean.dupont"
+		computer.computer_dns_entry = dns_entry
 
-		unless Room.all = nil
-			adherent.room = Room.first
+		dns_alias = AliasDnsEntry.new :name => "thefirstcomp"
+		dns_entry.alias_dns_entries << dns_alias
+
+		unless Room.all == []
+			Room.first.adherent = adherent
 			room = adherent.room
 			room.port = Port.first
 			room.save!
 		end
 
+		adherent.save!
 		credit.save!
 		computer.save!
 		dns_entry.save!
-		adherent.save!
+		dns_alias.save!
 
 	end
 

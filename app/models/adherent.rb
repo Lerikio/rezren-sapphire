@@ -19,15 +19,15 @@ class Adherent < ActiveRecord::Base
 	# :password n'est pas stocké dans la base de donnée, il permet simplement de réaliser les formulaires.
 	attr_accessor :password
 
-	has_many :mailings	# Un adhérent peut être propriétaire de mailings
+	has_many :mailings, inverse_of: :adherent 	# Un adhérent peut être propriétaire de mailings
 	has_many :payments, through: :credit
 
-	has_one :room	# Un adhérent non-externe a une chambre
-	has_one :admin  # Un adhérent peut être lié à un administrateur
+	has_one :room, inverse_of: :adherent	# Un adhérent non-externe a une chambre
+	#has_one :admin, inverse_of: :adherent  # Un adhérent peut être lié à un administrateur
 
 	# Association forte
-	has_many :computers, dependent: :destroy
-	has_one :credit, dependent: :destroy
+	has_many :computers, dependent: :destroy, inverse_of: :adherent
+	has_one :credit, dependent: :destroy, inverse_of: :adherent
 
 # Actions avant sauvegarde
 	before_save :encrypt_password

@@ -9,8 +9,8 @@ class Admin < ActiveRecord::Base
 	attr_accessor :password 
 
 	has_and_belongs_to_many :roles
-	has_many :payments
-	belongs_to :adherent # Qui est l'admin ?
+	has_many :payments, inverse_of: :admin
+	#belongs_to :adherent # Qui est l'admin ?
 
 # Actions avant sauvegarde
 	before_save :encrypt_password

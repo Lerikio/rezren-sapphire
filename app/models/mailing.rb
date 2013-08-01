@@ -10,7 +10,7 @@ class Mailing < ActiveRecord::Base
 
 	attr_accessible :adherent_id, :emails, :name, :system
 
-	belongs_to :adherent
+	belongs_to :adherent, inverse_of: :mailing
 
 	# Permet de stocker un tableau dans la base de donnée
 		serialize :emails
