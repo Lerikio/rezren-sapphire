@@ -19,14 +19,14 @@ class Mailing < ActiveRecord::Base
 
 # Actions avant validation/sauvegarde
 	# Création du nom complet de la mailing
-	before_validation self.name = self.name.downcase + "@" + @domain_name
+	before_validation name = name.downcase + "@" + @domain_name
 
 	# Mise en minuscule de toutes les emails
-	before_save {
+	before_save do
 		self.emails.each do |email|
 			email = email.downcase
 		end
-	}
+	end
 
 
 # Validations

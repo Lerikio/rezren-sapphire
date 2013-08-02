@@ -6,11 +6,15 @@ class Computer < ActiveRecord::Base
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
 
+# Filtres
+	scope :supelec, -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Supelec) }
+	scope :others,  -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Autre) }
+
 # Attributs et associations	
 	attr_accessible :adherent_id, :mac_address, :ip_address
 
-	belongs_to :adherent, dependent: :destroy, inverse_of: :computers
-	has_one :computer_dns_entry, inverse_of: :computer
+	belongs_to :adherent, inverse_of: :computers
+	has_one :computer_dns_entry, inverse_of: :computer, dependent: :destroy
 
 # Actions avant validation
 	before_validation :generate_ip
@@ -23,14 +27,24 @@ class Computer < ActiveRecord::Base
     validates :computer_dns_entry, presence: true, uniqueness: true
 
 
-## Méthodes permettant de gérer les adresses IP facilement
-	# Permet de générer une adresse IP
-	# ----> Algo de récupération du premier slot libre merdique !!!!!
+####################################################################################################
+#
+#                     Méthodes permettant de gérer les adresses IP facilement
+# 
+#       ===> les IPs sont gérées sous forme de tableau, puis rendue sous forme de string 	  
+#
+####################################################################################################
+
+# --------------------------------------------------------------------------------------------------
+#	Génère une adresse IP, la première disponible dans la DB
+#	----> Algo de récupération du premier slot libre merdique !!!!!
+# --------------------------------------------------------------------------------------------------
+
 	def generate_ip
 		if self.adherent.supelec
-			vlan = 2
+			vlan = VLAN::Adherent
 		else
-			vlan = 3
+			vlan = VLAN::Autre
 		end
 		current_ip = [10, vlan, 0, 1]
 
@@ -47,6 +61,11 @@ class Computer < ActiveRecord::Base
 		end
 	end
 
+
+# --------------------------------------------------------------------------------------------------
+#	Incrémente une adresse IP, sous forme de tableau
+# --------------------------------------------------------------------------------------------------
+
 	def increment_ip(current_ip)
 		unless current_ip[3] == 253
 			current_ip[3] += 1
@@ -59,6 +78,11 @@ class Computer < ActiveRecord::Base
 			end
 		end
 	end
+
+
+# --------------------------------------------------------------------------------------------------
+#	Rend une chaîne de caractères à partir d'un tableau IP
+# --------------------------------------------------------------------------------------------------
 
 	def to_ip(array_ip)
 		is_ipable = array_ip[0].is_a?(Integer) && array_ip[1].is_a?(Integer) && array_ip[2].is_a?(Integer) && array_ip[3].is_a?(Integer) && array_ip[0]<=255 && array_ip[0]<=255 && array_ip[0]<=255 && array_ip[0]<=253

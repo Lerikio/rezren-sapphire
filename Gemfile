@@ -84,5 +84,8 @@ source 'https://rubygems.org'
 # SNMP, pour l'administration des switchs
 	gem 'snmp'
 
+# Permet de générer et manipuler les Zonfile pour le DNS
+	gem 'zonefile'
+
 # Bibliothèque d'utilisation de la console en rake
 	gem 'highline'

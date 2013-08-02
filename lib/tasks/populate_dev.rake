@@ -1,5 +1,24 @@
 # encoding : UTF-8
+#
+# ----------------------------------------------------------------------------------------------------------------
+#
+# Génération d'une base de donnée d'exemples pour le développement
+#
+# ----------------------------------------------------------------------------------------------------------------
+
 namespace :populate_dev do
+
+##################################################################################################################
+#
+#                                            =====> Attention <=====
+#
+#  							Ces scripts NE DOIVENT PAS être utilisés en production !
+#
+##################################################################################################################
+
+# -----------------------------------------------------------------------------------------------------------------
+# Appel de tous les scripts 
+# -----------------------------------------------------------------------------------------------------------------
 
 	desc "Crée des instances de tous les modèles et leur dépendance"
 	task "all" => :environment do
@@ -10,6 +29,11 @@ namespace :populate_dev do
 		end
 	end
 
+
+# -----------------------------------------------------------------------------------------------------------------
+# Appel des scripts de populate.rake pour la génération de l'architecture
+# -----------------------------------------------------------------------------------------------------------------
+
 	desc "Crée toute l'architecture"
 	task "architecture" => :environment do
 		ActiveRecord::Base.transaction do
@@ -18,10 +42,16 @@ namespace :populate_dev do
 		end
 	end
 
+
+# -----------------------------------------------------------------------------------------------------------------
+# Génération d'un adhérent, et de toutes ses dépendances
+# -----------------------------------------------------------------------------------------------------------------
+
+
 	desc "Crée un adhérent et son premier ordinateur"
 	task "adherent" => :environment do
 
-		require 'highline/import'
+		require 'awesome_print'
 
 		adherent = Adherent.new
 		adherent.full_name = "Jean Dupont"
@@ -37,26 +67,38 @@ namespace :populate_dev do
 		adherent.computers << computer
 
 
-		dns_entry = ComputerDnsEntry.new :name => "jean.dupont"
+		dns_entry = ComputerDnsEntry.new :name => "dupont"
 		computer.computer_dns_entry = dns_entry
 
 		dns_alias = AliasDnsEntry.new :name => "thefirstcomp"
 		dns_entry.alias_dns_entries << dns_alias
 
-		unless Room.all == []
+		ap adherent.inspect
+		adherent.save!
+
+		unless Room.all.empty?
 			Room.first.adherent = adherent
 			room = adherent.room
 			room.port = Port.first
+			ap room.inspect
 			room.save!
+			adherent.save!
 		end
 
-		adherent.save!
 		credit.save!
+		ap "Computer"
 		computer.save!
+		ap "DNS"
 		dns_entry.save!
 		dns_alias.save!
 
 	end
+
+
+# -----------------------------------------------------------------------------------------------------------------
+# Génération d'un premier administrateur 
+# -----------------------------------------------------------------------------------------------------------------
+
 
 	desc "Crée un administrateur"
 	task "admin" => :environment do

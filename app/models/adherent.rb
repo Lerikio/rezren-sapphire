@@ -72,7 +72,7 @@ state_machine :state, initial: :created do
 
 private
 
-	# Devrait être déplacé pour factorisation du code avec les adhérents
+	# Devrait être déplacé pour factorisation du code avec les admins
 		def encrypt_password
 			if password.present?
 				self.password_salt = BCrypt::Engine.generate_salt

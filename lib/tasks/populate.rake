@@ -1,6 +1,23 @@
 # encoding : UTF-8
+#
+# ----------------------------------------------------------------------------------------------------------------
+#
+# Génération de l'architecture générale du Rezo
+#
+# ----------------------------------------------------------------------------------------------------------------
+
 namespace :populate do
 
+##################################################################################################################
+# 3 scripts																										 #
+# => :rooms, pour générer les chambres																			 #
+# => :switches, pour générer des switchs (attention, tous les mêmes)											 #
+# => :ports, pour générer x ports pour un switch (attention, :switches appelent déjà :ports !)					 #
+##################################################################################################################
+
+# -----------------------------------------------------------------------------------------------------------------
+# Génération des chambres 
+# -----------------------------------------------------------------------------------------------------------------
 	desc "Génère toutes les chambres existantes dans la configuration 2013 de la résidence de Rennes de Supélec"
 	task :rooms => :environment do
 		['A','B','C','D','H'].each do |building|
@@ -42,6 +59,10 @@ namespace :populate do
 		end
 	end
 
+# -----------------------------------------------------------------------------------------------------------------
+# Génération des ports d'un switch 
+# -----------------------------------------------------------------------------------------------------------------
+
 	desc "Génère tous les ports d'un switch, en passant le switch et le nombre de port en entrée"
 	task :ports, [:switch_id, :nbr_of_ports] => :environment do |t, args|
 
@@ -59,6 +80,10 @@ namespace :populate do
 		end
 	end
 
+
+# -----------------------------------------------------------------------------------------------------------------
+# Génération des switchs 
+# -----------------------------------------------------------------------------------------------------------------
 
 	desc "Génère des switchs TOUS SIMILAIRES en terme de nombre de ports, à partir du nombre de switches à créer et le nombre de port à leur attribuer.
 		  Attention : il faudra définir l'IP et la community du switch à la main à travers l'interface web."

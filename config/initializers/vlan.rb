@@ -4,10 +4,10 @@ module VLAN
 
 	Admin = 1
 	Adherent = 2
-	Exterieur = 3
+	Autre = 3
 	Prerezotage = 4
 	Deconnexion = 5
 
-	List = [Admin, Adherent, Exterieur, Prerezotage, Deconnexion]
+	List = [Admin, Adherent, Autre, Prerezotage, Deconnexion]
 
 end

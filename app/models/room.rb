@@ -11,7 +11,7 @@ class Room < ActiveRecord::Base
 	belongs_to :port, inverse_of: :room
 
 #Validations. Une chambre peut-être vide et sans ip-phone !
-	validates :number, presence: true, :uniqueness => {:scope => :building}
+	validates :number, presence: true, uniqueness: {scope: :building}
 	validates :building, presence: true
 	validates :port, presence: true
 
