@@ -50,7 +50,6 @@ namespace :populate_dev do
 
 	desc "Crée un adhérent et son premier ordinateur"
 	task "adherent" => :environment do
-
 		require 'awesome_print'
 
 		adherent = Adherent.new
@@ -73,25 +72,15 @@ namespace :populate_dev do
 		dns_alias = AliasDnsEntry.new :name => "thefirstcomp"
 		dns_entry.alias_dns_entries << dns_alias
 
-		ap adherent.inspect
+		room = Room.first
+		room.adherent = adherent
+		room.port = Port.first
 		adherent.save!
-
-		unless Room.all.empty?
-			Room.first.adherent = adherent
-			room = adherent.room
-			room.port = Port.first
-			ap room.inspect
-			room.save!
-			adherent.save!
-		end
-
+		room.save!
 		credit.save!
-		ap "Computer"
 		computer.save!
-		ap "DNS"
 		dns_entry.save!
 		dns_alias.save!
-
 	end
 
 

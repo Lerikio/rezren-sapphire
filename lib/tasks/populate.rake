@@ -94,9 +94,7 @@ namespace :populate do
 	    nbr_of_switches = ask("Number of switches:")
 	    nbr_of_ports = ask("Number of ports by switch:")
 
-
-		for switch in 1...nbr_of_switches.to_i
-
+		for switch in 1..nbr_of_switches.to_i
 			current_switch = Switch.new
 			current_switch.community = "private"
 			current_switch.ip_admin = "0.0.0.0"

@@ -10,7 +10,7 @@ class GenericDnsEntry < ActiveRecord::Base
 
 # Avant validation
 	
-	before_validation name.downcase
+	before_validation :downcase_name
 
 # Validations
 
@@ -19,5 +19,9 @@ class GenericDnsEntry < ActiveRecord::Base
 	validates :return, presence: true
 	validates :type, presence: true
 
+	private
 
+	def downcase_name
+		self.name = self.name.downcase if self.name.present?
+	end
 end

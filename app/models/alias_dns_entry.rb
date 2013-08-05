@@ -13,7 +13,7 @@ class AliasDnsEntry < ActiveRecord::Base
 
 # Avant validation
 	
-	before_validation name.downcase
+	before_validation :downcase_name
 
 # Validations
 
@@ -23,6 +23,12 @@ class AliasDnsEntry < ActiveRecord::Base
 
 	def ip_address
 		self.computer.ip_address
+	end
+
+	private
+
+	def downcase_name
+		self.name = self.name.downcase if self.name.present?
 	end
 
 end

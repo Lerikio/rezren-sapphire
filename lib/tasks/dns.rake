@@ -134,3 +134,5 @@ namespace :regenerate do
 	task :external_reverse_dns => :environment do
 
 	end
+
+end
