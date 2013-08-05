@@ -8,12 +8,12 @@ class Adherent < ActiveRecord::Base
 
 	attr_accessible :full_name, :password, :password_confirmation, :email, :username,
 		:rezoman, :externe, :supelec,
-		:computer_attributes, :credit_attributes
+		:computer_attributes, :credit_attributes, :payment_attributes
 			# La première ligne correspond à l'identité à proprement dit de l'adhérent
 			# La seconde ligne à des booléens qui permettent d'identifier les droits de l'adhérent
 				# Rezoman : permet de se connecter dans toutes les chambres, et de ne pas payer sa connexion.
 				# Externe : Un externe n'a pas d'ordinateurs, de solde ou de connexion.
-				# Supelec : un supelec a le droit à un compte email.
+				# Supelec : un supelec a le droit à un compte discourse, et est sur le VLAN::Supelec
 			# La dernière ligne permet la création d'un compte adhérent complet en un seul formulaire.
 
 	# :password n'est pas stocké dans la base de donnée, il permet simplement de réaliser les formulaires.

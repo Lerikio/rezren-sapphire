@@ -50,7 +50,6 @@ namespace :populate_dev do
 
 	desc "Crée un adhérent et son premier ordinateur"
 	task "adherent" => :environment do
-		require 'awesome_print'
 
 		adherent = Adherent.new
 		adherent.full_name = "Jean Dupont"

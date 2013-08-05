@@ -1,7 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Computer < ActiveRecord::Base
 	require 'resolv' #validation des adresses IP
-	require 'awesome_print'
 
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
@@ -24,7 +23,7 @@ class Computer < ActiveRecord::Base
         format: { with: /^([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/i }
     validates :adherent, presence: true
     validates :ip_address, presence: true, uniqueness: true, format: {with: Resolv::IPv4::Regex}
-    validates :computer_dns_entry, presence: true, uniqueness: true
+    validates :computer_dns_entry, presence: true
 
 
 ####################################################################################################
@@ -91,7 +90,6 @@ class Computer < ActiveRecord::Base
 			raise "The argument of to_ip method should be an array of the form [int, int, int, int]" 
 		end
 
-		ap array_ip[0].to_s + "." + array_ip[1].to_s + "." + array_ip[2].to_s + "." + array_ip[3].to_s
 		array_ip[0].to_s + "." + array_ip[1].to_s + "." + array_ip[2].to_s + "." + array_ip[3].to_s
 	end
 

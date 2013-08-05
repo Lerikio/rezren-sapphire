@@ -98,9 +98,9 @@ namespace :populate do
 			current_switch = Switch.new
 			current_switch.community = "private"
 			current_switch.ip_admin = "0.0.0.0"
-			current_switch.save(:validate => false)
+			current_switch.save(validate: false)
 			Rake::Task["populate:ports"].invoke(current_switch.id, nbr_of_ports)
-			current_switch.save!
+			current_switch.save!(validate: false)
 			
 		end
 	end
