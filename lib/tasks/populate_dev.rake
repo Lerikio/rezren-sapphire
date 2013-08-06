@@ -56,6 +56,7 @@ namespace :populate_dev do
 		adherent.email = "jean.dupont@rezren.fr"
 		adherent.password = "mdpTest"
 		adherent.username = "jean.dupont"
+		adherent.promotion = Time.now.year
 
 		credit = Credit.new
 		adherent.credit = credit

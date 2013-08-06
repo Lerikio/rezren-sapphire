@@ -41,9 +41,9 @@ class Computer < ActiveRecord::Base
 
 	def generate_ip
 		if self.adherent.supelec
-			vlan = VLAN::Adherent
+			vlan = VLAN::Supelec
 		else
-			vlan = VLAN::Autre
+			vlan = VLAN::Exterieur
 		end
 		current_ip = [10, vlan, 0, 1]
 

@@ -7,8 +7,9 @@ class CreateAdherents < ActiveRecord::Migration
 		t.string   :username
 		t.string   :email, null: false
 		t.string   :state, default: "created"
+		t.integer  :promotion
 		t.boolean  :rezoman, default: false
-		t.boolean  :externe, default: false
+		t.boolean  :resident, default: true
 		t.boolean  :supelec, default: false
 		t.boolean  :archived, default: false
 
