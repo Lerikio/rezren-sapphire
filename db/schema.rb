@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130726220922) do
+ActiveRecord::Schema.define(:version => 20130807145503) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -57,6 +57,11 @@ ActiveRecord::Schema.define(:version => 20130726220922) do
     t.datetime "updated_at",                       :null => false
   end
 
+  create_table "admins_roles", :force => true do |t|
+    t.integer "role_id_id"
+    t.integer "admin_id_id"
+  end
+
   create_table "alias_dns_entries", :force => true do |t|
     t.string   "name",                                     :null => false
     t.integer  "computer_dns_entry_id",                    :null => false
@@ -84,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20130726220922) do
 
   create_table "credits", :force => true do |t|
     t.float    "value",       :default => 0.0
-    t.date     "next_debit",  :default => '2013-08-06'
+    t.date     "next_debit",  :default => '2013-08-07'
     t.boolean  "archived",    :default => false
     t.integer  "adherent_id",                           :null => false
     t.datetime "created_at",                            :null => false
@@ -132,6 +137,12 @@ ActiveRecord::Schema.define(:version => 20130726220922) do
     t.boolean  "archived",   :default => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "rooms", :force => true do |t|

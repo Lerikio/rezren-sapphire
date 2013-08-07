@@ -1,17 +1,39 @@
-%h1 Listing adherents
+- content_for :title do
+	Liste des adhérents
 
-%table
-  %tr
-    %th
-    %th
-    %th
 
-  - @adherents.each do |adherent|
-    %tr
-      %td= link_to 'Show', adherent
-      %td= link_to 'Edit', edit_adherent_path(adherent)
-      %td= link_to 'Destroy', adherent, :method => :delete, :data => { :confirm => 'Are you sure?' }
+%table#adherents
+	%thead
+		%tr
+			%th Nom
+			%th Type
+			%th Solde
+			%th Chambre
+			%th 
+	%tbody
+		-@adherents.each do |adherent|
+			%tr
+				%td
+					= adherent.full_name
+				%td
+					- if adherent.rezoman
+						%i.icon-linux.icon-large{rel: "tooltip", title: "Rezoman"}
+					- if adherent.resident
+						%i.icon-home.icon-large{rel: "tooltip", title: "Résident"}
+					- if adherent.supelec
+						%i.icon-bolt.icon-large{rel: "tooltip", title: "Supélec"}
+				%td
+					= formatted_amount_with_currency(adherent.credit.value)
+				%td
+					= adherent.room.full_address
+				%td.actions
+					= link_to adherent_path(adherent.id), class:"btn btn-success" do
+						%i.icon-eye-open.icon-large
+						Voir
+					= link_to edit_adherent_path(adherent.id), class:"btn btn-warning" do
+						%i.icon-pencil.icon-large
+						Editer
+					= link_to adherent_path(adherent.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + adherent.full_name + "? Cette opération est irréversible.") } do
+						%i.icon-trash.icon-large
+						Supprimer
 
-%br
-
-= link_to 'New Adherent', new_adherent_path

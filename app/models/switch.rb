@@ -16,6 +16,16 @@ class Switch < ActiveRecord::Base
 	validates :ip_admin, presence: true, uniqueness: true
 
 
+  def occupied_ports_count
+    number_of_occupied_ports = 0
+    self.ports.each do |port|
+      unless port.room == nil
+        number_of_occupied_ports += 1
+      end
+    end
+    number_of_occupied_ports
+  end
+
 	#Renvoie une interface SNMP pour manager le switch/wifiAp à distance
     def snmp_interface(options={})
       if @interface

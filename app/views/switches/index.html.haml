@@ -1,19 +1,33 @@
-%h1 Listing switches
+- content_for :title do
+  Liste des switchs
 
-%table
-  %tr
-    %th Community
-    %th
-    %th
-    %th
 
-  - @switches.each do |switch|
+%table#switches
+  %thead
     %tr
-      %td= switch.community
-      %td= link_to 'Show', switch
-      %td= link_to 'Edit', edit_switch_path(switch)
-      %td= link_to 'Destroy', switch, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th Adresse IP
+      %th Nombre de ports
+      %th 
+        = link_to new_switch_path, class:"btn btn-inverse" do
+          %i.icon-plus
+          Nouveau switch
+  %tbody
+    -@switches.each do |switch|
+      %tr
+        %td
+          = switch.ip_admin
+        %td
+          = switch.occupied_ports_count
+          \/
+          = switch.ports.count
+        %td.actions
+          = link_to switch_path(switch.id), class:"btn btn-success" do
+            %i.icon-eye-open.icon-large
+            Voir
+          = link_to edit_switch_path(switch.id), class:"btn btn-warning" do
+            %i.icon-pencil.icon-large
+            Editer
+          = link_to switch_path(switch.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + switch.ip_admin + "?") } do
+            %i.icon-trash.icon-large
+            Supprimer
 
-%br
-
-= link_to 'New Switch', new_switch_path

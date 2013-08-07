@@ -34,4 +34,14 @@ module ApplicationHelper
 	    flash_messages.join("\n").html_safe
 	end
 
+
+  def formatted_amount(value)
+    return value.round(2).to_s if value <= 100
+    return value.to_i.to_s if value > 100 && value <= 1000
+    return number_to_currency(value / 1000.0, {:unit => '', :separator => ',', :delimiter => ' ', :precision => 2, :negative_format => "-%n%u"}).to_s + "k" if value > 1000
+  end
+  
+  def formatted_amount_with_currency(value)
+    formatted_amount(value) + '€'
+  end
 end

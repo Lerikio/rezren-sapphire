@@ -1,23 +1,37 @@
-%h1 Listing computer_dns_entries
+- content_for :title do
+  Liste des entrées DNS d'ordinateurs
 
-%table
-  %tr
-    %th Name
-    %th Computer
-    %th Archived
-    %th
-    %th
-    %th
 
-  - @computer_dns_entries.each do |computer_dns_entry|
+%table#computer-dns
+  %thead
     %tr
-      %td= computer_dns_entry.name
-      %td= computer_dns_entry.computer_id
-      %td= computer_dns_entry.archived
-      %td= link_to 'Show', computer_dns_entry
-      %td= link_to 'Edit', edit_computer_dns_entry_path(computer_dns_entry)
-      %td= link_to 'Destroy', computer_dns_entry, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %th Nom
+      %th Propriétaire
+      %th Alias
+      %th 
+  %tbody
+    -@computer_dns_entries.each do |computer_dns_entry|
+      %tr
+        %td
+          = computer_dns_entry.name
+        %td
+          = link_to computer_dns_entry.computer.adherent.full_name, computer_dns_entry.computer.adherent
+        %td
+          - unless computer_dns_entry.alias_dns_entries.empty?
+            - computer_dns_entry.alias_dns_entries.each do |alias_dns|
+              = link_to alias_dns.name, computer_dns_entry_alias_dns_entry_path(computer_dns_entry, alias_dns)
+              - unless alias_dns == computer_dns_entry.alias_dns_entries.last
+                ,
+          - else
+            \--
+        %td.actions
+          = link_to computer_dns_entry_path(computer_dns_entry.id), class:"btn btn-success" do
+            %i.icon-eye-open.icon-large
+            Voir
+          = link_to edit_computer_dns_entry_path(computer_dns_entry.id), class:"btn btn-warning" do
+            %i.icon-pencil.icon-large
+            Editer
+          = link_to computer_dns_entry_path(computer_dns_entry.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + computer_dns_entry.name + "? Cette opération est irréversible.") } do
+            %i.icon-trash.icon-large
+            Supprimer
 
-%br
-
-= link_to 'New Computer dns entry', new_computer_dns_entry_path

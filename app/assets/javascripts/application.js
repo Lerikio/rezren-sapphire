@@ -15,4 +15,10 @@
 //= require jquery.ui.all
 //= require dataTables/jquery.dataTables
 //= require bootstrap
+//= require rails.validations
+//= require rails.validations.simple_form
 //= require_tree .
+
+$(function () {
+    $("[rel='tooltip']").tooltip();
+});

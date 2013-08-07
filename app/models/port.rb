@@ -18,7 +18,7 @@ class Port < ActiveRecord::Base
 	validates :switch, presence: true
 
 	#charge l'état du port (enabled/disabled) et les vlans correspondants par SNMP
-	def refresh_from_snmp()
+	def refresh_from_snmp
 		#switch.access or return
 		#TODO
 		snmp_interface = self.switch.snmp_interface
@@ -45,7 +45,7 @@ class Port < ActiveRecord::Base
 		save
 	end
 
-	def update_snmp()
+	def update_snmp
 		#switch.access or return
 		#TODO
 		snmp_interface = self.switch.snmp_interface

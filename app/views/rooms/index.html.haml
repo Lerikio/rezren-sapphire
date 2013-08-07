@@ -24,7 +24,7 @@
             \--
         %td
           - if room.port
-            = link_to room.port.switch.ip_admin + ":" + room.port.number, room.port
+            = link_to room.port.switch.ip_admin + ":" + room.port.number.to_s, switch_port_path(room.port.switch.id, room.port.id)
           - else
             \--
         %td.actions
@@ -34,7 +34,7 @@
           = link_to edit_room_path(room.id), class:"btn btn-warning" do
             %i.icon-pencil.icon-large
             Editer
-          = link_to room_path(room.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + room.full_address + "? Cette opération est irréversible.") } do
+          = link_to room_path(room.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + room.full_address + "?") } do
             %i.icon-trash.icon-large
             Supprimer
 

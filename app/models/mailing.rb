@@ -1,25 +1,34 @@
 # -*- encoding : utf-8 -*-
 class Mailing < ActiveRecord::Base
 
-	@domain_name = "rez-rennes.supelec.fr"
+	DomainName = "rez-rennes.supelec.fr"
 
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
 
-# Attributs et associations	
+# --------------------------------------------------------------------------------------------------
+#	Attributs & associations
+# --------------------------------------------------------------------------------------------------
 
 	attr_accessible :adherent_id, :emails, :name, :system
 
-	belongs_to :adherent, inverse_of: :mailing
+	belongs_to :adherent, inverse_of: :mailings
 
 	# Permet de stocker un tableau dans la base de donnée
-		serialize :emails
-		before_validation_on_create :emails = []
+	serialize :emails
+	before_validation on: :create do
+		self.emails = []
+	end
 
 
-# Actions avant validation/sauvegarde
+# --------------------------------------------------------------------------------------------------
+#	Actions avant sauvegarde/validation
+# --------------------------------------------------------------------------------------------------
+
 	# Création du nom complet de la mailing
-	before_validation name = name.downcase + "@" + @domain_name
+	before_validation do
+		self.name = self.name.downcase
+	end
 
 	# Mise en minuscule de toutes les emails
 	before_save do
@@ -28,16 +37,26 @@ class Mailing < ActiveRecord::Base
 		end
 	end
 
-
-# Validations
+# --------------------------------------------------------------------------------------------------
+#	Validations
+# --------------------------------------------------------------------------------------------------
 
 	validates :name, presence: true, uniqueness: true,
-		format: { with: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }
+		format: { with: /^([a-zA-Z0-9_\-\.]+)$/ }
 	validates :emails, presence: true
-	validates :emails_validity
+	validate :emails_validity
 
 	# Une mailing peut être gérée par le système
 	validates :adherent, presence:true, unless: :system?
+
+
+# --------------------------------------------------------------------------------------------------
+#	Méthodes
+# --------------------------------------------------------------------------------------------------
+
+	def address
+		self.name + "@" + DomainName
+	end
 
 private
 
@@ -47,5 +66,5 @@ private
 			return false unless email.match /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
 		end
 	end
-	
+
 end

@@ -2,21 +2,12 @@
 class ComputersController < ApplicationController
 
 # Charge @computer par id, ainsi que les autorisations du controller
-load_and_authorize_resource nested: :adherent
+load_and_authorize_resource
 
-
-  def index_all
-    @computers = Computer.where(:archived => params[:archived].to_bool)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @computers }
-    end
-
-  # GET adherent/id/computers
+  # GET /computers
   # GET /computers.json
   def index
-    @computers = Computer.all
+    @computers = Computer.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

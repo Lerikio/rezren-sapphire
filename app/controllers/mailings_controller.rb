@@ -7,7 +7,11 @@ load_and_authorize_resource
   # GET /mailings
   # GET /mailings.json
   def index
-    @mailings = Mailing.where(:archived => params[:archived].to_bool)
+    if params[:archived]
+      @mailings = Mailing.where(:archived => params[:archived].to_bool)
+    else
+      @mailings = Mailing.where(:archived => false)
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,10 +32,9 @@ load_and_authorize_resource
   # GET /mailings/new
   # GET /mailings/new.json
   def new
-    @mailing = Mailing.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.js
       format.json { render json: @mailing }
     end
   end

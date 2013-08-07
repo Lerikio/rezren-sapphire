@@ -61,6 +61,10 @@ source 'https://rubygems.org'
 
 # Formtastic, pour les formulaires
 	gem 'simple_form'
+
+# Validation au niveau du client
+	gem 'client_side_validations'
+	gem 'client_side_validations-simple_form'
   
 # Pagination
 	gem 'kaminari'

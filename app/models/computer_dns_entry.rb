@@ -13,7 +13,9 @@ class ComputerDnsEntry < ActiveRecord::Base
 
 # Avant validation
 	
-	before_validation :downcase_name
+	before_validation do
+		self.name = self.name.downcase if self.name.present?
+	end
 
 # Validations
 
@@ -36,10 +38,4 @@ class ComputerDnsEntry < ActiveRecord::Base
 		ip_addr.reverse
 	end
 
-
-	private
-
-	def downcase_name
-		self.name = self.name.downcase if self.name.present?
-	end
 end

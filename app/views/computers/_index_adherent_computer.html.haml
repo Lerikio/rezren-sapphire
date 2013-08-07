@@ -1,22 +1,15 @@
-- content_for :title do
-  Liste des ordinateurs
-
-
-%table#computers
+%table#computers-adherent
   %thead
     %tr
       %th DNS
-      %th Propriétaire
       %th Adresse MAC
       %th Adresse IP
-      %th 
+      %th actions
   %tbody
     -@computers.each do |computer|
       %tr
         %td
           = computer.computer_dns_entry.name
-        %td
-          = link_to computer.adherent.full_name, computer.adherent 
         %td
           = computer.mac_address
         %td
@@ -28,7 +21,7 @@
           = link_to edit_adherent_computer_path(computer.adherent.id, computer.id), class:"btn btn-warning" do
             %i.icon-pencil.icon-large
             Editer
-          = link_to adherent_computer_path(computer.adherent.id, computer.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + computer.mac_address + "?") } do
+          = link_to adherent_computer_path(computer.adherent.id, computer.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + computer.mac_address + "? Cette opération est irréversible.") } do
             %i.icon-trash.icon-large
             Supprimer
 

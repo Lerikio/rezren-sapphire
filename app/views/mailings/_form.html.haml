@@ -1,22 +1,13 @@
-= form_for @mailing do |f|
-  - if @mailing.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@mailing.errors.count, "error")} prohibited this mailing from being saved:"
-      %ul
-        - @mailing.errors.full_messages.each do |msg|
-          %li= msg
+%ul.errors
+	%li
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :emails
-    = f.text_area :emails
-  .field
-    = f.label :adherent_id
-    = f.number_field :adherent_id
-  .field
-    = f.label :archived
-    = f.check_box :archived
-  .actions
-    = f.submit 'Save'
+%div{style: "margin: 10px"}
+
+= f.input_field :adherent, as: :select, class: "label-field input-xxlarge", :placeholder => "Fournisseur", collection: Adherent.all, prompt: "Propriétaire"
+
+%div{style: "margin: 10px"}
+
+
+= f.input_field :name, required: true, class: "label-field input-xlarge", id: "appendedInput", :placeholder => "Adresse"
+%span
+	= "@" + Mailing::DomainName
