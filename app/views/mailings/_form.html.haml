@@ -1,13 +1,14 @@
 %ul.errors
 	%li
 
+%div
+	= f.input_field :adherent_id, url: autocomplete_adherent_full_name_path, as: :autocomplete, class: "label-field input-xlarge", placeholder: "Propriétaire", update_elements: {}
+	%i.icon-user.inline{rel: "tooltip", title: "Propriétaire"}
+
 %div{style: "margin: 10px"}
 
-= f.input_field :adherent, as: :select, class: "label-field input-xxlarge", :placeholder => "Fournisseur", collection: Adherent.all, prompt: "Propriétaire"
 
-%div{style: "margin: 10px"}
-
-
-= f.input_field :name, required: true, class: "label-field input-xlarge", id: "appendedInput", :placeholder => "Adresse"
-%span
-	= "@" + Mailing::DomainName
+.input-append
+	= f.input_field :name, required: true, class: "label-field", id: "appendedInput", :placeholder => "Adresse"
+	%span.add-on{style: 'margin-bottom: 3px;', rel: "tooltip", title: "Adresse"}
+		= "@" + Mailing::DomainName

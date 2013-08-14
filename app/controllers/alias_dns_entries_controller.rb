@@ -8,11 +8,6 @@ load_and_authorize_resource
   # GET /alias_dns_entries.json
   def index
     @alias_dns_entries = AliasDnsEntry.where(:archived => params[:archived].to_bool)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @alias_dns_entries }
-    end
   end
 
   # GET /alias_dns_entries/1

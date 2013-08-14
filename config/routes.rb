@@ -14,6 +14,10 @@ Sapphire::Application.routes.draw do
 		# Vide la session
 		delete "deconnexion", to: "sessions#destroy", as: "deconnexion"
 
+		# Autocompletions
+		get "autocomplete_adherent_full_name", to: "adherents#autocomplete_adherent_full_name", as: "autocomplete_adherent_full_name"
+
+
 		root to: "sessions#new"
 
 	# Les différentes ressources de l'appli

@@ -53,8 +53,10 @@ source 'https://rubygems.org'
 	# Tables de données ultra pratiques en JQuery
 		gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 	# Bootstrap (CSS & JS Twitter)
-	gem 'bootstrap-sass'
-	gem "font-awesome-rails"
+		gem 'bootstrap-sass'
+		gem "font-awesome-rails"
+	# Autocompletion pour les formulaires
+		gem 'rails3-jquery-autocomplete'
 
 # HAML
 	gem 'haml-rails'

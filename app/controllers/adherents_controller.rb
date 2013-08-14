@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 class AdherentsController < ApplicationController
 
+autocomplete :adherent, :full_name, full: true
+
 # Charge @adherent par id, ainsi que les autorisations du controller
 load_and_authorize_resource
 
@@ -8,11 +10,6 @@ load_and_authorize_resource
   # GET /adherents.json
   def index
     @adherents = Adherent.where(:archived => params[:archived].to_bool)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @adherents }
-    end
   end
 
   # GET /adherents/1
