@@ -1,6 +1,9 @@
 # -*- encoding : utf-8 -*-
 class Mailing < ActiveRecord::Base
 
+	scope :not_archived, -> { where(archived: false)}
+
+
 	DomainName = "rez-rennes.supelec.fr"
 
 # Surveillance par la gem public_activity
@@ -15,11 +18,7 @@ class Mailing < ActiveRecord::Base
 	belongs_to :adherent, inverse_of: :mailings
 
 	# Permet de stocker un tableau dans la base de donnée
-	serialize :emails
-	before_validation on: :create do
-		self.emails = []
-	end
-
+	serialize :emails, Array
 
 # --------------------------------------------------------------------------------------------------
 #	Actions avant sauvegarde/validation

@@ -1,3 +1,4 @@
+// Datatables
 $(document).ready( function () {
 	$('#activities').dataTable( {
 		"sDom": '<"H"Cfr>t<"F"ip>',

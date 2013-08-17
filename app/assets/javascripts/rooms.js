@@ -1,3 +1,4 @@
+// Datatables
 $(document).ready( function () {
 	$('#rooms').dataTable( {
 		"sPaginationType": "full_numbers",

@@ -1,3 +1,4 @@
+// Datatables
 $(document).ready( function () {
 	$('#switches').dataTable( {
 		"sPaginationType": "full_numbers",

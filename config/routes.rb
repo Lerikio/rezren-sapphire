@@ -5,20 +5,15 @@ Sapphire::Application.routes.draw do
 
 
 	# En vrac
-		get "activity", to: "activities#index", as: "activity"
-
 		# Permet de visualiser la totalité des instances d'un modèle malgré une nested_route
 		get "computers", to: "computers#index", as: "computers"
-		get "payments", to: "payments#index", as: "payments"
+		get "payments", to: "payments#index_all", as: "payments"
 
-		# Vide la session
+		# Sessions
 		delete "deconnexion", to: "sessions#destroy", as: "deconnexion"
+		get 'connexion', to: 'sessions#new', as: :connexion
 
-		# Autocompletions
-		get "autocomplete_adherent_full_name", to: "adherents#autocomplete_adherent_full_name", as: "autocomplete_adherent_full_name"
-
-
-		root to: "sessions#new"
+		root to: "activities#index"
 
 	# Les différentes ressources de l'appli
 
@@ -44,12 +39,4 @@ Sapphire::Application.routes.draw do
 			resources :ports
 		end
 	
-
-# Redirection vers les autres services du serveur
-	# Rediriger vers rezowiki
-	match "/rezowiki" => redirect("/rezowiki/index.php"), :as => :rezowiki
-
-	# Rediriger vers phpmyadmin
-	match "/phpmyadmin" => redirect("/phpmyadmin/index.php"), :as => :phpmyadmin
-
 end

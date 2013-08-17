@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 class Payment < ActiveRecord::Base
 
+scope :not_archived, -> { where(archived: false)}
+
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
 
@@ -18,7 +20,7 @@ class Payment < ActiveRecord::Base
 	validates :value, presence: true
 	validates :paid_value, presence: true
 
-	validates :comment, presence: true, unless: self.paid_value==self.value
+	validates :comment, presence: true, unless: paid_value == value
 
 	validate :mean_is_correct
 	validates :bank_name, presence: true, if: self.mean == "cheque"

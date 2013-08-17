@@ -24,8 +24,10 @@ source 'https://rubygems.org'
 			# Tables de données ultra pratiques en JQuery
 				gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 			# Bootstrap (CSS & JS Twitter)
-			gem 'bootstrap-sass'
-			gem "font-awesome-rails"
+				gem 'bootstrap-sass'
+				gem "font-awesome-rails"
+			# Aide pour les "select" des formulaires
+				gem 'select2-rails'
 	end
 
 # Développement
@@ -43,20 +45,6 @@ source 'https://rubygems.org'
 			gem 'magic_encoding'
 	end
 
-# Jquery & CSS
-	gem 'execjs'
-	gem 'jquery-rails'
-	gem 'jquery-ui-rails' 
-	gem 'jquery-ui-sass-rails'
-    # Tipsy, pour des info-bulles pratiques
-		gem 'tipsy-rails'
-	# Tables de données ultra pratiques en JQuery
-		gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
-	# Bootstrap (CSS & JS Twitter)
-		gem 'bootstrap-sass'
-		gem "font-awesome-rails"
-	# Autocompletion pour les formulaires
-		gem 'rails3-jquery-autocomplete'
 
 # HAML
 	gem 'haml-rails'
@@ -92,6 +80,10 @@ source 'https://rubygems.org'
 
 # Permet de générer et manipuler les Zonfile pour le DNS
 	gem 'zonefile'
+
+# Turbolinks, pour un chargement plus rapide des pages via JavaScript
+	gem 'turbolinks'
+	gem 'jquery-turbolinks'
 
 # Bibliothèque d'utilisation de la console en rake
 	gem 'highline'

@@ -1,3 +1,4 @@
+// Datatables
 $(document).ready( function () {
 	$('#adherents').dataTable( {
 		"sPaginationType": "full_numbers",
@@ -10,5 +11,8 @@ $(document).ready( function () {
 		    null,
 		    { "bSortable": false }
 		]
-	} );
+	});
 } );
+
+// Selects in form
+$('select').select2();
