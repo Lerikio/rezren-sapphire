@@ -34,7 +34,8 @@ source 'https://rubygems.org'
 	group :production do
 		# PostgreSQL
 			gem 'pg'
-
+	end
+	
 # Développement
 	group :development do
 		# Serveur de développement rails
