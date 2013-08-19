@@ -1,8 +1,10 @@
-.btn-group.activable
-	%button.btn.btn-info.active#resident-btn{"data-target" => "#if_resident, #computers-form, #payment-form", "data-toggle" => "collapse"}
+.controls.btn-group.activable
+	%button.btn#resident-btn{"data-target" => "#if_resident, #computers-form, #payment-form", "data-toggle" => "collapse"}
 		Résident
 	%button.btn#supelec-btn{"data-target" => "#if_supelec", "data-toggle" => "collapse"}
 		Supélec
+	%button.btn#rezoman-btn{"data-target" => "#if_supelec", "data-toggle" => "collapse", style: 'display: none'}
+		Rezoman
 
 .controls
 	= f.input_field :full_name, placeholder: "Nom complet"
@@ -13,8 +15,10 @@
 	%span.add-on
 		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px", "data-placement" => "right"}
 
-%div{display: "none"}
+%div{style: 'display: none'}
 	= f.input :resident, as: :boolean do
 		= f.check_box :resident, {id: "resident-check"}, "true", "false"
 	= f.input :supelec, as: :boolean do  
 		= f.check_box :supelec, {id: "supelec-check" }, "true", "false" 
+	= f.input :rezoman, as: :boolean do
+		= f.check_box :rezoman, {id: "rezoman-check" }, "true", "false" 

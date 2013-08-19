@@ -9,12 +9,12 @@ class CreateAdherents < ActiveRecord::Migration
 		t.string   :state, default: "created"
 		t.integer  :promotion
 		t.boolean  :rezoman, default: false
-		t.boolean  :resident, default: true
+		t.boolean  :resident, default: false
 		t.boolean  :supelec, default: false
 		t.boolean  :archived, default: false
 
-		t.string   :password_salt, null: false
-		t.string   :password_hash, null: false
+		t.string   :password_salt
+		t.string   :password_hash
 
 		t.timestamps
 	end

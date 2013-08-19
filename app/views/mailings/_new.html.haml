@@ -4,7 +4,7 @@
 
 	%h3 Création d'une mailing
 
-= simple_form_for @mailing, validate: true, html: {"data-type" => :json} do |f|
+= simple_form_for @mailing, validate: true, html: {"data-type" => :json}, remote: true do |f|
 	.modal-body
 		= render partial: "form", locals: {f: f}  
 	.modal-footer

@@ -1,13 +1,29 @@
-.btn-group.choosable
-  Moyen de paiement :
-  %button.btn.btn-info#check-btn
-    Chèque
-  %button.btn.btn-info#liquid-btn
-    Liquide
+.controls
+	.btn-group.choosable
+		Moyen de paiement :
+		%button.btn.btn-info.active#cheque-btn
+			Chèque
+		%button.btn#liquid-btn
+			Liquide
+	.input-append#bank{style: "margin-left: 100px"}
+		= f.input_field :bank_name, placeholder: "Banque"
+		%span.add-on
+			%i.icon-credit-card.inline{rel: "tooltip", title: "Banque", style: "margin-top: 10px"}
 
 .controls
-  = f.input_field :value, placeholder: "Valeur du paiement"
-  = f.input_field :paid_value, placeholder: "Valeur réelle"
+
+	.input-append
+		= f.input_field :value, placeholder: "Valeur à ajouter"
+		%span.add-on
+			%i.icon-eur.inline{rel: "tooltip", title: "Valeur à ajouter", style: "margin-top: 10px"}
+
+	.input-append
+		= f.input_field :paid_value, placeholder: "Valeur réelle"
+		%span.add-on
+			%i.icon-money.inline{rel: "tooltip", title: "Valeur réelle", style: "margin-top: 10px"}
 
 .controls
-  = f.input_field :comment, as: :text, placeholder: "Commentaire, nécessaire si les deux valeurs du paiements sont différentes", rows: "4", width: "460px"
+	= f.input_field :comment, as: :text, placeholder: "Commentaire. Nécessaire si les deux valeurs du paiements sont différentes.", rows: "4", style: "width: 490px"
+
+%div{style: 'display: none'}
+	= f.input :mean, id: "mean"

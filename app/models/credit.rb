@@ -17,8 +17,7 @@ attr_accessible :payments_attributes
 	validates :value, presence: true
 
 # Nested attributes
-	accepts_nested_attributes_for :payments
+	accepts_nested_attributes_for :payments, reject_if: lambda { |a| a[:value].to_i == 0}
 
 
 end
-

@@ -3,7 +3,7 @@
     .input-append
       = f.input_field :mac_address, placeholder: "Adresse MAC"
       %span.add-on
-        %i.icon-laptop.inline{rel: "tooltip", title: "Adresse MAC", style: "margin-top: 10px", "data-placement" => "right"}
+        %i.icon-laptop.inline{rel: "tooltip", title: "Adresse MAC", style: "margin-top: 10px"}
 
 
     = f.simple_fields_for :computer_dns_entry do |builder|

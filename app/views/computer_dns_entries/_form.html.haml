@@ -1,1 +1,4 @@
-= f.input_field :name, placeholder: "Nom de domaine"
+.input-append
+	= f.input_field :name, placeholder: "Nom de domaine"
+	%span.add-on
+		%i.icon-globe.inline{rel: "tooltip", title: "Nom de domaine", style: "margin-top: 10px"}

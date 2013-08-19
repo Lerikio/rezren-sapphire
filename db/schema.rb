@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(:version => 20130807145503) do
     t.string   "state",         :default => "created"
     t.integer  "promotion"
     t.boolean  "rezoman",       :default => false
-    t.boolean  "resident",      :default => true
+    t.boolean  "resident",      :default => false
     t.boolean  "supelec",       :default => false
     t.boolean  "archived",      :default => false
-    t.string   "password_salt",                        :null => false
-    t.string   "password_hash",                        :null => false
+    t.string   "password_salt"
+    t.string   "password_hash"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
   end
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20130807145503) do
 
   create_table "credits", :force => true do |t|
     t.float    "value",       :default => 0.0
-    t.date     "next_debit",  :default => '2013-08-07'
+    t.date     "next_debit",  :default => '2013-08-19'
     t.boolean  "archived",    :default => false
     t.integer  "adherent_id",                           :null => false
     t.datetime "created_at",                            :null => false

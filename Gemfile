@@ -49,8 +49,8 @@ source 'https://rubygems.org'
 # HAML
 	gem 'haml-rails'
 
-# Formtastic, pour les formulaires
-	gem 'simple_form'
+# # Formtastic, pour les formulaires
+ 	gem 'simple_form'
 
 # Validation au niveau du client
 	gem 'client_side_validations'
@@ -67,10 +67,10 @@ source 'https://rubygems.org'
 	gem 'bcrypt-ruby', require: "bcrypt"
   
 # Notifications
-	gem 'public_activity'
+ 	gem 'public_activity'
 
 # Machine d'état
-	gem 'state_machine'
+ 	gem 'state_machine'
 
 # Settings, permet de garder en mémoire des valeurs de config
 	gem "rails-settings-cached", "0.2.4"

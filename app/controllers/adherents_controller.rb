@@ -20,10 +20,6 @@ authorize_resource only: :create
     @credit.payments.build
   end
 
-  def edit
-    @adherent.computers.build
-    @adherent.credit.build
-  end
 
   def create
 
@@ -32,43 +28,48 @@ authorize_resource only: :create
 
     @adherent = Adherent.new(params[:adherent])
 
-
     respond_to do |format|
       if @adherent.save
 
-        @room.adherent = @adherent
-        @romm.save
-
+        if @room
+          @room.adherent = @adherent
+          @romm.save
+        end
+        
         @adherent.create_activity :create, owner: current_admin
-
-        format.html { redirect_to @adherent, notice: 'Adherent was successfully created.' }
         format.json { render json: @adherent, status: :created, location: @adherent }
-      else
-        format.json { render json: @adherent.errors, status: :unprocessable_entity }
-      end
+      else        
+        flash.now[:error] = @adherent.errors.full_messages
+        format.js { redirect_to action: :new}
+      end  
     end
   end
 
-  # PUT /adherents/1
-  # PUT /adherents/1.json
+
+  def edit
+  end
+
   def update
+    @room = Room.find_by_id(params[:adherent][:room])
+    params[:adherent].delete :room
 
     respond_to do |format|
       if @adherent.update_attributes(params[:adherent])
 
+        if @room
+          @room.adherent = @adherent
+          @romm.save
+        end
+        
         @adherent.create_activity :update, owner: current_admin
-
-        format.html { redirect_to @adherent, notice: 'Adherent was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @adherent.errors, status: :unprocessable_entity }
-      end
+        format.json { render json: @adherent, status: :updated, location: @adherent }
+      else        
+        flash.now[:error] = @adherent.errors.full_messages
+        format.js { render :edit}
+      end  
     end
   end
 
-  # DELETE /adherents/1
-  # DELETE /adherents/1.json
   def destroy
     # On archive au lieu de supprimer de la base de donnée
     @adherent.update_attribute(:archived, true)

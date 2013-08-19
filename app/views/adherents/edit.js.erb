@@ -1,4 +1,4 @@
-$("#modal-window").html("<%= escape_javascript(render 'new') %>");
+$("#modal-window").html("<%= escape_javascript(render 'edit') %>");
 
 // Les onglets sont cachés par défaut
 <% unless @adherent.resident %>
@@ -9,11 +9,10 @@ $('#resident-tab').hide();
 $('#supelec-tab').hide();
 <% end %>
 
+$("#rezoman-btn").show();
+
 // Résident et/ou supélec
 activate_button();
-
-// Chèque ou liquide
-choose_button();
 
 // Tooltips
 $("[rel='tooltip']").tooltip();
@@ -29,12 +28,6 @@ $('#years-select').select2({
 $("form").on("ajax:success", function(event, data, status, xhr){
     $('#modal-window').modal('hide');
   });
-
-// Faire disparaitre le modal quand la requête réussie
-$("form").ajaxSuccess(function(){
-  $('#modal-window').modal('hide');
-});
-
 
 // Functions
 function activate_button() {
@@ -84,7 +77,14 @@ function adherent_is_resident_supelec_rezoman() {
     $('#supelec-tab').hide();
     $('#supelec').children().hide();
   };
+
+  if( $("#rezoman-btn").hasClass("active")){
+    $('#rezoman-check').attr('value', true);
+  } else {
+    $('#rezoman-check').attr('value', false);
+  };
 };
+
 
 function payment_is_cheque_or_liquid(){
 

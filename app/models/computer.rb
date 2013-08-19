@@ -57,7 +57,7 @@ class Computer < ActiveRecord::Base
 		else 
 			Computer.all.each do |other_computer|
 				unless other_computer.ip_address == to_ip(current_ip)
-					self.ip_address self.to_ip(current_ip)
+					self.ip_address = self.to_ip(current_ip)
 					break
 				end
 				current_ip = increment_ip(current_ip)
