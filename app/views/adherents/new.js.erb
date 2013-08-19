@@ -1,18 +1,11 @@
 $("#modal-window").html("<%= escape_javascript(render 'new') %>");
 
-// Les onglets sont cachés par défaut
-<% unless @adherent.resident %>
-$('#resident-tab').hide(); 
-<% end %>
-
-<% unless @adherent.supelec %>
-$('#supelec-tab').hide();
-<% end %>
-
 // Résident et/ou supélec
+adherent_is_resident_supelec_rezoman();
 activate_button();
 
-// Chèque ou liquide
+// Moyen de paiement
+payment_is_cheque_or_liquid();
 choose_button();
 
 // Tooltips

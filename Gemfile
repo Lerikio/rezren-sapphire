@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 	gem 'sqlite3'
 
 ## Gems de base :
-	gem 'rails', '3.2.13'
+	gem 'rails', '3.2.14'
 	gem 'rails-i18n'
 	    
 # Gems used only for assets and not required
@@ -29,6 +29,11 @@ source 'https://rubygems.org'
 			# Aide pour les "select" des formulaires
 				gem 'select2-rails'
 	end
+
+# Production
+	group :production do
+		# PostgreSQL
+			gem 'pg'
 
 # Développement
 	group :development do
@@ -56,10 +61,6 @@ source 'https://rubygems.org'
 	gem 'client_side_validations'
 	gem 'client_side_validations-simple_form'
   
-# Pagination
-	gem 'kaminari'
-	gem 'kaminari-bootstrap'
-
 # CanCan : gem d'autorisation
 	gem 'cancan'
 

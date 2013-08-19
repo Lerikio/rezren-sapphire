@@ -24,9 +24,9 @@
 							%i.icon-cog.icon-white  
 							Gestion simple
 						%ul.dropdown-menu
-							%li= link_to "Adhérents", adherents_path(:archived => false)
-							%li= link_to "Ordinateurs", computers_path(:archived => false)
-							%li= link_to "Mailings", mailings_path(:archived => false)
+							%li= link_to "Adhérents", adherents_path
+							%li= link_to "Ordinateurs", computers_path
+							%li= link_to "Mailings", mailings_path
 
 					%li.divider-vertical
 
@@ -36,12 +36,12 @@
 							Gestion avancée
 						%ul.dropdown-menu
 							%li.nav-header Architecture		
-							%li= link_to "Chambres", rooms_path(:archived => false)
-							%li= link_to "Switchs", switches_path(:archived => false)
+							%li= link_to "Chambres", rooms_path
+							%li= link_to "Switchs", switches_path
 							%li.divider
 							%li.nav-header Entrées DNS
-							%li= link_to "Ordinateurs", computer_dns_entries_path(:archived => false)
-							%li= link_to "Autres", generic_dns_entries_path(:archived => false)
+							%li= link_to "Ordinateurs", computer_dns_entries_path
+							%li= link_to "Autres", generic_dns_entries_path
 
 					%li.divider-vertical
 
@@ -50,7 +50,7 @@
 							%i.icon-eur.icon-white 
 							Trésorerie
 						%ul.dropdown-menu
-							%li= link_to "Paiements", payments_path(:archived => false)
+							%li= link_to "Paiements", payments_path
 							%li= link_to "Statistiques", "#"
 
 					%li.divider-vertical

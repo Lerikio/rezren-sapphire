@@ -25,5 +25,4 @@
 .controls
 	= f.input_field :comment, as: :text, placeholder: "Commentaire. Nécessaire si les deux valeurs du paiements sont différentes.", rows: "4", style: "width: 490px"
 
-%div{style: 'display: none'}
-	= f.input :mean, id: "mean"
+	= f.input_field :mean, id: "mean", style: "display: none"

@@ -7,13 +7,16 @@
 		Rezoman
 
 .controls
-	= f.input_field :full_name, placeholder: "Nom complet"
-	
+	.input-append
+		= f.input_field :full_name, placeholder: "Nom complet"
+		%span.add-on
+			%i.icon-user{rel: "tooltip", title: "Nom complet", style: "margin-top: 10px"}
 
-.input-append
-	= f.input_field :email, placeholder: "E-mail"
-	%span.add-on
-		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px", "data-placement" => "right"}
+
+	.input-append
+		= f.input_field :email, placeholder: "E-mail"
+		%span.add-on
+			%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px"}
 
 %div{style: 'display: none'}
 	= f.input :resident, as: :boolean do

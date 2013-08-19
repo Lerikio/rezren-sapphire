@@ -12,7 +12,13 @@ $('#supelec-tab').hide();
 $("#rezoman-btn").show();
 
 // Résident et/ou supélec
+adherent_is_resident_supelec_rezoman();
 activate_button();
+
+// Moyen de paiement
+payment_is_cheque_or_liquid()
+function choose_button() {
+
 
 // Tooltips
 $("[rel='tooltip']").tooltip();

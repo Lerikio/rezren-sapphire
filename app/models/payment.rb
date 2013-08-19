@@ -20,10 +20,10 @@ scope :not_archived, -> { where(archived: false)}
 	validates :value, presence: true
 	validates :paid_value, presence: true
 
-	validates :comment, presence: true, unless: paid_value == value
+	validates :comment, presence: true, unless: :equality_of_values
 
 	validate :mean_is_correct
-	validates :bank_name, presence: true, if: self.mean == "cheque"
+	validates :bank_name, presence: true, if: :mean_is_cheque
 
 	validates :credit, presence: true
 	validates :admin, presence: true
@@ -32,14 +32,14 @@ scope :not_archived, -> { where(archived: false)}
 
 state_machine :state, initial: :received do
 
-	after_transition all => :cashed, do: self.cashed_date = Time.now
+	after_transition all => :cashed, do: :set_cached_date
 
 	event :by_treasurer do
 		transition :received => :received_by_treasurer
 	end
 	
 	event :cash do
-		transition :received, :received_by_treasurer => :cashed
+		transition [:received, :received_by_treasurer] => :cashed
 	end
 	
 end
@@ -55,6 +55,18 @@ private
 			return true if possible_mean == self.mean
 		end
 		raise "Le moyen de paiement n'est pas correct."
+	end
+
+	def equality_of_values
+		paid_value == value
+	end
+
+	def mean_is_cheque
+		mean == "cheque"
+	end
+
+	def set_cached_date
+		self.cashed_date = Time.now
 	end
 
 end
