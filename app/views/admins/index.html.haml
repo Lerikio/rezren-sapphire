@@ -28,7 +28,7 @@
 					= link_to edit_admin_path(admin.id), class:"btn btn-warning" do
 						%i.icon-pencil.icon-large
 						Editer
-					= link_to admin_path(admin.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + admin.full_name + "? Cette opération est irréversible.") } do
+					= link_to admin_path(admin.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + admin.username + "? Cette opération est irréversible.") } do
 						%i.icon-trash.icon-large
 						Supprimer
 

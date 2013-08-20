@@ -19,9 +19,6 @@
 			%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px"}
 
 %div{style: 'display: none'}
-	= f.input :resident, as: :boolean do
-		= f.check_box :resident, {id: "resident-check"}, "true", "false"
-	= f.input :supelec, as: :boolean do  
-		= f.check_box :supelec, {id: "supelec-check" }, "true", "false" 
-	= f.input :rezoman, as: :boolean do
-		= f.check_box :rezoman, {id: "rezoman-check" }, "true", "false" 
+	= f.hidden_field :resident
+	= f.hidden_field :supelec
+	= f.hidden_field :rezoman

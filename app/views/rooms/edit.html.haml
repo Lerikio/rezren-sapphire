@@ -1,6 +1,9 @@
 %h1 Editing room
 
-= render 'form'
+
+= simple_form_for @room do |f|
+    = render partial: "form", locals: {f: f}  
+    = f.submit "Modifier", {class: "btn btn-primary btn-large btn-block"}
 
 = link_to 'Show', @room
 \|

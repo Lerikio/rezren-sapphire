@@ -15,7 +15,7 @@ scope :not_archived, -> { where(archived: false)}
 #Validations. Une chambre peut-être vide et sans ip-phone !
 	validates :number, presence: true, uniqueness: {scope: :building}
 	validates :building, presence: true
-	validates :port, presence: true
+	#validates :port, presence: true
 
 
 	

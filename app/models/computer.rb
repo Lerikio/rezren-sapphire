@@ -50,7 +50,7 @@ class Computer < ActiveRecord::Base
 		else
 			vlan = VLAN::Exterieur
 		end
-		current_ip = [10, vlan, 0, 1]
+		current_ip = [10, vlan, 1, 1]
 
 		if Computer.all == []
 			self.ip_address = self.to_ip(current_ip)

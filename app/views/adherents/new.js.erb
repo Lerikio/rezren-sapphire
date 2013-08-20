@@ -1,6 +1,7 @@
 $("#modal-window").html("<%= escape_javascript(render 'new') %>");
 
 // Résident et/ou supélec
+init_buttons();
 adherent_is_resident_supelec_rezoman();
 activate_button();
 
@@ -13,7 +14,7 @@ $("[rel='tooltip']").tooltip();
 
 // Selects
 $('#rooms-select').select2({
-  placeholder: "Chambre"
+  placeholder: "Chambre"  
 });
 $('#years-select').select2({
   placeholder: "Promotion"
@@ -30,6 +31,15 @@ $("form").ajaxSuccess(function(){
 
 
 // Functions
+function init_buttons() {
+    if ($('#adherent_resident').attr('value')=="true") {
+      $("#resident-btn").addClass("btn-info active");
+    }
+    if ($('#adherent_supelec').attr('value')=="true") {
+      $("#supelec-btn").addClass("btn-info active");
+    }
+}
+
 function activate_button() {
   $('.activable').children().click(function(){
     if ( $(this).hasClass('active') ){
@@ -58,22 +68,22 @@ function choose_button() {
 function adherent_is_resident_supelec_rezoman() {
 
   if( $("#resident-btn").hasClass("active")){
-    $('#resident-check').attr('value', true);
+    $('#adherent_resident').attr('value', true);
     $('#resident-tab').show();
     $('#resident').children().show();
   } else {
-    $('#resident-check').attr('value', false);
+    $('#adherent_resident').attr('value', false);
     $('#resident-tab').hide();
     $('#resident').children().hide();
   };
 
 
   if( $("#supelec-btn").hasClass("active")){
-    $('#supelec-check').attr('value', true);
+    $('#adherent_supelec').attr('value', true);
     $('#supelec-tab').show();
     $('#supelec').children().show();
   } else {
-    $('#supelec-check').attr('value', false);
+    $('#adherent_supelec').attr('value', false);
     $('#supelec-tab').hide();
     $('#supelec').children().hide();
   };

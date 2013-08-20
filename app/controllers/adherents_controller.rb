@@ -15,7 +15,7 @@ authorize_resource only: :create
   def new
     @computer = @adherent.computers.build
     @computer_dns_entry = @computer.build_computer_dns_entry
-    
+
     @credit = @adherent.build_credit
     @credit.payments.build
   end
@@ -23,24 +23,32 @@ authorize_resource only: :create
 
   def create
 
-    @room = Room.find_by_id(params[:adherent][:room])
-    params[:adherent].delete :room
+    params[:adherent][:room] = Room.find_by_id(params[:adherent][:room])
+    #params[:adherent].delete :room
 
-    @adherent = Adherent.new(params[:adherent])
-
+    @adherent = Adherent.new(params[:adherent]) 
+    @adherent.credit.payments.first.admin = current_admin
     respond_to do |format|
       if @adherent.save
 
-        if @room
-          @room.adherent = @adherent
-          @romm.save
-        end
+        #if @room
+        #  @room.adherent = @adherent
+        #  @romm.save
+        #end
         
         @adherent.create_activity :create, owner: current_admin
         format.json { render json: @adherent, status: :created, location: @adherent }
       else        
         flash.now[:error] = @adherent.errors.full_messages
-        format.js { redirect_to action: :new}
+
+        if @adherent.computers.empty?
+          @computer = @adherent.computers.build
+          @computer_dns_entry = @computer.build_computer_dns_entry
+        end
+
+        @credit = @adherent.credit
+        @credit.payments.build if @credit.payments.empty?
+        format.js { render action: :new}
       end  
     end
   end
