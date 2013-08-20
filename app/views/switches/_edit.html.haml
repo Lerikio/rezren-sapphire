@@ -2,13 +2,13 @@
 	%button.close{ type:"button", 'data-dismiss' => "modal"}
 		%i.icon-remove
 
-	%h3 Création d'une mailing
+	%h3 Edition d'un switch
 
 	= bootstrap_flash
 
-= simple_form_for @mailing, validate: true, remote: true do |f|
+= simple_form_for @switch, validate: true, remote: true do |f|	
 
 	.modal-body
 		= render partial: "form", locals: {f: f}  
 	.modal-footer
-		= f.submit "Créer", {class: "btn btn-primary"}
+		= f.submit "Modifier", {class: "btn btn-primary"}

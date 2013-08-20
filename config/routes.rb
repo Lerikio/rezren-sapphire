@@ -37,6 +37,7 @@ Sapphire::Application.routes.draw do
 		end
 		resources :vlans
 
+		get '/switches/reload', :controller => 'switches', :action => 'reload'
 		resources :switches do
 			resources :ports
 		end

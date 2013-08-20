@@ -2,7 +2,7 @@
 	%button.close{ type:"button", 'data-dismiss' => "modal"}
 		%i.icon-remove
 
-	%h3 Création d'une mailing
+	%h3 Edition d'une mailing
 
 	= bootstrap_flash
 
@@ -10,4 +10,4 @@
 	.modal-body
 		= render partial: "form", locals: {f: f}  
 	.modal-footer
-		= f.submit "Créer", {class: "btn btn-primary"}
+		= f.submit "Modifier", {class: "btn btn-primary"}

@@ -4,12 +4,13 @@
     %span.add-on
       %i.icon-double-angle-up{rel: "tooltip", title: "Ip d'administration", style: "margin-top: 10px", "data-placement" => "bottom"}
 
-  .input-append
-    = f.input_field :number_of_ports, placeholder: "Nombre de ports"
-    %span.add-on
-      %i.icon-sitemap{rel: "tooltip", title: "Nombre de ports", style: "margin-top: 10px", "data-placement" => "bottom"}
+  - if @switch.new_record?
+    .input-append
+      = f.input_field :number_of_ports, placeholder: "Nombre de ports"
+      %span.add-on
+        %i.icon-sitemap{rel: "tooltip", title: "Nombre de ports", style: "margin-top: 10px", "data-placement" => "bottom"}
 
 .input-append
-  = f.input_field :community, as: :text, placeholder: "Community", rows: "2", style: "width: 457px"
+  = f.input_field :community, as: :text, placeholder: "Community", rows: "1", style: "width: 457px"
   %span.add-on
     %i.icon-key{rel: "tooltip", title: "Community", style: "margin-top: 10px"}
