@@ -6,6 +6,7 @@ $('#mailing_adherent_id').select2({
 });
 
 $('#mailing_emails').select2({
+	placeholder: "E-mails",
 	createSearchChoice: function(term) { return {id:term, text:term}; },
 	tags: true,
 	multiple: true,

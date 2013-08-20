@@ -21,7 +21,7 @@
         %td
           = mailing.emails.count
         %td.actions
-          = link_to mailing_path(mailing.id), class:"btn btn-success" do
+          = link_to mailing_path(mailing.id), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-success", remote: true do
             %i.icon-eye-open.icon-large
             Voir
           = link_to edit_mailing_path(mailing.id), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-warning", remote: true do
