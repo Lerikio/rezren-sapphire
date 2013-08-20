@@ -1,0 +1,22 @@
+.modal-header
+    %button.close{ type:"button", 'data-dismiss' => "modal"}
+        %i.icon-remove
+
+    .alert.alert-block
+        %h4 
+            %i.icon-warning-sign.icon-large
+            Attention   
+        Les chambres devraient être généré via la commande rake populate:rooms. Modifiez ce script si l'architecture de la rez change.
+
+    %h3 Création d'une chambre
+
+    = bootstrap_flash
+
+
+= simple_form_for @room do |f|
+
+    .modal-body
+        = render partial: "form", locals: {f: f}  
+
+    .modal-footer
+        = f.submit "Créer", {class: "btn btn-primary"}
