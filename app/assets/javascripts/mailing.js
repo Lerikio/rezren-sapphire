@@ -8,7 +8,7 @@ $(document).ready( function () {
 			null,
 		    null,
 		    null,
-		    { "bSortable": false }
+		    { "bSortable": false, "bSearchable": false }
 		]
 	} );
 } );
