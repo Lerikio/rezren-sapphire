@@ -65,8 +65,8 @@ authorize_resource only: :create
         format.html { redirect_to @switch, notice: 'Switch was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @switch.errors, status: :unprocessable_entity }
+        flash.now[:error] = @mailing.errors.full_messages
+        format.js { render action: :edit}
       end
     end
   end
@@ -74,13 +74,20 @@ authorize_resource only: :create
   # DELETE /switches/1
   # DELETE /switches/1.json
   def destroy
-    # On archive au lieu de supprimer de la base de donnée
-    @switch.update_attribute(:archived, true)
-    @switch.create_activity :destroy, owner: current_admin
-
     respond_to do |format|
+      # On archive au lieu de supprimer de la base de donnée
+      @switch.update_attribute(:archived, true)
+      @switch.create_activity :destroy, owner: current_admin
+
       format.html { redirect_to switches_url }
       format.json { head :no_content }
+    end
+  end
+
+  def reload
+    @switches = Switch.where(:archived => params[:archived].to_bool)
+    respond_to do |format|
+      format.html { render partial: "index_table" }
     end
   end
 end
