@@ -38,14 +38,13 @@ load_and_authorize_resource
 
     respond_to do |format|
       if @mailing.update_attributes(params[:mailing])
-
         @mailing.create_activity :update, owner: current_admin
 
         format.html { redirect_to @mailing, notice: 'Mailing was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @mailing.errors, status: :unprocessable_entity }
+        flash.now[:error] = @mailing.errors.full_messages
+        format.js { render action: :edit}
       end
     end
   end

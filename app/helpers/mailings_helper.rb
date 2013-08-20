@@ -4,7 +4,7 @@ module MailingsHelper
 	def gen_select2_data
 		text = "["
 		Adherent.not_archived.each do |adherent|
-			text = text + "{id:\'#{adherent.email}', text:'#{adherent.email}'},"
+			text = text + "{id:'#{adherent.email}', text:'#{adherent.email}'},"
 		end
 
 		Mailing.not_archived.each do |mailing|
@@ -12,8 +12,5 @@ module MailingsHelper
 		end
 
 		text = text + "]"
-
-		logger.info text
-		text
 	end
 end
