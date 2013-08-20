@@ -7,7 +7,7 @@ $(document).ready( function () {
 		"aoColumns": [
 			null,
 		    null,
-		    { "bSortable": false }
+		    { "bSortable": false, "bSearchable": false }
 		]
 	} );
 } );

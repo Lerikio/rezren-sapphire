@@ -9,7 +9,7 @@
       %th Locataire
       %th Connexion
       %th 
-        = link_to new_room_path, class:"btn btn-inverse" do
+        = link_to new_room_path, class:"btn btn-inverse", "data-toggle" => 'modal', "data-target" => '#modal-window', remote: true do
           %i.icon-plus
           Nouvelle chambre
   %tbody

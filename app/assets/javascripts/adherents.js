@@ -9,10 +9,7 @@ $(document).ready( function () {
 		    null,
 		    null,
 		    null,
-		    { "bSortable": false }
+		    { "bSortable": false, "bSearchable": false }
 		]
 	});
 } );
-
-// Selects in form
-$('select').select2();

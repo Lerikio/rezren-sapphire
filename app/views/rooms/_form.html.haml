@@ -1,14 +1,10 @@
-- if @room.errors.any?
-  #error_explanation
-    %h2= "#{pluralize(@room.errors.count, "erreur")} ont empéché la chambre d'être sauvegardée :"
-    %ul
-      - @room.errors.full_messages.each do |msg|
-        %li= msg
+.controls
+	.input-append
+		= f.input_field :building, as: :select, class: "label-field short-field", collection: @building_list, id: "buildings-select"
+		%span.add-on
+			%i.icon-home{rel: "tooltip", title: "Bâtiment", style: "margin-top: 10px"}
 
-
-
-= f.input :building, :required => true do
-  = f.input_field :building, as: :select, class: "label-field short-field", :placeholder => "Fournisseur", collection: @building_list, prompt: "Bâtiment", value: @room.building
-
-= f.input :number, :required => true do
-  = f.input_field :number, class: "label-field", :placeholder => "Numéro de la chambre"
+	.input-append
+		= f.input_field :number, class: "label-field", :placeholder => "Numéro de la chambre"
+		%span.add-on
+			%i.icon-male{rel: "tooltip", title: "Numéro de la chambre", style: "margin-top: 10px"}

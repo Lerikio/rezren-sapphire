@@ -1,14 +1,5 @@
 $("#modal-window").html("<%= escape_javascript(render 'edit') %>");
 
-// Les onglets sont cachés par défaut
-<% unless @adherent.resident %>
-$('#resident-tab').hide(); 
-<% end %>
-
-<% unless @adherent.supelec %>
-$('#supelec-tab').hide();
-<% end %>
-
 $("#rezoman-btn").show();
 
 // Résident et/ou supélec
@@ -16,8 +7,8 @@ adherent_is_resident_supelec_rezoman();
 activate_button();
 
 // Moyen de paiement
-payment_is_cheque_or_liquid()
-function choose_button() {
+payment_is_cheque_or_liquid();
+choose_button();
 
 
 // Tooltips

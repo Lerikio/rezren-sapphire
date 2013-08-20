@@ -4,6 +4,8 @@
 #
 # Génération d'une base de donnée d'exemples pour le développement
 #
+# Script réalisé en août 2013 par Valérian Justine (Promo 2015)
+#
 # ----------------------------------------------------------------------------------------------------------------
 
 namespace :populate_dev do

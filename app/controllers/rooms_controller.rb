@@ -7,8 +7,6 @@ class RoomsController < ApplicationController
 # Charge @room par id, ainsi que les autorisations du controller
   load_and_authorize_resource
 
-  # GET /rooms
-  # GET /rooms.json
   def index
     @rooms = Room.where(:archived => params[:archived].to_bool)
     respond_to do |format|
@@ -17,32 +15,16 @@ class RoomsController < ApplicationController
     end
   end
 
-  # GET /rooms/1
-  # GET /rooms/1.json
+
   def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @room }
-    end
   end
 
-  # GET /rooms/new
-  # GET /rooms/new.json
   def new
-    @room = Room.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.js
-    end
   end
 
-  # GET /rooms/1/edit
   def edit
   end
 
-  # POST /rooms
-  # POST /rooms.json
   def create
     @room = Room.new(params[:room])
 
@@ -50,18 +32,13 @@ class RoomsController < ApplicationController
       if @room.save
 
         @room.create_activity :create, owner: current_admin
-
-        format.html { redirect_to @room, notice: 'Room was successfully created.' }
-        format.json { render json: @room, status: :created, location: @room }
       else
-        format.html { render action: "new" }
-        format.json { render json: @room.errors, status: :unprocessable_entity }
+        flash.now[:error] = @room.errors.full_messages
+        format.js { render action: :new}
       end
     end
   end
 
-  # PUT /rooms/1
-  # PUT /rooms/1.json
   def update
     respond_to do |format|
       if @room.update_attributes(params[:room])
