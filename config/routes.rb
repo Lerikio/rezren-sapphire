@@ -20,7 +20,9 @@ Sapphire::Application.routes.draw do
 		resources :sessions
 		resources :admins
 
+		get '/mailings/reload', :controller => 'mailings', :action => 'reload'
 		resources :mailings
+
 		resources :rooms
 
 		resources :adherents do

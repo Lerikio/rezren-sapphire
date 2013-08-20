@@ -1,0 +1,32 @@
+%table#mailings
+  %thead
+    %tr
+      %th Nom
+      %th Propriétaire
+      %th Nombre d'e-mails
+      %th 
+        = link_to new_mailing_path, "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-inverse", remote: true do
+          %i.icon-plus
+          Nouvelle mailing
+  %tbody
+    -@mailings.each do |mailing|
+      %tr
+        %td
+          = mailing.name
+        %td
+          - if mailing.system
+            Système
+          - else
+            = link_to mailing.adherent.full_name, mailing.adherent
+        %td
+          = mailing.emails.count
+        %td.actions
+          = link_to mailing_path(mailing.id), class:"btn btn-success" do
+            %i.icon-eye-open.icon-large
+            Voir
+          = link_to edit_mailing_path(mailing.id), class:"btn btn-warning" do
+            %i.icon-pencil.icon-large
+            Editer
+          = link_to mailing_path(mailing.id), class:"btn btn-danger remote-delete", :method => :delete do
+            %i.icon-trash.icon-large
+            Supprimer

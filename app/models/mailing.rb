@@ -31,6 +31,7 @@ class Mailing < ActiveRecord::Base
 
 	# Mise en minuscule de toutes les emails
 	before_save do
+		emails.reject! { |e| e.empty? }
 		self.emails.each do |email|
 			email = email.downcase
 		end
