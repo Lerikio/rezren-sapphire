@@ -25,7 +25,7 @@
 
 			.tab-pane#resident
 
-				= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;'
+				= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;', selected: @adherent.room_id
 
 				%hr
 				%h2 Ordinateur

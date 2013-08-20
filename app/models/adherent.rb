@@ -94,6 +94,10 @@ state_machine :state, initial: :created do
 #	Méthodes
 # --------------------------------------------------------------------------------------------------
 
+	def room_id
+		room.id if room
+	end
+	
 private
 
 	# Devrait être déplacé pour factorisation du code avec les admins
