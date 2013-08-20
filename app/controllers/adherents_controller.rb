@@ -26,8 +26,9 @@ authorize_resource only: :create
     params[:adherent][:room] = Room.find_by_id(params[:adherent][:room])
     #params[:adherent].delete :room
 
-    @adherent = Adherent.new(params[:adherent]) 
-    @adherent.credit.payments.first.admin = current_admin
+    @adherent = Adherent.new(params[:adherent])
+    @adherent.credit.payments.first.admin = current_admin if @adherent.credit
+
     respond_to do |format|
       if @adherent.save
 
@@ -41,11 +42,12 @@ authorize_resource only: :create
       else        
         flash.now[:error] = @adherent.errors.full_messages
 
-        if @adherent.computers.empty?
-          @computer = @adherent.computers.build
-          @computer_dns_entry = @computer.build_computer_dns_entry
-        end
+        @adherent.computers.build if @adherent.computers.empty?
+        @computer = @adherent.computers.first
+        @computer.build_computer_dns_entry unless @computer.computer_dns_entry
+        @computer_dns_entry = @computer.computer_dns_entry
 
+        @adherent.build_credit unless @adherent.credit
         @credit = @adherent.credit
         @credit.payments.build if @credit.payments.empty?
         format.js { render action: :new}

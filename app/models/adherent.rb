@@ -67,8 +67,8 @@ scope :not_archived, -> { where(archived: false)}
 #	Nested forms
 # --------------------------------------------------------------------------------------------------
 
-	accepts_nested_attributes_for :computers, reject_if: lambda { |a| a[:mac_address].blank?}, :allow_destroy => true
-	accepts_nested_attributes_for :credit
+	accepts_nested_attributes_for :computers, reject_if: :not_resident?, :allow_destroy => true
+	accepts_nested_attributes_for :credit, reject_if: :not_resident?
 
 # --------------------------------------------------------------------------------------------------
 #	Machine d'état
@@ -102,6 +102,10 @@ private
 				self.password_salt = BCrypt::Engine.generate_salt
 				self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
 			end
+		end
+
+		def not_resident?
+			not resident?
 		end
 
 end
