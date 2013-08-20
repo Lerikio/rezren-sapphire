@@ -5,6 +5,13 @@ $('#mailing_adherent_id').select2({
 	placeholder: "Propriétaire"
 });
 
+$('#mailing_emails').select2({
+	createSearchChoice: function(term) { return {id:term, text:term}; },
+	tags: true,
+	multiple: true,
+	data: <%= gen_select2_data.html_safe %>
+});
+
 $("[rel='tooltip']").tooltip();
 
 $("form").on("ajax:success", function(event, data, status, xhr){

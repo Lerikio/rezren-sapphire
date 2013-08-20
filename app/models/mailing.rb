@@ -62,6 +62,8 @@ private
 
 	# Validation du format de chaque e-mail
 	def emails_validity
+		self.emails = self.emails.split(",")
+		self.emails.delete_if {|i| i == "[]" || i == ""}
 		self.emails.each do |email|
 			return false unless email.match /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
 		end
