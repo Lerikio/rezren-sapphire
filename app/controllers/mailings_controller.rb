@@ -40,6 +40,7 @@ load_and_authorize_resource
       if @mailing.update_attributes(params[:mailing])
         @mailing.create_activity :update, owner: current_admin
 
+        format.js { head :no_content }
         format.html { redirect_to @mailing, notice: 'Mailing was successfully updated.' }
         format.json { head :no_content }
       else

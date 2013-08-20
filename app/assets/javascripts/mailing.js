@@ -1,14 +1,13 @@
-// Datatables
 $(document).ready( function () {
-	register_all();
+	register_all_mailings();
 } );
 
-function register_all() {
-	register_datatable();
-	register_delete_buttons();
+function register_all_mailings() {
+	register_datatable_mailings();
+	register_delete_buttons_mailings();
 }
 
-function register_datatable() {
+function register_datatable_mailings() {
 	$('#mailings').dataTable( {
 		"sPaginationType": "full_numbers",
 		"sDom": '<"H"Cfr>t<"F"ip>',
@@ -22,15 +21,15 @@ function register_datatable() {
 	} );
 }
 
-function register_delete_buttons() {
-	$('a.remote-delete').click(function() {
+function register_delete_buttons_mailings() {
+	$('#mailings a.remote-delete').click(function() {
     	$.post(this.href, { _method: 'delete' }, null , "json").always(
-  	  			function(data) { reload(); }
+  	  			function(data) { reload_mailings(); }
   		  	);
   	  return false;
   	});
 }
 
-function reload() {
-	$('#wrapper').load('mailings/reload', function () {register_all();});
+function reload_mailings() {
+	$('#wrapper').load('mailings/reload', function () {register_all_mailings();});
 }
