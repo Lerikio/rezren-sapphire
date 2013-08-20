@@ -20,14 +20,10 @@ $('#years-select').select2({
   placeholder: "Promotion"
 });
 
+// Faire disparaitre le modal quand la requête réussie
 $("form").on("ajax:success", function(event, data, status, xhr){
     $('#modal-window').modal('hide');
   });
-
-// Faire disparaitre le modal quand la requête réussie
-$("form").ajaxSuccess(function(){
-  $('#modal-window').modal('hide');
-});
 
 
 // Functions

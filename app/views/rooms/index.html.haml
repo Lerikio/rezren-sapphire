@@ -24,17 +24,19 @@
             \--
         %td
           - if room.port
-            = link_to room.port.switch.ip_admin + ":" + room.port.number.to_s, switch_port_path(room.port.switch.id, room.port.id)
+            = link_to room.port.switch.ip_admin, switch_path(room.port.switch)
+            \:
+            = link_to room.port.number.to_s, switch_port_path(room.port.switch, room.port)
           - else
             \--
         %td.actions
-          = link_to room_path(room.id), class:"btn btn-success" do
+          = link_to room_path(room), class:"btn btn-success" do
             %i.icon-eye-open.icon-large
             Voir
-          = link_to edit_room_path(room.id), class:"btn btn-warning" do
+          = link_to edit_room_path(room), class:"btn btn-warning" do
             %i.icon-pencil.icon-large
             Editer
-          = link_to room_path(room.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + room.full_address + "?") } do
+          = link_to room_path(room), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + room.full_address + "?") } do
             %i.icon-trash.icon-large
             Supprimer
 

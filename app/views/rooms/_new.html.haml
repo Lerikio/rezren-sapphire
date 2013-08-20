@@ -2,14 +2,16 @@
     %button.close{ type:"button", 'data-dismiss' => "modal"}
         %i.icon-remove
 
-    .alert.alert-block
+    
+
+    %h3 Création d'une chambre
+
+    .alert.alert-block{style: "margin-bottom: 5px; margin-top: 10px;"}
         %h4 
             %i.icon-warning-sign.icon-large
             Attention   
         Les chambres devraient être généré via la commande rake populate:rooms. Modifiez ce script si l'architecture de la rez change.
-
-    %h3 Création d'une chambre
-
+   
     = bootstrap_flash
 
 

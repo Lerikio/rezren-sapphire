@@ -8,6 +8,6 @@ $(document).ready( function () {
 		    null,
 		    null
 		],
-		"aaSorting": [[ 2, "desc" ]]
+		"aaSorting": [[ 2, "asc" ]]
 	} );
 } );
