@@ -10,11 +10,7 @@ scope :not_archived, -> { where(archived: false)}
 #	Attributs
 # --------------------------------------------------------------------------------------------------
 
-<<<<<<< HEAD
-	attr_accessible :full_name, :password, :password_confirmation, :email, :username, :promotion, :room,
-=======
 	attr_accessible :first_name, :last_name, :password, :password_confirmation, :email, :username, :promotion, :room,
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 		:rezoman, :resident, :supelec,
 		:computers_attributes, :credit_attributes
 			# La première ligne correspond à l'identité à proprement dit de l'adhérent
@@ -52,11 +48,7 @@ scope :not_archived, -> { where(archived: false)}
 #	Validations
 # --------------------------------------------------------------------------------------------------
 
-<<<<<<< HEAD
-	validates :full_name, presence: true
-=======
 	validates :first_name, :last_name, presence: true
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 	validates :email, presence: true, uniqueness: true,
 		format: { with: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }
 	
@@ -74,14 +66,8 @@ scope :not_archived, -> { where(archived: false)}
 # --------------------------------------------------------------------------------------------------
 #	Nested forms
 # --------------------------------------------------------------------------------------------------
-
-<<<<<<< HEAD
-	accepts_nested_attributes_for :computers, reject_if: lambda { |a| a[:mac_address].blank?}, :allow_destroy => true
-	accepts_nested_attributes_for :credit
-=======
 	accepts_nested_attributes_for :computers, reject_if: :not_resident?, :allow_destroy => true
 	accepts_nested_attributes_for :credit, reject_if: :not_resident?
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
 # --------------------------------------------------------------------------------------------------
 #	Machine d'état
