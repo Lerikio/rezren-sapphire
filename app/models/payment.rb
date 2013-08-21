@@ -28,6 +28,9 @@ scope :not_archived, -> { where(archived: false)}
 	validates :credit, presence: true
 	validates :admin, presence: true
 
+# Lors de la sauvegarde :
+	after_save :update_credit
+
 # Machine d'état
 
 state_machine :state, initial: :received do
@@ -67,6 +70,17 @@ private
 
 	def set_cached_date
 		self.cashed_date = Time.now
+	end
+
+	# Mise à jour du crédit de l'utilisateur lors de la création du paiement
+	def update_credit
+		credit = self.credit
+
+		credit.value += self.value
+
+		if self == credit.payments.first || credit.next_debit <= Time.now
+			credit.next_debit = Time.now + 1.month
+		end
 	end
 
 end

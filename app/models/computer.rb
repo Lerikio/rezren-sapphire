@@ -19,10 +19,7 @@ class Computer < ActiveRecord::Base
 # Actions avant validation
 	before_validation :generate_ip
 	before_validation :on => :create do 
-		self.name = generate_name(adherent.last_name)
-	end
-	before_validation do
-		self.name = self.name.downcase if self.name.present?
+		self.name = Computer.generate_name(adherent.last_name)
 	end
 	
 
