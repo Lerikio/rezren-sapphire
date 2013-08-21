@@ -38,8 +38,23 @@ scope :not_archived, -> { where(archived: false)}
 	end
 
 	def reverse_ip
-		ip_addr = IPAddr.new self.computer.ip_address
+		ip_addr = IPAddr.new self.ip_address
 		ip_addr.reverse
 	end
 
+	# Génère un nom de domaine à partir du nom de famille de l'adhérent
+	def self.generate_name(adherent_name)
+		current_number = 2
+
+		# Normalisation de la chaîne de caractère
+		adherent_name = adherent_name.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.to_s
+		current_name = adherent_name
+
+		# Tant qu'une entrée DNS existe déjà avec ce nom, on augmente le nombre qui lui est rajouté
+		while ComputerDnsEntry.find_by_name(current_name)
+			current_name = adherent_name + current_number.to_s
+			current_number += 1
+		end
+		return current_name
+	end
 end
