@@ -31,7 +31,8 @@ Sapphire::Application.routes.draw do
 			resources :payments
 			get "credit/destroy"
 		end
-
+		
+		get '/generic_dns_entries/reload', :controller => 'generic_dns_entries', :action => 'reload'
 	  	resources :generic_dns_entries
 	  	resources :computer_dns_entries do
 			resources :alias_dns_entries

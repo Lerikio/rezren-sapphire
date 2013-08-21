@@ -23,9 +23,11 @@ function register_datatable_rooms() {
 
 function register_delete_buttons_rooms() {
 	$('#rooms a.remote-delete').click(function() {
-    	$.post(this.href, { _method: 'delete' }, null , "json").always(
-  	  			function(data) { reload_rooms(); }
-  		  	);
+		if (confirm("Êtes vous sûr de vouloir supprimer cette chambre ?")) {
+	    	$.post(this.href, { _method: 'delete' }, null , "json").always(
+	  	  			function(data) { reload_rooms(); }
+	  		  	);
+	    };
   	  return false;
   	});
 }

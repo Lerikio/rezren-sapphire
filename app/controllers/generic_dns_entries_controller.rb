@@ -28,12 +28,6 @@ load_and_authorize_resource
   # GET /generic_dns_entries/new
   # GET /generic_dns_entries/new.json
   def new
-    @generic_dns_entry = GenericDnsEntry.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @generic_dns_entry }
-    end
   end
 
   # GET /generic_dns_entries/1/edit
@@ -50,11 +44,10 @@ load_and_authorize_resource
 
         @generic_dns_entry.create_activity :create, owner: current_admin
 
-        format.html { redirect_to @generic_dns_entry, notice: 'Generic dns entry was successfully created.' }
         format.json { render json: @generic_dns_entry, status: :created, location: @generic_dns_entry }
       else
-        format.html { render action: "new" }
-        format.json { render json: @generic_dns_entry.errors, status: :unprocessable_entity }
+        flash.now[:error] = @generic_dns_entry.errors.full_messages
+        format.js { render action: :new}
       end
     end
   end
@@ -68,11 +61,12 @@ load_and_authorize_resource
 
         @generic_dns_entry.create_activity :update, owner: current_admin
 
+        format.js { head :no_content }
         format.html { redirect_to @generic_dns_entry, notice: 'Generic dns entry was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @generic_dns_entry.errors, status: :unprocessable_entity }
+        flash.now[:error] = @mailing.errors.full_messages
+        format.js { render action: :edit}
       end
     end
   end
@@ -87,6 +81,13 @@ load_and_authorize_resource
     respond_to do |format|
       format.html { redirect_to generic_dns_entries_url }
       format.json { head :no_content }
+    end
+  end
+
+  def reload
+    @generic_dns_entries = GenericDnsEntry.where(:archived => params[:archived].to_bool)
+    respond_to do |format|
+      format.html { render partial: "index_table" }
     end
   end
 end

@@ -14,4 +14,4 @@
 	%span.add-on{style: 'margin-bottom: 3px;', rel: "tooltip", title: "Nom de domaine. Des alias peuvent exister."}
 		= "@" + Mailing::DomainName
 
-=f.hidden_field :emails, style: 'width:500px', :value => @mailing.emails.join(',')
+= f.hidden_field :emails, style: 'width:500px', :value => @mailing.emails.join(',')

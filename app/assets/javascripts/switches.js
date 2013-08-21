@@ -22,9 +22,11 @@ function register_datatable_switches() {
 
 function register_delete_buttons_switches() {
 	$('#switches a.remote-delete').click(function() {
-    	$.post(this.href, { _method: 'delete' }, null , "json").always(
-  	  			function(data) { reload_switches(); }
-  		  	);
+		if (confirm("Êtes vous sûr de vouloir supprimer ce switch ?")) {
+	    	$.post(this.href, { _method: 'delete' }, null , "json").always(
+	  	  			function(data) { reload_switches(); }
+	  		  	);
+	    };
   	  return false;
   	});
 }
