@@ -23,6 +23,7 @@ Sapphire::Application.routes.draw do
 		get '/mailings/reload', :controller => 'mailings', :action => 'reload'
 		resources :mailings
 
+		get '/rooms/reload', :controller => 'rooms', :action => 'reload'
 		resources :rooms
 
 		resources :adherents do
