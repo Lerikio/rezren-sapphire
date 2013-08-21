@@ -1,0 +1,18 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3
+		Edition de l'ordinateur
+		= @computer.mac_address
+
+	= bootstrap_flash
+
+= simple_form_for @computer, url: adherent_computer_path(@computer.adherent, @computer), validate: true, remote: true do |f|  
+
+	.modal-body
+
+		= render 'form', f: f
+
+	.modal-footer
+		= f.submit "Editer", {class: "btn btn-primary"}

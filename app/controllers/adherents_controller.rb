@@ -14,12 +14,17 @@ authorize_resource only: :create
 
   def new
     @computer = @adherent.computers.build
+<<<<<<< HEAD
     @computer_dns_entry = @computer.build_computer_dns_entry
     
+=======
+
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
     @credit = @adherent.build_credit
     @credit.payments.build
   end
 
+<<<<<<< HEAD
   def edit
     @adherent.computers.build
     @adherent.credit.build
@@ -31,44 +36,76 @@ authorize_resource only: :create
     params[:adherent].delete :room
 
     @adherent = Adherent.new(params[:adherent])
+=======
 
+  def create
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
+    params[:adherent][:room] = Room.find_by_id(params[:adherent][:room])
+    #params[:adherent].delete :room
+
+    @adherent = Adherent.new(params[:adherent])
+    @adherent.credit.payments.first.admin = current_admin if @adherent.credit
+    if computer = @adherent.computers.first
+      dns_entry = computer.build_computer_dns_entry(name: ComputerDnsEntry.generate_name(@adherent.last_name) )
+    end
     respond_to do |format|
       if @adherent.save
+        
+        if dns_entry
+          dns_entry.save
+        end
 
         @room.adherent = @adherent
         @romm.save
 
         @adherent.create_activity :create, owner: current_admin
-
-        format.html { redirect_to @adherent, notice: 'Adherent was successfully created.' }
         format.json { render json: @adherent, status: :created, location: @adherent }
+<<<<<<< HEAD
       else
         format.json { render json: @adherent.errors, status: :unprocessable_entity }
       end
+=======
+      else        
+        flash.now[:error] = @adherent.errors.full_messages
+
+        @adherent.computers.build if @adherent.computers.empty?
+        @computer = @adherent.computers.first
+
+        @adherent.build_credit unless @adherent.credit
+        @credit = @adherent.credit
+        @credit.payments.build if @credit.payments.empty?
+        format.js { render action: :new}
+      end  
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
     end
   end
 
-  # PUT /adherents/1
-  # PUT /adherents/1.json
+
+  def edit
+  end
+
   def update
+    @room = Room.find_by_id(params[:adherent][:room])
+    params[:adherent].delete :room
 
     respond_to do |format|
       if @adherent.update_attributes(params[:adherent])
 
+        if @room
+          @room.adherent = @adherent
+          @romm.save
+        end
+        
         @adherent.create_activity :update, owner: current_admin
-
-        format.html { redirect_to @adherent, notice: 'Adherent was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @adherent.errors, status: :unprocessable_entity }
-      end
+        format.json { render json: @adherent, status: :updated, location: @adherent }
+      else        
+        flash.now[:error] = @adherent.errors.full_messages
+        format.js { render :edit}
+      end  
     end
   end
 
-  # DELETE /adherents/1
-  # DELETE /adherents/1.json
   def destroy
     # On archive au lieu de supprimer de la base de donnée
     @adherent.update_attribute(:archived, true)

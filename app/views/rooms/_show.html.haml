@@ -1,0 +1,16 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3= @room.full_address
+
+.modal-body
+	%p
+		%b Building:
+		= @room.building
+	%p
+		%b Number:
+		= @room.number
+	%p
+		%b Adherent:
+		= @room.adherent

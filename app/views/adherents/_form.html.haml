@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .btn-group.activable
 	%button.btn.btn-info.active#resident-btn{"data-target" => "#if_resident, #computers-form, #payment-form", "data-toggle" => "collapse"}
 		Résident
@@ -7,10 +8,31 @@
 .controls
 	= f.input_field :full_name, placeholder: "Nom complet"
 	
+=======
+.controls.btn-group.activable
+	%button.btn#resident-btn{"data-target" => "#if_resident, #computers-form, #payment-form", "data-toggle" => "collapse"}
+		Résident
+	%button.btn#supelec-btn{"data-target" => "#if_supelec", "data-toggle" => "collapse"}
+		Supélec
+	%button.btn#rezoman-btn{"data-target" => "#if_supelec", "data-toggle" => "collapse", style: 'display: none'}
+		Rezoman
+
+.controls
+	.input-append
+		= f.input_field :first_name, placeholder: "Prénom"
+		%span.add-on
+			%i.icon-user{rel: "tooltip", title: "Prénom", style: "margin-top: 10px"}
+	.input-append
+		= f.input_field :last_name, placeholder: "Nom de famille"
+		%span.add-on
+			%i.icon-user{rel: "tooltip", title: "Nom de famille", style: "margin-top: 10px"}
+
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
 .input-append
 	= f.input_field :email, placeholder: "E-mail"
 	%span.add-on
+<<<<<<< HEAD
 		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px", "data-placement" => "right"}
 
 %div{display: "none"}
@@ -18,3 +40,11 @@
 		= f.check_box :resident, {id: "resident-check"}, "true", "false"
 	= f.input :supelec, as: :boolean do  
 		= f.check_box :supelec, {id: "supelec-check" }, "true", "false" 
+=======
+		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px"}
+
+%div{style: 'display: none'}
+	= f.hidden_field :resident
+	= f.hidden_field :supelec
+	= f.hidden_field :rezoman
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f

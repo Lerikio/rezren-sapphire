@@ -17,20 +17,27 @@
 					= adherent.full_name
 				%td
 					- if adherent.rezoman
-						%i.icon-linux.icon-large{rel: "tooltip", title: "Rezoman"}
+						%i.icon-linux.icon-large{rel: "tooltip", title: "Rezoman", style: "margin-right: 5px"}
 					- if adherent.resident
-						%i.icon-home.icon-large{rel: "tooltip", title: "Résident"}
+						%i.icon-home.icon-large{rel: "tooltip", title: "Résident", style: "margin-right: 5px"}
 					- if adherent.supelec
 						%i.icon-bolt.icon-large{rel: "tooltip", title: "Supélec"}
+					- unless adherent.resident || adherent.supelec || adherent.rezoman
+						\--
+
 				%td
-					= formatted_amount_with_currency(adherent.credit.value)
+					- if adherent.credit
+						= formatted_amount_with_currency(adherent.credit.value)
 				%td
-					= adherent.room.full_address
+					- if adherent.room
+						= adherent.room.full_address
+					- else
+						\--
 				%td.actions
 					= link_to adherent_path(adherent.id), class:"btn btn-success" do
 						%i.icon-eye-open.icon-large
 						Voir
-					= link_to edit_adherent_path(adherent.id), class:"btn btn-warning" do
+					= link_to edit_adherent_path(adherent.id), class:"btn btn-warning", remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
 						%i.icon-pencil.icon-large
 						Editer
 					= link_to adherent_path(adherent.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + adherent.full_name + "? Cette opération est irréversible.") } do

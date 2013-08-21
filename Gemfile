@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 	gem 'sqlite3'
 
 ## Gems de base :
-	gem 'rails', '3.2.13'
+	gem 'rails', '3.2.14'
 	gem 'rails-i18n'
 	    
 # Gems used only for assets and not required
@@ -30,6 +30,12 @@ source 'https://rubygems.org'
 				gem 'select2-rails'
 	end
 
+# Production
+	group :production do
+		# PostgreSQL
+			gem 'pg'
+	end
+	
 # Développement
 	group :development do
 		# Serveur de développement rails
@@ -49,17 +55,13 @@ source 'https://rubygems.org'
 # HAML
 	gem 'haml-rails'
 
-# Formtastic, pour les formulaires
-	gem 'simple_form'
+# # Formtastic, pour les formulaires
+ 	gem 'simple_form'
 
 # Validation au niveau du client
 	gem 'client_side_validations'
 	gem 'client_side_validations-simple_form'
   
-# Pagination
-	gem 'kaminari'
-	gem 'kaminari-bootstrap'
-
 # CanCan : gem d'autorisation
 	gem 'cancan'
 
@@ -67,10 +69,10 @@ source 'https://rubygems.org'
 	gem 'bcrypt-ruby', require: "bcrypt"
   
 # Notifications
-	gem 'public_activity'
+ 	gem 'public_activity'
 
 # Machine d'état
-	gem 'state_machine'
+ 	gem 'state_machine'
 
 # Settings, permet de garder en mémoire des valeurs de config
 	gem "rails-settings-cached", "0.2.4"

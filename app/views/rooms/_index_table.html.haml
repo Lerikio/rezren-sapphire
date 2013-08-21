@@ -1,0 +1,37 @@
+%table#rooms
+  %thead
+    %tr
+      %th Adresse
+      %th Locataire
+      %th Connexion
+      %th 
+        = link_to new_room_path, class:"btn btn-inverse", "data-toggle" => 'modal', "data-target" => '#modal-window', remote: true do
+          %i.icon-plus
+          Nouvelle chambre
+  %tbody
+    -@rooms.each do |room|
+      %tr
+        %td
+          = room.full_address
+        %td
+          - if room.adherent
+            = link_to room.adherent.full_name, room.adherent
+          - else
+            \--
+        %td
+          - if room.port
+            = link_to room.port.switch.ip_admin, switch_path(room.port.switch)
+            \:
+            = link_to room.port.number.to_s, switch_port_path(room.port.switch, room.port)
+          - else
+            \--
+        %td.actions
+          = link_to room_path(room), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-success", remote: true do
+            %i.icon-eye-open.icon-large
+            Voir
+          = link_to edit_room_path(room), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-warning", remote: true do
+            %i.icon-pencil.icon-large
+            Editer
+          = link_to room_path(room), class:"btn btn-danger remote-delete", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + room.full_address + "?") } do
+            %i.icon-trash.icon-large
+            Supprimer

@@ -1,0 +1,13 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3 Edition d'une mailing
+
+	= bootstrap_flash
+
+= simple_form_for @mailing, validate: true, remote: true do |f|
+	.modal-body
+		= render partial: "form", locals: {f: f}  
+	.modal-footer
+		= f.submit "Modifier", {class: "btn btn-primary"}

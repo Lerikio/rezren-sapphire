@@ -1,13 +1,16 @@
-= form_for @switch do |f|
-  - if @switch.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@switch.errors.count, "error")} prohibited this switch from being saved:"
-      %ul
-        - @switch.errors.full_messages.each do |msg|
-          %li= msg
+.controls
+  .input-append
+    = f.input_field :ip_admin, placeholder: "Ip d'administration"
+    %span.add-on
+      %i.icon-double-angle-up{rel: "tooltip", title: "Ip d'administration", style: "margin-top: 10px", "data-placement" => "bottom"}
 
-  .field
-    = f.label :community
-    = f.text_field :community
-  .actions
-    = f.submit 'Save'
+  - if @switch.new_record?
+    .input-append
+      = f.input_field :number_of_ports, placeholder: "Nombre de ports"
+      %span.add-on
+        %i.icon-sitemap{rel: "tooltip", title: "Nombre de ports", style: "margin-top: 10px", "data-placement" => "bottom"}
+
+.input-append
+  = f.input_field :community, as: :text, placeholder: "Community", rows: "1", style: "width: 457px"
+  %span.add-on
+    %i.icon-key{rel: "tooltip", title: "Community", style: "margin-top: 10px"}

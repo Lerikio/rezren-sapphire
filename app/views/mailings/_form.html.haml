@@ -2,7 +2,11 @@
 	%li
 
 %div
+<<<<<<< HEAD
 	= f.input_field :adherent_id, collection: Adherent.not_archived.collect{ |i| [i.full_name, i.id]}, class: "select2", style: "width: 239px;"
+=======
+	= f.input_field :adherent_id, collection: Adherent.not_archived.collect{ |i| [i.full_name, i.id]}, style: "width: 239px;"
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
 	%i.icon-user.inline{rel: "tooltip", title: "Propriétaire", style: "margin-top: 10px", "data-placement" => "right"}
 
@@ -14,4 +18,8 @@
 	%span.add-on{style: 'margin-bottom: 3px;', rel: "tooltip", title: "Nom de domaine. Des alias peuvent exister."}
 		= "@" + Mailing::DomainName
 
+<<<<<<< HEAD
 = f.input_field :emails, collection: (Adherent.not_archived.collect{ |i| i.email} + Mailing.not_archived.collect{ |i| i.address}) , class: "select2", multiple: true, "data-placeholder" => "E-mails", style: "width: 520px;"
+=======
+= f.hidden_field :emails, style: 'width:500px', :value => @mailing.emails.join(',')
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f

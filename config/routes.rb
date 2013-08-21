@@ -20,7 +20,10 @@ Sapphire::Application.routes.draw do
 		resources :sessions
 		resources :admins
 
+		get '/mailings/reload', :controller => 'mailings', :action => 'reload'
 		resources :mailings
+
+		get '/rooms/reload', :controller => 'rooms', :action => 'reload'
 		resources :rooms
 
 		resources :adherents do
@@ -28,13 +31,15 @@ Sapphire::Application.routes.draw do
 			resources :payments
 			get "credit/destroy"
 		end
-
+		
+		get '/generic_dns_entries/reload', :controller => 'generic_dns_entries', :action => 'reload'
 	  	resources :generic_dns_entries
 	  	resources :computer_dns_entries do
 			resources :alias_dns_entries
 		end
 		resources :vlans
 
+		get '/switches/reload', :controller => 'switches', :action => 'reload'
 		resources :switches do
 			resources :ports
 		end

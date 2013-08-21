@@ -1,0 +1,10 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3= @switch.ip_admin
+
+.modal-body
+	%p
+		%b Community:
+		= @switch.community

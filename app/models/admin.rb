@@ -22,7 +22,7 @@ class Admin < ActiveRecord::Base
 
 # Méthodes de classe
 	def self.authenticate(username, password)
-		user = find_by_username(username)
+		user = where('lower(username) = ?', username).first
 		if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
 			user
 		else

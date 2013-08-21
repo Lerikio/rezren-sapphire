@@ -15,12 +15,16 @@
 			%tr
 				%td
 					= render_activity activity
-					- if activity.trackable
-						il y a
-						= time_ago_in_words(activity.created_at)
 				%td
 					- if activity.owner
 						= link_to activity.owner.username, activity.owner
 					- else
 						\--
-				%td= activity.created_at
+				%td
+					- if activity.trackable
+						Il y a
+						= time_ago_in_words(activity.created_at)
+					[
+					= activity.created_at.to_s(:short)
+					]
+

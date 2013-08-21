@@ -1,0 +1,14 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3 Création d'une entrée DNS
+
+	= bootstrap_flash
+
+= simple_form_for @generic_dns_entry, validate: true, remote: true do |f|
+
+	.modal-body
+		= render partial: "form", locals: {f: f}  
+	.modal-footer
+		= f.submit "Créer", {class: "btn btn-primary"}

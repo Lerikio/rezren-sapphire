@@ -1,34 +1,5 @@
 - content_for :title do
   Liste des entrées DNS génériques
 
-
-%table#generic-dns
-  %thead
-    %tr
-      %th Nom
-      %th Type
-      %th Retour
-      %th 
-        = link_to new_generic_dns_entry_path, class:"btn btn-inverse" do
-          %i.icon-plus
-          Nouvelle entrée DNS
-  %tbody
-    -@generic_dns_entries.each do |generic_dns_entry|
-      %tr
-        %td
-          = generic_dns_entry.name
-        %td
-          = generic_dns_entry.type
-        %td
-          = generic_dns_entry.return
-        %td.actions
-          = link_to generic_dns_entry_path(generic_dns_entry), class:"btn btn-success" do
-            %i.icon-eye-open.icon-large
-            Voir
-          = link_to edit_generic_dns_entry_path(generic_dns_entry), class:"btn btn-warning" do
-            %i.icon-pencil.icon-large
-            Editer
-          = link_to generic_dns_entry_path(generic_dns_entry), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + generic_dns_entry.name + "? Cette opération est irréversible.") } do
-            %i.icon-trash.icon-large
-            Supprimer
-
+#wrapper
+  = render partial: 'index_table'

@@ -4,7 +4,13 @@
 
 	%h3 Rézotage
 
+<<<<<<< HEAD
 = simple_form_for @adherent, validate: true, html: {"data-type" => :json} do |f|	
+=======
+	= bootstrap_flash
+
+= simple_form_for @adherent, validate: true, remote: true do |f|	
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
 	.modal-body
 
@@ -23,11 +29,25 @@
 
 			.tab-pane#resident
 
+<<<<<<< HEAD
 				= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 255px;'
 
 				= f.simple_fields_for :computers do |builder|
 					= render 'computers/form', f: builder	
 						
+=======
+				= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;', selected: @adherent.room_id
+
+				%hr
+				%h2 Ordinateur
+
+				= f.simple_fields_for :computers do |builder|
+					= render 'computers/form', f: builder	
+				
+				%hr
+				%h2 Paiement
+
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 				= f.simple_fields_for :credit do |builder|
 					= builder.simple_fields_for :payments do |payment_builder|
 						= render 'payments/form', f: payment_builder

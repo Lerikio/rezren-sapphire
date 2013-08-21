@@ -44,6 +44,7 @@ module ApplicationHelper
   def formatted_amount_with_currency(value)
     formatted_amount(value) + '€'
   end
+<<<<<<< HEAD
 
   def link_to_remove_fields(name, f)
     f.hidden_field(:_destroy) + link_to_function(name, "remove_fields(this)")
@@ -56,5 +57,7 @@ module ApplicationHelper
     end
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")
   end
+=======
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
   
 end

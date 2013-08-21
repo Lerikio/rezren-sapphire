@@ -4,7 +4,10 @@
 
 	%h3 Création d'une mailing
 
-= simple_form_for @mailing, validate: true, html: {"data-type" => :json} do |f|
+	= bootstrap_flash
+
+= simple_form_for @mailing, validate: true, remote: true do |f|
+
 	.modal-body
 		= render partial: "form", locals: {f: f}  
 	.modal-footer

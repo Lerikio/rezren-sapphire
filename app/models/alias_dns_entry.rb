@@ -8,10 +8,9 @@ scope :not_archived, -> { where(archived: false)}
 	
 # Attributs et associations	
 
-	attr_accessible :computer_dns_entry_id, :name
+	attr_accessible :computer_id, :name
 
-	belongs_to :computer_dns_entry, inverse_of: :alias_dns_entries
-	has_one :computer, through: :computer_dns_entry
+	belongs_to :computer, inverse_of: :alias_dns_entries
 
 # Avant validation
 	
@@ -23,7 +22,7 @@ scope :not_archived, -> { where(archived: false)}
 
 	validates :name, presence: true,
 		format: { with: /^([a-z0-9_\-\.]+)$/ }
-	validates :computer_dns_entry, presence: true
+	validates :computer, presence: true
 
 	def ip_address
 		self.computer.ip_address

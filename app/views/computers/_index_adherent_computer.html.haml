@@ -9,16 +9,16 @@
     -@computers.each do |computer|
       %tr
         %td
-          = computer.computer_dns_entry.name
+          = computer.name
         %td
           = computer.mac_address
         %td
           = computer.ip_address
         %td.actions
-          = link_to adherent_computer_path(computer.adherent.id, computer.id), class:"btn btn-success" do
+          = link_to adherent_computer_path(computer.adherent.id, computer.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-success" do
             %i.icon-eye-open.icon-large
             Voir
-          = link_to edit_adherent_computer_path(computer.adherent.id, computer.id), class:"btn btn-warning" do
+          = link_to edit_adherent_computer_path(computer.adherent.id, computer.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-warning" do
             %i.icon-pencil.icon-large
             Editer
           = link_to adherent_computer_path(computer.adherent.id, computer.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + computer.mac_address + "? Cette opération est irréversible.") } do

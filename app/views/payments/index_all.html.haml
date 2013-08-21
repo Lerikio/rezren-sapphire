@@ -20,6 +20,7 @@
           = link_to payment.adherent.full_name, payment.adherent
 
         %td.actions
+<<<<<<< HEAD
           = link_to payment_path(payment.id), class:"btn btn-success" do
             %i.icon-eye-open.icon-large
             Voir
@@ -27,6 +28,15 @@
             %i.icon-pencil.icon-large
             Editer
           = link_to payment_path(payment.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer le paiement de " + payment.adherent.full_name + "?") } do
+=======
+          = link_to adherent_payment_path(payment.adherent, payment.id), class:"btn btn-success" do
+            %i.icon-eye-open.icon-large
+            Voir
+          = link_to edit_adherent_payment_path(payment.adherent, payment.id), class:"btn btn-warning" do
+            %i.icon-pencil.icon-large
+            Editer
+          = link_to adherent_payment_path(payment.adherent, payment.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer le paiement de " + payment.adherent.full_name + "?") } do
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
             %i.icon-trash.icon-large
             Supprimer
 

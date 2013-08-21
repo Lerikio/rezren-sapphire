@@ -4,7 +4,7 @@ class CreateAliasDnsEntries < ActiveRecord::Migration
     create_table :alias_dns_entries do |t|
 
       t.string   :name, null: false
-      t.integer  :computer_dns_entry_id, null:false
+      t.integer  :computer_id, null:false
 
       t.boolean  :archived, default: false
 

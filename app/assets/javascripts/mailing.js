@@ -1,5 +1,18 @@
+<<<<<<< HEAD
 // Datatables
 $(document).ready( function () {
+=======
+$(document).ready( function () {
+	register_all_mailings();
+} );
+
+function register_all_mailings() {
+	register_datatable_mailings();
+	register_delete_buttons_mailings();
+}
+
+function register_datatable_mailings() {
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 	$('#mailings').dataTable( {
 		"sPaginationType": "full_numbers",
 		"sDom": '<"H"Cfr>t<"F"ip>',
@@ -8,8 +21,30 @@ $(document).ready( function () {
 			null,
 		    null,
 		    null,
+<<<<<<< HEAD
 		    { "bSortable": false }
 		]
 	} );
 } );
 
+=======
+		    { "bSortable": false, "bSearchable": false }
+		]
+	} );
+}
+
+function register_delete_buttons_mailings() {
+	$('#mailings a.remote-delete').click(function() {
+		if (confirm("Êtes vous sûr de vouloir supprimer cette mailing ?")) {
+	    	$.post(this.href, { _method: 'delete' }, null , "json").always(
+	  	  			function(data) { reload_mailings(); }
+	  		  	);
+	    }
+  	  return false;
+  	});
+}
+
+function reload_mailings() {
+	$('#wrapper').load('mailings/reload', function () {register_all_mailings();});
+}
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f

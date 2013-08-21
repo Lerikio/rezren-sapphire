@@ -1,0 +1,19 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3= @mailing.name
+
+.modal-body
+	%p
+		%b Name:
+		= @mailing.name
+	%p
+		%b Emails:
+		= @mailing.emails
+	%p
+		%b Adherent:
+		= @mailing.adherent_id
+	%p
+		%b Archived:
+		= @mailing.archived

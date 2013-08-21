@@ -7,6 +7,7 @@ $(document).ready( function () {
 		    { "bSortable": false },
 		    null,
 		    null
-		]
+		],
+		"aaSorting": [[ 2, "asc" ]]
 	} );
 } );

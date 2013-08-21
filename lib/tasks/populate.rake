@@ -4,6 +4,8 @@
 #
 # Génération de l'architecture générale du Rezo
 #
+# Script réalisé en août 2013 par Valérian Justine (Promo 2015)
+#
 # ----------------------------------------------------------------------------------------------------------------
 
 namespace :populate do
@@ -36,7 +38,7 @@ namespace :populate do
 						current_room.building = building
 						current_room.number = story.to_s + string_number
 						current_room.archived = false
-						current_room.save(validate: false) # Evite les validations : normalement, une chambre devrait aussi avoir un port
+						current_room.save
 					end
 				end
 
@@ -52,7 +54,45 @@ namespace :populate do
 						current_room.building = building
 						current_room.number = story + string_number
 						current_room.archived = false
-						current_room.save(validate: false) # Evite les validations : normalement, une chambre devrait aussi avoir un port
+						current_room.save
+					end
+				else
+					# Le rez-de-chaussé du bâtiment Barthelemy est différent des autres
+					for number in 1..9
+						string_number = "0" + number.to_s
+						current_room = Room.new
+						current_room.building = building
+						current_room.number = story + string_number
+						current_room.save
+					end
+				end
+			end
+
+			# Bâtiment Hertz, qui a une architecture différente
+			if building == 'H'
+				story = "0"
+				for number in 1..9
+					string_number = "0" + number.to_s
+					current_room = Room.new
+					current_room.building = building
+					current_room.number = story + string_number
+					current_room.archived = false
+					current_room.save
+				end
+				current_room = Room.create!(building: building, number: story + "10")
+
+				for story in 1..2
+					for number in 1..16
+						if number < 10
+							string_number = "0" + number.to_s
+						else
+							string_number = number.to_s
+						end
+						current_room = Room.new
+						current_room.building = building
+						current_room.number = story.to_s + string_number
+						current_room.archived = false
+						current_room.save
 					end
 				end
 			end

@@ -7,6 +7,7 @@ class Switch < ActiveRecord::Base
 # Attributs et associations	
 
 	attr_accessible :community, :ip_admin
+  attr_accessor :number_of_ports #Permet à l'utilisateur de rentrer le nombre de ports à créer pour le switch
 
 	has_many :ports, dependent: :destroy, inverse_of: :switch
 

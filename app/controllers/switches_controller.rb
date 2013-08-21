@@ -2,7 +2,8 @@
 class SwitchesController < ApplicationController
 
 # Charge @switch par id, ainsi que les autorisations du controller
-load_and_authorize_resource
+load_and_authorize_resource except: :create
+authorize_resource only: :create
 
   # GET /switches
   # GET /switches.json
@@ -15,47 +16,40 @@ load_and_authorize_resource
     end
   end
 
-  # GET /switches/1
-  # GET /switches/1.json
   def show
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @switch }
-    end
   end
 
-  # GET /switches/new
-  # GET /switches/new.json
   def new
-    @switch = Switch.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @switch }
-    end
   end
 
-  # GET /switches/1/edit
   def edit
   end
 
-  # POST /switches
-  # POST /switches.json
   def create
+    
+    number_of_ports = params[:switch][:number_of_ports]
+    params[:switch].delete :number_of_ports
+
     @switch = Switch.new(params[:switch])
 
     respond_to do |format|
-      if @switch.save
+      if @switch.valid? 
+
+        ActiveRecord::Base.transaction do
+          @switch.save  
+          if number_of_ports.to_i >= 1
+            for number in 1..number_of_ports.to_i
+              @switch.ports.build(number: number).save
+            end
+          end
+        end
 
         @switch.create_activity :create, owner: current_admin
-
-        format.html { redirect_to @switch, notice: 'Switch was successfully created.' }
         format.json { render json: @switch, status: :created, location: @switch }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @switch.errors, status: :unprocessable_entity }
-      end
+      else        
+        flash.now[:error] = @switch.errors.full_messages
+        format.js { render action: :new}
+      end  
     end
   end
 
@@ -71,8 +65,8 @@ load_and_authorize_resource
         format.html { redirect_to @switch, notice: 'Switch was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @switch.errors, status: :unprocessable_entity }
+        flash.now[:error] = @mailing.errors.full_messages
+        format.js { render action: :edit}
       end
     end
   end
@@ -80,13 +74,20 @@ load_and_authorize_resource
   # DELETE /switches/1
   # DELETE /switches/1.json
   def destroy
-    # On archive au lieu de supprimer de la base de donnée
-    @switch.update_attribute(:archived, true)
-    @switch.create_activity :destroy, owner: current_admin
-
     respond_to do |format|
+      # On archive au lieu de supprimer de la base de donnée
+      @switch.update_attribute(:archived, true)
+      @switch.create_activity :destroy, owner: current_admin
+
       format.html { redirect_to switches_url }
       format.json { head :no_content }
+    end
+  end
+
+  def reload
+    @switches = Switch.where(:archived => params[:archived].to_bool)
+    respond_to do |format|
+      format.html { render partial: "index_table" }
     end
   end
 end

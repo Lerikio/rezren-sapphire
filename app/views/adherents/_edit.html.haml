@@ -1,0 +1,58 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3 Rézotage
+
+	= bootstrap_flash
+
+= simple_form_for @adherent, validate: true, remote: true do |f|  
+
+	.modal-body
+
+		%ul.nav.nav-tabs
+			%li.active
+				= link_to "Adhérent", "#adherent", "data-toggle" => "tab"
+			%li
+				= link_to "Résidence", "#resident", id: "resident-tab", "data-toggle" => "tab"
+			%li
+				= link_to "Supélec", "#supelec", id: "supelec-tab", "data-toggle" => "tab"
+
+		.tab-content
+			.tab-pane.active#adherent
+
+				= render 'form', f: f
+
+			.tab-pane#resident
+
+				= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;'
+
+				%hr
+				%h2
+					- if @adherent.computers.count >= 2
+						Ordinateurs
+					- else
+						Ordinateur
+
+				= f.simple_fields_for :computers do |builder|
+					= render 'computers/form', f: builder 
+				
+				%hr
+				%h2 Paiement
+
+				= f.simple_fields_for :credit do |builder|
+					= builder.simple_fields_for :payments do |payment_builder|
+						= render 'payments/form', f: payment_builder
+
+			.tab-pane#supelec
+
+				.controls
+					= f.input_field :password, placeholder: "Mot de passe"
+					= f.input_field :password_confirmation, placeholder: "Confirmation du mot de passe"
+
+				%div.controls
+					= f.input_field :username, placeholder: "Username"
+					= f.input_field :promotion, as: :select, collection: (Time.now.year-5...Time.now.year+5), id: "years-select", style: 'width: 220px;'
+
+	.modal-footer
+		= f.submit "Editer", {class: "btn btn-primary"}

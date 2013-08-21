@@ -9,7 +9,7 @@ load_and_authorize_resource
     @payments = Payment.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html # index_all.html.erb
       format.json { render json: @payments }
     end
   end

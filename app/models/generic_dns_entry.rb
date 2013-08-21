@@ -8,7 +8,7 @@ scope :not_archived, -> { where(archived: false)}
 
 # Attributs et associations	
 
-	attr_accessible :external, :name, :return, :type
+	attr_accessible :external, :name, :return, :dns_type
 
 # Avant validation
 	
@@ -20,6 +20,6 @@ scope :not_archived, -> { where(archived: false)}
 	validates :name, presence: true,
 		format: { with: /^([a-z0-9_\-\.]+)$/ }
 	validates :return, presence: true
-	validates :type, presence: true
+	validates :dns_type, presence: true
 
 end
