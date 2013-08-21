@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
   end
   
   def create
-    @admin = Admin.find_by_username(params[:admin][:username])
+    @admin = Admin.where('lower(username) = ?', params[:admin][:username]).first
     if @admin && Admin.authenticate(params[:admin][:username], params[:admin][:password])
       session[:admin_id] = @admin.id
       redirect_to root_path
