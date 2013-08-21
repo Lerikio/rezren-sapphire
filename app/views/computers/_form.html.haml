@@ -5,9 +5,3 @@
       %span.add-on
         %i.icon-laptop.inline{rel: "tooltip", title: "Adresse MAC", style: "margin-top: 10px"}
 
-
-    = f.simple_fields_for :computer_dns_entry do |builder|
-
-      = render 'computer_dns_entries/form', f: builder
-
-

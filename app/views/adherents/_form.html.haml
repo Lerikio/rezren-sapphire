@@ -8,15 +8,19 @@
 
 .controls
 	.input-append
-		= f.input_field :full_name, placeholder: "Nom complet"
+		= f.input_field :first_name, placeholder: "Prénom"
 		%span.add-on
-			%i.icon-user{rel: "tooltip", title: "Nom complet", style: "margin-top: 10px"}
-
-
+			%i.icon-user{rel: "tooltip", title: "Prénom", style: "margin-top: 10px"}
 	.input-append
-		= f.input_field :email, placeholder: "E-mail"
+		= f.input_field :last_name, placeholder: "Nom de famille"
 		%span.add-on
-			%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px"}
+			%i.icon-user{rel: "tooltip", title: "Nom de famille", style: "margin-top: 10px"}
+
+
+.input-append
+	= f.input_field :email, placeholder: "E-mail"
+	%span.add-on
+		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px"}
 
 %div{style: 'display: none'}
 	= f.hidden_field :resident

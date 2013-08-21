@@ -3,7 +3,9 @@ class CreateAdherents < ActiveRecord::Migration
   def change
 	create_table :adherents do |t|
 		
-		t.string   :full_name, null: false, index: true
+		t.string   :first_name, null: false
+		t.string   :last_name, null: false
+
 		t.string   :username
 		t.string   :email, null: false
 		t.string   :state, default: "created"
@@ -18,5 +20,7 @@ class CreateAdherents < ActiveRecord::Migration
 
 		t.timestamps
 	end
+	add_index :adherents, [:first_name, :last_name]
+
   end
 end

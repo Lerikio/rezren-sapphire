@@ -10,7 +10,7 @@ scope :not_archived, -> { where(archived: false)}
 #	Attributs
 # --------------------------------------------------------------------------------------------------
 
-	attr_accessible :full_name, :password, :password_confirmation, :email, :username, :promotion, :room,
+	attr_accessible :first_name, :last_name, :password, :password_confirmation, :email, :username, :promotion, :room,
 		:rezoman, :resident, :supelec,
 		:computers_attributes, :credit_attributes
 			# La première ligne correspond à l'identité à proprement dit de l'adhérent
@@ -20,7 +20,7 @@ scope :not_archived, -> { where(archived: false)}
 				# Supelec : un supelec a le droit à un compte discourse, et est sur le VLAN::Supelec
 			# La dernière ligne permet la création d'un compte adhérent complet en un seul formulaire.
 
-	# :password n'est pas stocké dans la base de donnée, il permet simplement de réaliser les formulaires.
+	# ne sont pas stockés dans la base de donnée, ils permet simplement de réaliser les formulaires.
 	attr_accessor :password
 
 # --------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ scope :not_archived, -> { where(archived: false)}
 #	Validations
 # --------------------------------------------------------------------------------------------------
 
-	validates :full_name, presence: true
+	validates :first_name, :last_name, presence: true
 	validates :email, presence: true, uniqueness: true,
 		format: { with: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }
 	
@@ -98,6 +98,10 @@ state_machine :state, initial: :created do
 		room.id if room
 	end
 	
+	def full_name
+		self.first_name + " " self.last_name
+	end
+
 private
 
 	# Devrait être déplacé pour factorisation du code avec les admins
