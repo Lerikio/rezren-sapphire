@@ -11,25 +11,24 @@ class Computer < ActiveRecord::Base
 	scope :others,  -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Autre) }
 
 # Attributs et associations	
-	attr_accessible :adherent_id, :mac_address, :ip_address, :computer_dns_entry_attributes
+	attr_accessible :adherent_id, :mac_address, :ip_address, :name
 
 	belongs_to :adherent, inverse_of: :computers
-	has_one :computer_dns_entry, inverse_of: :computer, dependent: :destroy
+	has_many :alias_dns_entries, dependent: :destroy, inverse_of: :computer
 
 # Actions avant validation
 	before_validation :generate_ip
+	before_validation do
+		self.name = self.name.downcase if self.name.present?
+	end
 
 # Validations
     validates :mac_address, presence: true, uniqueness: true,
         format: { with: /^([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/i }
     validates :adherent, presence: true
     validates :ip_address, presence: true, uniqueness: true, format: {with: Resolv::IPv4::Regex}
-    validates :computer_dns_entry, presence: true
-
-# Création de l'entrée DNS
-	accepts_nested_attributes_for :computer_dns_entry
-
-
+   	validates :name, presence: true,
+		format: { with: /^([a-z0-9_\-\.]+)$/ }
 
 ####################################################################################################
 #
@@ -98,5 +97,31 @@ class Computer < ActiveRecord::Base
 		array_ip[0].to_s + "." + array_ip[1].to_s + "." + array_ip[2].to_s + "." + array_ip[3].to_s
 	end
 
+# --------------------------------------------------------------------------------------------------
+#	Renvoie l'adresse IP inverse pour les scripts DNS
+# --------------------------------------------------------------------------------------------------
 
+	def reverse_ip
+		ip_addr = IPAddr.new self.ip_address
+		ip_addr.reverse
+	end
+
+# --------------------------------------------------------------------------------------------------
+#	Génère un nom de domaine à partir du nom de l'adhérent lors de la création
+# --------------------------------------------------------------------------------------------------
+
+	def self.generate_name(adherent_name)
+		current_number = 2
+
+		# Normalisation de la chaîne de caractère
+		adherent_name = adherent_name.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.to_s
+		current_name = adherent_name
+
+		# Tant qu'une entrée DNS existe déjà avec ce nom, on augmente le nombre qui lui est rajouté
+		while Computer.find_by_name(current_name)
+			current_name = adherent_name + current_number.to_s
+			current_number += 1
+		end
+		return current_name
+	end
 end

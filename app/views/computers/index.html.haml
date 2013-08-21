@@ -14,7 +14,7 @@
     -@computers.each do |computer|
       %tr
         %td
-          = computer.computer_dns_entry.name
+          = computer.name
         %td
           = link_to computer.adherent.full_name, computer.adherent 
         %td

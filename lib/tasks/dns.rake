@@ -59,7 +59,7 @@ namespace :regenerate do
 
 		Computer.supelec.each do |computer|
 
-			supelec_zonefile.a << { class: 'IN', name: computer.computer_dns_entry.name, host: computer.ip_address} 
+			supelec_zonefile.a << { class: 'IN', name: computer.name, host: computer.ip_address} 
 
 		end
 
@@ -76,7 +76,7 @@ namespace :regenerate do
 
 		Computer.supelec.each do |computer|
 
-			supelec_reverse_zonefile.ptr << { class: 'IN', name: computer.computer_dns_entry.reverse_ip, host: computer.computer_dns_entry.name} 
+			supelec_reverse_zonefile.ptr << { class: 'IN', name: computer.reverse_ip, host: compute.name} 
 
 		end
 
@@ -93,7 +93,7 @@ namespace :regenerate do
 
 		Computer.others.each do |computer|
 
-			others_zonefile.ptr << { class: 'IN', name: computer.computer_dns_entry.name, host: computer.ip_address} 
+			others_zonefile.ptr << { class: 'IN', name: computer.name, host: computer.ip_address} 
 
 		end
 
@@ -110,7 +110,7 @@ namespace :regenerate do
 
 		Computer.others.each do |computer|
 
-			others_reverse_zonefile.ptr << { class: 'IN', name: computer.computer_dns_entry.reverse_ip, host: computer.computer_dns_entry.name} 
+			others_reverse_zonefile.ptr << { class: 'IN', name: computer.reverse_ip, host: computer.name} 
 
 		end
 

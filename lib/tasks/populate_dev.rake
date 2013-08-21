@@ -68,14 +68,12 @@ namespace :populate_dev do
 
 		computer = Computer.new
 		computer.mac_address = "00:00:00:00:00:00"
+		computer.name = Computer.generate_name(adherent.last_name)
 		adherent.computers << computer
 
 
-		dns_entry = ComputerDnsEntry.new :name => "dupont"
-		computer.computer_dns_entry = dns_entry
-
 		dns_alias = AliasDnsEntry.new :name => "thefirstcomp"
-		dns_entry.alias_dns_entries << dns_alias
+		computer.alias_dns_entries << dns_alias
 
 		room = Room.first
 		room.adherent = adherent
@@ -84,7 +82,6 @@ namespace :populate_dev do
 		room.save!
 		credit.save!
 		computer.save!
-		dns_entry.save!
 		dns_alias.save!
 	end
 
