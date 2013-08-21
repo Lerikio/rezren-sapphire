@@ -20,11 +20,7 @@ scope :not_archived, -> { where(archived: false)}
 	validates :value, presence: true
 	validates :paid_value, presence: true
 
-<<<<<<< HEAD
-	validates :comment, presence: true, unless: paid_value == value
-=======
 	validates :comment, presence: true, unless: :equality_of_values
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
 	validate :mean_is_correct
 	validates :bank_name, presence: true, if: :mean_is_cheque

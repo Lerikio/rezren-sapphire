@@ -1,10 +1,6 @@
 $("#modal-window").html("<%= escape_javascript(render 'new') %>");
 
 // Résident et/ou supélec
-<<<<<<< HEAD
-activate_button();
-
-=======
 init_buttons();
 adherent_is_resident_supelec_rezoman();
 activate_button();
@@ -13,33 +9,22 @@ activate_button();
 payment_is_cheque_or_liquid();
 choose_button();
 
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 // Tooltips
 $("[rel='tooltip']").tooltip();
 
 // Selects
 $('#rooms-select').select2({
-<<<<<<< HEAD
-  placeholder: "Chambre"
-=======
   placeholder: "Chambre"  
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 });
 $('#years-select').select2({
   placeholder: "Promotion"
 });
 
-<<<<<<< HEAD
-=======
 // Faire disparaitre le modal quand la requête réussie
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 $("form").on("ajax:success", function(event, data, status, xhr){
     $('#modal-window').modal('hide');
   });
 
-<<<<<<< HEAD
-// Functions
-=======
 
 // Functions
 function init_buttons() {
@@ -51,7 +36,6 @@ function init_buttons() {
     }
 }
 
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 function activate_button() {
   $('.activable').children().click(function(){
     if ( $(this).hasClass('active') ){
@@ -59,34 +43,12 @@ function activate_button() {
     } else {
       $(this).addClass("btn-info active");  
     };
-<<<<<<< HEAD
-    adherent_is_resident_or_supelec();
-=======
     adherent_is_resident_supelec_rezoman();
     return false;
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
   });
 };
 
 function choose_button() {
-<<<<<<< HEAD
-  $(this).parent().children('.btn-info').addClass('disabled');
-  $(this).parent().children('.btn-info').removeClass('btn-info');
-  $(this).removeClass('disabled');
-  $(this).addClass("btn-info");
-};
-
-function adherent_is_resident_or_supelec() {
-
-  if( $("#resident-btn").hasClass("active")){
-    console.log('1');
-    $('#resident-check').attr('value', true);
-    $('#resident-tab').show();
-    $('#resident').children().show();
-  } else {
-    console.log('2');
-    $('#resident-check').attr('value', false);
-=======
   $('.choosable').children().click(function(){
     if ( $(this).hasClass('active') ){
       // do nothing
@@ -107,26 +69,12 @@ function adherent_is_resident_supelec_rezoman() {
     $('#resident').children().show();
   } else {
     $('#adherent_resident').attr('value', false);
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
     $('#resident-tab').hide();
     $('#resident').children().hide();
   };
 
 
   if( $("#supelec-btn").hasClass("active")){
-<<<<<<< HEAD
-    console.log('3');
-    $('#supelec-check').attr('value', true);
-    $('#supelec-tab').show();
-    $('#supelec').children().show();
-  } else {
-    console.log('4');
-    $('#supelec-check').attr('value', false);
-    $('#supelec-tab').hide();
-    $('#supelec').children().hide();
-  };
-
-=======
     $('#adherent_supelec').attr('value', true);
     $('#supelec-tab').show();
     $('#supelec').children().show();
@@ -154,5 +102,4 @@ function payment_is_cheque_or_liquid(){
       $input.delay(800).attr('disabled', true);
     });
   };
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 };

@@ -14,32 +14,13 @@ authorize_resource only: :create
 
   def new
     @computer = @adherent.computers.build
-<<<<<<< HEAD
-    @computer_dns_entry = @computer.build_computer_dns_entry
-    
-=======
 
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
     @credit = @adherent.build_credit
     @credit.payments.build
   end
 
-<<<<<<< HEAD
-  def edit
-    @adherent.computers.build
-    @adherent.credit.build
-  end
 
   def create
-
-    @room = Room.find_by_id(params[:adherent][:room])
-    params[:adherent].delete :room
-
-    @adherent = Adherent.new(params[:adherent])
-=======
-
-  def create
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
     params[:adherent][:room] = Room.find_by_id(params[:adherent][:room])
     #params[:adherent].delete :room
@@ -50,16 +31,8 @@ authorize_resource only: :create
     respond_to do |format|
       if @adherent.save
 
-        @room.adherent = @adherent
-        @romm.save
-
         @adherent.create_activity :create, owner: current_admin
         format.json { render json: @adherent, status: :created, location: @adherent }
-<<<<<<< HEAD
-      else
-        format.json { render json: @adherent.errors, status: :unprocessable_entity }
-      end
-=======
       else        
         flash.now[:error] = @adherent.errors.full_messages
 
@@ -71,7 +44,6 @@ authorize_resource only: :create
         @credit.payments.build if @credit.payments.empty?
         format.js { render action: :new}
       end  
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
     end
   end
 

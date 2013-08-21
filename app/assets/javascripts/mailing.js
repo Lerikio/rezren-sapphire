@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-// Datatables
-$(document).ready( function () {
-=======
 $(document).ready( function () {
 	register_all_mailings();
 } );
@@ -12,7 +8,6 @@ function register_all_mailings() {
 }
 
 function register_datatable_mailings() {
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 	$('#mailings').dataTable( {
 		"sPaginationType": "full_numbers",
 		"sDom": '<"H"Cfr>t<"F"ip>',
@@ -21,13 +16,6 @@ function register_datatable_mailings() {
 			null,
 		    null,
 		    null,
-<<<<<<< HEAD
-		    { "bSortable": false }
-		]
-	} );
-} );
-
-=======
 		    { "bSortable": false, "bSearchable": false }
 		]
 	} );
@@ -47,4 +35,3 @@ function register_delete_buttons_mailings() {
 function reload_mailings() {
 	$('#wrapper').load('mailings/reload', function () {register_all_mailings();});
 }
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f

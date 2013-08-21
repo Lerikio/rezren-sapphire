@@ -3,17 +3,10 @@
 	%head
 		%title= full_title(yield(:title))
 		%meta{'http-equiv' => 'Content-Type', :content => 'text/html;charset=UTF-8'}
-<<<<<<< HEAD
-			= stylesheet_link_tag    "application", media: "all"
-			= javascript_include_tag "application"
-			= csrf_meta_tags
-			= render 'layouts/shim'
-=======
 		= stylesheet_link_tag    "application", media: "all"
 		= javascript_include_tag "application"
 		= csrf_meta_tags
 		= render 'layouts/shim'
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 	%body
 		= render 'layouts/header'
 		.container-fluid
@@ -22,8 +15,4 @@
 			.hero-unit
 				= yield 
 
-<<<<<<< HEAD
-		#modal-window.modal.hide.fade{ role: "dialog", "aria-labelledby" => "Modal", "aria-hidden" => "true"}
-=======
 		#modal-window.modal.hide.fade{ role: "dialog", "aria-hidden" => "true"}
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f

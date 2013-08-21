@@ -11,11 +11,7 @@ class Computer < ActiveRecord::Base
 	scope :others,  -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Autre) }
 
 # Attributs et associations	
-<<<<<<< HEAD
-	attr_accessible :adherent_id, :mac_address, :ip_address, :computer_dns_entry_attributes
-=======
 	attr_accessible :adherent_id, :mac_address, :ip_address, :name
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
 	belongs_to :adherent, inverse_of: :computers
 	has_many :alias_dns_entries, dependent: :destroy, inverse_of: :computer
@@ -35,17 +31,8 @@ class Computer < ActiveRecord::Base
         format: { with: /^([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/i }
     validates :adherent, presence: true
     validates :ip_address, presence: true, uniqueness: true, format: {with: Resolv::IPv4::Regex}
-<<<<<<< HEAD
-    validates :computer_dns_entry, presence: true
-
-# Création de l'entrée DNS
-	accepts_nested_attributes_for :computer_dns_entry
-
-
-=======
    	validates :name, presence: true,
 		format: { with: /^([a-z0-9_\-\.]+)$/ }
->>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
 
 ####################################################################################################
 #

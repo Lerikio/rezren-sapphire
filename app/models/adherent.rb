@@ -66,6 +66,7 @@ scope :not_archived, -> { where(archived: false)}
 # --------------------------------------------------------------------------------------------------
 #	Nested forms
 # --------------------------------------------------------------------------------------------------
+
 	accepts_nested_attributes_for :computers, reject_if: :not_resident?, :allow_destroy => true
 	accepts_nested_attributes_for :credit, reject_if: :not_resident?
 

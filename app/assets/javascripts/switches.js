@@ -1,4 +1,3 @@
-// Datatables
 $(document).ready( function () {
 	register_all_switches();
 } );
