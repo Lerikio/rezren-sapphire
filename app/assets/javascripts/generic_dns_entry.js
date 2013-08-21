@@ -23,9 +23,11 @@ function register_datatable_generic_dns_entries() {
 
 function register_delete_buttons_generic_dns_entries() {
 	$('#generic_dns_entries a.remote-delete').click(function() {
-    	$.post(this.href, { _method: 'delete' }, null , "json").always(
-  	  			function(data) { reload_generic_dns_entries(); }
-  		  	);
+		if (confirm("Êtes vous sûr de vouloir supprimer cette entrée DNS ?")) {
+	    	$.post(this.href, { _method: 'delete' }, null , "json").always(
+	  	  			function(data) { reload_generic_dns_entries(); }
+	  		  	);
+	    };
   	  return false;
   	});
 }

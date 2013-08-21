@@ -23,9 +23,11 @@ function register_datatable_mailings() {
 
 function register_delete_buttons_mailings() {
 	$('#mailings a.remote-delete').click(function() {
-    	$.post(this.href, { _method: 'delete' }, null , "json").always(
-  	  			function(data) { reload_mailings(); }
-  		  	);
+		if (confirm("Êtes vous sûr de vouloir supprimer cette mailing ?")) {
+	    	$.post(this.href, { _method: 'delete' }, null , "json").always(
+	  	  			function(data) { reload_mailings(); }
+	  		  	);
+	    }
   	  return false;
   	});
 }
