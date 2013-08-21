@@ -54,7 +54,8 @@ namespace :populate_dev do
 	task "adherent" => :environment do
 
 		adherent = Adherent.new
-		adherent.full_name = "Jean Dupont"
+		adherent.first_name = "Jean"
+		adherent.last_name = "Dupont"
 		adherent.email = "jean.dupont@rezren.fr"
 		adherent.password = "mdpTest"
 		adherent.username = "jean.dupont"

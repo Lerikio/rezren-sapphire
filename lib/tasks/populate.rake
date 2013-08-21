@@ -63,14 +63,13 @@ namespace :populate do
 						current_room = Room.new
 						current_room.building = building
 						current_room.number = story + string_number
-						current_room.archived = false
 						current_room.save
 					end
 				end
 			end
 
 			# Bâtiment Hertz, qui a une architecture différente
-			if building == H
+			if building == 'H'
 				story = "0"
 				for number in 1..9
 					string_number = "0" + number.to_s
@@ -80,7 +79,7 @@ namespace :populate do
 					current_room.archived = false
 					current_room.save
 				end
-				current_room = Room.create!(building: building, number: story + "10", archived: false)
+				current_room = Room.create!(building: building, number: story + "10")
 
 				for story in 1..2
 					for number in 1..16
