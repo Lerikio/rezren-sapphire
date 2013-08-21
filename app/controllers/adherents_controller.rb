@@ -14,7 +14,6 @@ authorize_resource only: :create
 
   def new
     @computer = @adherent.computers.build
-    @computer_dns_entry = @computer.build_computer_dns_entry
 
     @credit = @adherent.build_credit
     @credit.payments.build
@@ -28,15 +27,16 @@ authorize_resource only: :create
 
     @adherent = Adherent.new(params[:adherent])
     @adherent.credit.payments.first.admin = current_admin if @adherent.credit
-
+    if computer = @adherent.computers.first
+      dns_entry = computer.build_computer_dns_entry(name: ComputerDnsEntry.generate_name(@adherent.last_name) )
+    end
     respond_to do |format|
       if @adherent.save
-
-        #if @room
-        #  @room.adherent = @adherent
-        #  @romm.save
-        #end
         
+        if dns_entry
+          dns_entry.save
+        end
+
         @adherent.create_activity :create, owner: current_admin
         format.json { render json: @adherent, status: :created, location: @adherent }
       else        
@@ -44,8 +44,6 @@ authorize_resource only: :create
 
         @adherent.computers.build if @adherent.computers.empty?
         @computer = @adherent.computers.first
-        @computer.build_computer_dns_entry unless @computer.computer_dns_entry
-        @computer_dns_entry = @computer.computer_dns_entry
 
         @adherent.build_credit unless @adherent.credit
         @credit = @adherent.credit
