@@ -1,10 +1,20 @@
-= form_for @adherent do |f|
-  - if @adherent.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@adherent.errors.count, "error")} prohibited this adherent from being saved:"
-      %ul
-        - @adherent.errors.full_messages.each do |msg|
-          %li= msg
+.btn-group.activable
+	%button.btn.btn-info.active#resident-btn{"data-target" => "#if_resident, #computers-form, #payment-form", "data-toggle" => "collapse"}
+		Résident
+	%button.btn#supelec-btn{"data-target" => "#if_supelec", "data-toggle" => "collapse"}
+		Supélec
 
-  .actions
-    = f.submit 'Save'
+.controls
+	= f.input_field :full_name, placeholder: "Nom complet"
+	
+
+.input-append
+	= f.input_field :email, placeholder: "E-mail"
+	%span.add-on
+		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px", "data-placement" => "right"}
+
+%div{display: "none"}
+	= f.input :resident, as: :boolean do
+		= f.check_box :resident, {id: "resident-check"}, "true", "false"
+	= f.input :supelec, as: :boolean do  
+		= f.check_box :supelec, {id: "supelec-check" }, "true", "false" 

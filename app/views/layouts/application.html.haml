@@ -6,7 +6,7 @@
 			= stylesheet_link_tag    "application", media: "all"
 			= javascript_include_tag "application"
 			= csrf_meta_tags
-			-# = render 'layouts/shim'
+			= render 'layouts/shim'
 	%body
 		= render 'layouts/header'
 		.container-fluid
@@ -15,6 +15,4 @@
 			.hero-unit
 				= yield 
 
-
-		
-		- # = debug(params) if Rails.env.development?
+		#modal-window.modal.hide.fade{ role: "dialog", "aria-labelledby" => "Modal", "aria-hidden" => "true"}

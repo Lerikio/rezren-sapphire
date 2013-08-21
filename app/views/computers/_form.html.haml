@@ -1,19 +1,13 @@
-= form_for @computer do |f|
-  - if @computer.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@computer.errors.count, "error")} prohibited this computer from being saved:"
-      %ul
-        - @computer.errors.full_messages.each do |msg|
-          %li= msg
+.duplicatable_nested_form
+  .controls
+    .input-append
+      = f.input_field :mac_address, placeholder: "Adresse MAC"
+      %span.add-on
+        %i.icon-laptop.inline{rel: "tooltip", title: "Adresse MAC", style: "margin-top: 10px", "data-placement" => "right"}
 
-  .field
-    = f.label :mac_address
-    = f.text_field :mac_address
-  .field
-    = f.label :adherent_id
-    = f.number_field :adherent_id
-  .field
-    = f.label :alias
-    = f.text_field :alias
-  .actions
-    = f.submit 'Save'
+
+    = f.simple_fields_for :computer_dns_entry do |builder|
+
+      = render 'computer_dns_entries/form', f: builder
+
+

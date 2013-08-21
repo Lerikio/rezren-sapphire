@@ -1,3 +1,4 @@
+// Datatables
 $(document).ready( function () {
 	$('#computers').dataTable( {
 		"sPaginationType": "full_numbers",

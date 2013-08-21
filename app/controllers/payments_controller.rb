@@ -17,7 +17,7 @@ load_and_authorize_resource
   # GET /adherent/id/payments
   # GET /payments.json
   def index
-    @payments = Payment.all
+    @payments = Payment.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb

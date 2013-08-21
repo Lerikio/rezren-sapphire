@@ -10,16 +10,21 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//
+//  --------------------------------------------------------------------------------------------------------
+//	ATTENTION : Pour que Turbolinks fonctionne, aucun code ne devrait être écrit ici, et tout code "global"
+//              devrait être écrit dans global.js
+//				En effet, il doit être importé après tout le reste du javascript de l'application.
+//  --------------------------------------------------------------------------------------------------------
+//
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require dataTables/jquery.dataTables
 //= require bootstrap
 //= require rails.validations
 //= require rails.validations.simple_form
-//= require autocomplete-rails
+//= require select2
 //= require_tree .
-
-$(function () {
-    $("[rel='tooltip']").tooltip();
-});
+//= require turbolinks

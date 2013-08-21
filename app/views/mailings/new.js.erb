@@ -1,1 +1,8 @@
 $("#modal-window").html("<%= escape_javascript(render 'new') %>");
+
+// Rechargement des fonctions JS nécessaires dans le modal
+$('.select2').select2({
+	placeholder: "Propriétaire"
+});
+
+$("[rel='tooltip']").tooltip();

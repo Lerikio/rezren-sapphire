@@ -1,6 +1,6 @@
 // Datatables
 $(document).ready( function () {
-	$('#generic-dns').dataTable( {
+	$('#mailings').dataTable( {
 		"sPaginationType": "full_numbers",
 		"sDom": '<"H"Cfr>t<"F"ip>',
 		"bJQueryUI": true,	
@@ -12,3 +12,4 @@ $(document).ready( function () {
 		]
 	} );
 } );
+

@@ -2,13 +2,16 @@
 	%li
 
 %div
-	= f.input_field :adherent_id, url: autocomplete_adherent_full_name_path, as: :autocomplete, class: "label-field input-xlarge", placeholder: "Propriétaire", update_elements: {}
-	%i.icon-user.inline{rel: "tooltip", title: "Propriétaire"}
+	= f.input_field :adherent_id, collection: Adherent.not_archived.collect{ |i| [i.full_name, i.id]}, class: "select2", style: "width: 239px;"
+
+	%i.icon-user.inline{rel: "tooltip", title: "Propriétaire", style: "margin-top: 10px", "data-placement" => "right"}
 
 %div{style: "margin: 10px"}
 
 
 .input-append
-	= f.input_field :name, required: true, class: "label-field", id: "appendedInput", :placeholder => "Adresse"
-	%span.add-on{style: 'margin-bottom: 3px;', rel: "tooltip", title: "Adresse"}
+	= f.input_field :name, required: true, id: "appendedInput", :placeholder => "Adresse"
+	%span.add-on{style: 'margin-bottom: 3px;', rel: "tooltip", title: "Nom de domaine. Des alias peuvent exister."}
 		= "@" + Mailing::DomainName
+
+= f.input_field :emails, collection: (Adherent.not_archived.collect{ |i| i.email} + Mailing.not_archived.collect{ |i| i.address}) , class: "select2", multiple: true, "data-placeholder" => "E-mails", style: "width: 520px;"

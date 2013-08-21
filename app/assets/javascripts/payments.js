@@ -1,9 +1,9 @@
 // Datatables
 $(document).ready( function () {
-	$('#generic-dns').dataTable( {
+	$('#payments').dataTable( {
 		"sPaginationType": "full_numbers",
 		"sDom": '<"H"Cfr>t<"F"ip>',
-		"bJQueryUI": true,	
+		"bJQueryUI": true,
 		"aoColumns": [
 			null,
 		    null,

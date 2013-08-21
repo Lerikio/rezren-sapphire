@@ -6,11 +6,12 @@ class Computer < ActiveRecord::Base
 	include PublicActivity::Common
 
 # Filtres
+	scope :not_archived, -> { where(archived: false)}
 	scope :supelec, -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Supelec) }
 	scope :others,  -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Autre) }
 
 # Attributs et associations	
-	attr_accessible :adherent_id, :mac_address, :ip_address
+	attr_accessible :adherent_id, :mac_address, :ip_address, :computer_dns_entry_attributes
 
 	belongs_to :adherent, inverse_of: :computers
 	has_one :computer_dns_entry, inverse_of: :computer, dependent: :destroy
@@ -24,6 +25,10 @@ class Computer < ActiveRecord::Base
     validates :adherent, presence: true
     validates :ip_address, presence: true, uniqueness: true, format: {with: Resolv::IPv4::Regex}
     validates :computer_dns_entry, presence: true
+
+# Création de l'entrée DNS
+	accepts_nested_attributes_for :computer_dns_entry
+
 
 
 ####################################################################################################

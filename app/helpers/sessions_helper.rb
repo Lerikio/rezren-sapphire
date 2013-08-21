@@ -6,7 +6,7 @@ module SessionsHelper
 	end
 
 	def signed_in_admin
-    	redirect_to root_path, notice: "Veuillez vous connecter." unless signed_in?
+    	redirect_to connexion_path, notice: "Veuillez vous connecter." unless signed_in?
     end
 
     def signed_in?
