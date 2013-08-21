@@ -18,9 +18,13 @@ class Computer < ActiveRecord::Base
 
 # Actions avant validation
 	before_validation :generate_ip
+	before_validation :on => :create do 
+		self.name = generate_name(adherent.last_name)
+	end
 	before_validation do
 		self.name = self.name.downcase if self.name.present?
 	end
+	
 
 # Validations
     validates :mac_address, presence: true, uniqueness: true,

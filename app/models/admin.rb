@@ -6,11 +6,11 @@ class Admin < ActiveRecord::Base
 
 # Attributs et associations
 	attr_accessible :password, :password_confirmation, :username
-	attr_accessor :password 
+
+	attr_accessor :password
 
 	has_and_belongs_to_many :roles
 	has_many :payments, inverse_of: :admin
-	#belongs_to :adherent # Qui est l'admin ?
 
 # Actions avant sauvegarde
 	before_save :encrypt_password
@@ -18,7 +18,6 @@ class Admin < ActiveRecord::Base
 # Validations
 	validates :password, confirmation: true, presence: true, length: {minimum: 6}
 	validates :username, presence: true, uniqueness: true, length: {minimum: 3}
-	#validates :adherent, presence: true
 
 # Méthodes de classe
 	def self.authenticate(username, password)

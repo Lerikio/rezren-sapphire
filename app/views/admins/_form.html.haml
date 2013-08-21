@@ -1,10 +1,8 @@
-= form_for @admin do |f|
-  - if @admin.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@admin.errors.count, "error")} prohibited this admin from being saved:"
-      %ul
-        - @admin.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for @admin do |f|
 
-  .actions
-    = f.submit 'Save'
+	= f.input_field :username
+
+	= f.input_field :roles, collection: Role.all, multiple: true, style: "width: 300px;"
+
+	.actions
+		= f.submit 'Save'

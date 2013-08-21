@@ -145,4 +145,12 @@ namespace :populate do
 		end
 	end
 
+	desc "Génère des rôles pour les admins"
+	task :roles => :environment do |t, args|
+		Role.new(:name => 'Zero').save
+		Role.new(:name => 'Rezoman').save
+		Role.new(:name => 'Tresorier').save
+		Role.new(:name => 'Superadmin').save
+	end
+
 end

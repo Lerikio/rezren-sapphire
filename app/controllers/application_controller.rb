@@ -16,12 +16,17 @@ class ApplicationController < ActionController::Base
 
 # Override la méthode de base de CanCan pour utiliser current_admin à la place de current_user
 	def current_ability
-  		@current_ability ||= Ability.new(current_admin)
+		@current_ability ||= Ability.new(current_admin)
 	end
 
 	def check_archived_parameter
 		unless params[:archived]
 			params[:archived] = "false"
 		end
+	end
+
+	rescue_from CanCan::AccessDenied do |exception|
+		flash[:error] = "Access denied!"
+ 		redirect_to root_url
 	end
 end

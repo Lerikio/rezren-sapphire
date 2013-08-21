@@ -10,4 +10,6 @@ $(document).ready( function () {
 		    { "bSortable": false, "bSearchable": false }
 		]
 	} );
+	$('#admin_roles').select2();
 } );
+

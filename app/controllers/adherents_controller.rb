@@ -27,15 +27,9 @@ authorize_resource only: :create
 
     @adherent = Adherent.new(params[:adherent])
     @adherent.credit.payments.first.admin = current_admin if @adherent.credit
-    if computer = @adherent.computers.first
-      dns_entry = computer.build_computer_dns_entry(name: ComputerDnsEntry.generate_name(@adherent.last_name) )
-    end
+
     respond_to do |format|
       if @adherent.save
-        
-        if dns_entry
-          dns_entry.save
-        end
 
         @adherent.create_activity :create, owner: current_admin
         format.json { render json: @adherent, status: :created, location: @adherent }
