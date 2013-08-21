@@ -20,4 +20,9 @@ attr_accessible :payments_attributes
 	accepts_nested_attributes_for :payments
 
 
+<<<<<<< HEAD
 end
+
+=======
+end
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f

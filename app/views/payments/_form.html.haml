@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+.btn-group.choosable
+  Moyen de paiement :
+  %button.btn.btn-info#check-btn
+    Chèque
+  %button.btn.btn-info#liquid-btn
+    Liquide
+
+.controls
+  = f.input_field :value, placeholder: "Valeur du paiement"
+  = f.input_field :paid_value, placeholder: "Valeur réelle"
+
+.controls
+  = f.input_field :comment, as: :text, placeholder: "Commentaire, nécessaire si les deux valeurs du paiements sont différentes", rows: "4", width: "460px"
+=======
 .controls
 	.btn-group.choosable
 		Moyen de paiement :
@@ -26,3 +41,4 @@
 	= f.input_field :comment, as: :text, placeholder: "Commentaire. Nécessaire si les deux valeurs du paiements sont différentes.", rows: "4", style: "width: 490px"
 
 	= f.input_field :mean, id: "mean", style: "display: none"
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f

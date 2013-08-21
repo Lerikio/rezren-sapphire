@@ -1,5 +1,13 @@
 $("#modal-window").html("<%= escape_javascript(render 'new') %>");
 
+<<<<<<< HEAD
+// Rechargement des fonctions JS nécessaires dans le modal
+$('.select2').select2({
+	placeholder: "Propriétaire"
+});
+
+$("[rel='tooltip']").tooltip();
+=======
 $('#mailing_adherent_id').select2({
 	placeholder: "Propriétaire"
 });
@@ -25,3 +33,4 @@ $("form").on("ajax:success", function(event, data, status, xhr){
     $('#modal-window').modal('hide');
     reload_mailings();
   });
+>>>>>>> 6d299dfb9b0a4c3197311b60d44d613cd23cfd8f
