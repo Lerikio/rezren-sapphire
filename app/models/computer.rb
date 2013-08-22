@@ -7,8 +7,6 @@ class Computer < ActiveRecord::Base
 
 # Filtres
 	scope :not_archived, -> { where(archived: false)}
-	scope :supelec, -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Supelec) }
-	scope :others,  -> { where(adherent.room.port.vlan_connection.vlan = VLAN::Autre) }
 
 # Attributs et associations	
 	attr_accessible :adherent_id, :mac_address, :ip_address, :name
@@ -124,5 +122,21 @@ class Computer < ActiveRecord::Base
 			current_number += 1
 		end
 		return current_name
+	end
+
+	def self.supelec
+		computers = []
+		Computer.all.each do |computer|
+			computers << computer if computer.adherent.supelec
+		end
+		computers
+	end
+
+	def self.others
+		computers = []
+		Computer.all.each do |computer|
+			computers << computer unless computer.adherent.supelec
+		end
+		computers
 	end
 end

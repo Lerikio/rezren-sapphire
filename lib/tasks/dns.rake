@@ -2,7 +2,7 @@
 #
 # ----------------------------------------------------------------------------------------------------------------
 #
-# Regénération des bases DNS 
+# Regénération des zonefiles DNS 
 #
 # ----------------------------------------------------------------------------------------------------------------
 
@@ -55,15 +55,24 @@ namespace :regenerate do
 # -----------------------------------------------------------------------------------------------------------------
 	desc "Régénération des DNS direct pour le VLAN::Supelec"
 	task :supelec_dns => :environment do
-		supelec_zonefile = Zonefile.new('./supelec_zonefile.db')
+		zf = Zonefile.new("$ORIGIN local.rez-rennes.supelec.fr.")
+		zf.soa[:email] = 'rezo.rez-rennes.supelec.'
+		zf.soa[:ttl] = 3600
+		zf.soa[:primary] = 'ns.local.rez-rennes.supelec.fr.'
+		zf.soa[:refresh] = '1d'
+		zf.soa[:retry] = '2h'
+		zf.soa[:expire] = '4w'
+		zf.soa[:minimumTTL] = '1h'
 
 		Computer.supelec.each do |computer|
 
-			supelec_zonefile.a << { class: 'IN', name: computer.name, host: computer.ip_address} 
+			zf.a << { class: 'IN', name: computer.name, host: computer.ip_address} 
 
 		end
 
-		supelec_zonefile.output
+		zf.new_serial
+
+		puts zf.output
 	end	
 
 

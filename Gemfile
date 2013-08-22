@@ -89,3 +89,7 @@ source 'https://rubygems.org'
 
 # Bibliothèque d'utilisation de la console en rake
 	gem 'highline'
+
+# Bibliothèques SSH et SCP pour l'administration des autres serveurs
+	gem 'net-ssh'
+	gem 'net-scp'
