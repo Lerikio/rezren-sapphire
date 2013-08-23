@@ -10,7 +10,7 @@ scope :not_archived, -> { where(archived: false)}
 #	Attributs
 # --------------------------------------------------------------------------------------------------
 
-	attr_accessible :first_name, :last_name, :password, :password_confirmation, :email, :username, :promotion, :room,
+	attr_accessible :first_name, :last_name, :password, :password_confirmation, :email, :username, :promotion, :room, :supelec_email, :use_supelec_email,
 		:rezoman, :resident, :supelec,
 		:computers_attributes, :credit_attributes
 			# La première ligne correspond à l'identité à proprement dit de l'adhérent
@@ -58,7 +58,9 @@ scope :not_archived, -> { where(archived: false)}
 	validates :username, presence: true, if: :supelec?
 	validates :username, uniqueness: true, length: {minimum: 3},
 		:format => { :with => /^([a-zA-Z0-9_\-\.]+)$/ }, if: :supelec?
-	
+	validates :supelec_email, uniqueness: true, presence: true, if: :supelec?
+	validates :supelec_email, format: { with: /^([a-zA-Z0-9_\-\.]+)$/ }
+
 	# S'il s'agit d'un résident :
 	validates :credit, presence: true, if: :resident?
 	validates :room, presence: true, if: :resident?
@@ -102,6 +104,11 @@ state_machine :state, initial: :created do
 		self.first_name + " " + self.last_name
 	end
 
+	def full_supelec_address
+		if supelec_email
+			supelec_email + "@supelec.fr"
+		end
+	end
 private
 
 	# Devrait être déplacé pour factorisation du code avec les admins

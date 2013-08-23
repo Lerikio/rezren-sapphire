@@ -11,6 +11,7 @@ class SessionsController < ApplicationController
   end
   
   def create
+    params[:admin][:username] = params[:admin][:username].downcase
     @admin = Admin.where('lower(username) = ?', params[:admin][:username]).first
     if @admin && Admin.authenticate(params[:admin][:username], params[:admin][:password])
       session[:admin_id] = @admin.id

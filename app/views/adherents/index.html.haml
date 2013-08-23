@@ -2,7 +2,7 @@
 	Liste des adhérents
 
 
-%table#adherents
+%table#adherents{style: "overflow: visible"}
 	%thead
 		%tr
 			%th Nom
@@ -37,18 +37,17 @@
 					= link_to adherent_path(adherent.id), class:"btn btn-success" do
 						%i.icon-eye-open.icon-large
 						Voir
-					.btn-group
+					.btn-group{style: "margin-top: 2px"}
 						= link_to edit_adherent_path(adherent.id), class:"btn btn-warning", remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
 							%i.icon-pencil.icon-large
-							Editer
 						%button.btn.btn-warning.dropdown-toggle{"data-toggle" => "dropdown"}
 							%span.caret
 						%ul.dropdown-menu
 							%li
-								= link_to new_adherent_computer_path(adherent.id), class:"btn btn-warning", remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
+								= link_to new_adherent_computer_path(adherent.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
 									Nouvel ordinateur
 							%li
-								= link_to new_adherent_payment_path(adherent.id), class:"btn btn-warning", remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
+								= link_to new_adherent_payment_path(adherent.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
 									Nouveau paiement
 					= link_to adherent_path(adherent.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + adherent.full_name + "? Cette opération est irréversible.") } do
 						%i.icon-trash.icon-large

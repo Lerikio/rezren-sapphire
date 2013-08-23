@@ -8,6 +8,8 @@ class CreateAdherents < ActiveRecord::Migration
 
 		t.string   :username
 		t.string   :email, null: false
+		t.string   :supelec_email
+		t.boolean   :use_supelec_email, default: false
 		t.string   :state, default: "created"
 		t.integer  :promotion
 		t.boolean  :rezoman, default: false

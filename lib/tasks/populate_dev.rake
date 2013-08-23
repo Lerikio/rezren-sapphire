@@ -25,7 +25,7 @@ namespace :populate_dev do
 	desc "Crée des instances de tous les modèles et leur dépendance"
 	task "all" => :environment do
 		ActiveRecord::Base.transaction do
-			Rake::Task["populate_dev:architecture"].invoke
+			Rake::Task["populate_dev:architecture"	].invoke
 			Rake::Task["populate_dev:adherent"].invoke
 			Rake::Task["populate_dev:admin"].invoke
 		end
@@ -59,6 +59,7 @@ namespace :populate_dev do
 		adherent.email = "jean.dupont@rezren.fr"
 		adherent.password = "mdpTest"
 		adherent.username = "jean.dupont"
+		adherent.supelec_email = "jean.dupont"
 		adherent.promotion = Time.now.year
 		adherent.resident = true
 		adherent.supelec = true
@@ -68,7 +69,6 @@ namespace :populate_dev do
 
 		computer = Computer.new
 		computer.mac_address = "00:00:00:00:00:00"
-		computer.name = Computer.generate_name(adherent.last_name)
 		adherent.computers << computer
 
 

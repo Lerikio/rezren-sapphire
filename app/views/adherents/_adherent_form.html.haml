@@ -1,0 +1,28 @@
+.controls.btn-group.activable
+	%button.btn#resident-btn{"data-target" => "#if_resident, #computers-form, #payment-form", "data-toggle" => "collapse"}
+		Résident
+	%button.btn#supelec-btn{"data-target" => "#if_supelec", "data-toggle" => "collapse"}
+		Supélec
+	%button.btn#rezoman-btn{"data-target" => "#if_supelec", "data-toggle" => "collapse", style: 'display: none'}
+		Rezoman
+
+.controls
+	.input-append
+		= f.input_field :first_name, placeholder: "Prénom"
+		%span.add-on
+			%i.icon-user{rel: "tooltip", title: "Prénom", style: "margin-top: 10px"}
+	.input-append
+		= f.input_field :last_name, placeholder: "Nom de famille"
+		%span.add-on
+			%i.icon-user{rel: "tooltip", title: "Nom de famille", style: "margin-top: 10px"}
+
+
+.input-append
+	= f.input_field :email, placeholder: "E-mail"
+	%span.add-on
+		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px"}
+
+%div{style: 'display: none'}
+	= f.hidden_field :resident
+	= f.hidden_field :supelec
+	= f.hidden_field :rezoman
