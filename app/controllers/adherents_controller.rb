@@ -33,6 +33,7 @@ authorize_resource only: :create
         format.json { render json: @adherent, status: :created, location: @adherent }
       else        
         flash.now[:error] = @adherent.errors.full_messages
+        logger.info @adherent.errors
 
         @adherent.computers.build if @adherent.computers.empty?
         @computer = @adherent.computers.first
