@@ -9,6 +9,9 @@ activate_button();
 payment_is_cheque_or_liquid();
 choose_button();
 
+// Utiliser ou non l'e-mail supélec
+use_supelec_mail_button();
+
 // Tooltips
 $("[rel='tooltip']").tooltip();
 
@@ -60,6 +63,19 @@ function choose_button() {
     return false;
   });
 };
+
+function use_supelec_mail_button() {
+  $('#supelec-mail-button').click(function(){
+    if ( $(this).hasClass('active') ){
+      $('#supelec-mail-check').val(false);
+      $(this).removeClass("btn-info active");
+    } else {
+      $('#supelec-mail-check').val(true);
+      $(this).addClass("btn-info active");
+    };
+    return false;
+  });
+}
 
 function adherent_is_resident_supelec_rezoman() {
 

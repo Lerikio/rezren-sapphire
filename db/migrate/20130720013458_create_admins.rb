@@ -7,7 +7,8 @@ class CreateAdmins < ActiveRecord::Migration
       t.string     :password_salt, null: false
 
       t.string     :username, null: false, index: true
-      
+      t.string     :display_name, null: false
+
       t.integer    :adherent_id
 
       t.boolean    :archived, default: false

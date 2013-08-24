@@ -23,8 +23,6 @@ authorize_resource only: :create
   def create
 
     params[:adherent][:room] = Room.find_by_id(params[:adherent][:room])
-    #params[:adherent].delete :room
-
     @adherent = Adherent.new(params[:adherent])
     @adherent.credit.payments.first.admin = current_admin if @adherent.credit
 
@@ -52,8 +50,7 @@ authorize_resource only: :create
   end
 
   def update
-    @room = Room.find_by_id(params[:adherent][:room])
-    params[:adherent].delete :room
+    params[:adherent][:room] = Room.find_by_id(params[:adherent][:room])
 
     respond_to do |format|
       if @adherent.update_attributes(params[:adherent])
@@ -83,4 +80,5 @@ authorize_resource only: :create
       format.json { head :no_content }
     end
   end
+
 end

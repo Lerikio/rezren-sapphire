@@ -6,7 +6,7 @@ class Switch < ActiveRecord::Base
 
 # Attributs et associations	
 
-	attr_accessible :community, :ip_admin
+	attr_accessible :community, :ip_admin, :description
   attr_accessor :number_of_ports #Permet à l'utilisateur de rentrer le nombre de ports à créer pour le switch
 
 	has_many :ports, dependent: :destroy, inverse_of: :switch
@@ -15,6 +15,7 @@ class Switch < ActiveRecord::Base
 
 	validates :community, presence: true
 	validates :ip_admin, presence: true, uniqueness: true
+  validates :description, presence: true
 
 
   def occupied_ports_count

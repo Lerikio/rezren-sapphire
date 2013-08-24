@@ -2,6 +2,7 @@
   %thead
     %tr
       %th Adresse IP
+      %th Description
       %th Nombre de ports
       %th 
         = link_to new_switch_path, class:"btn btn-inverse", "data-toggle" => 'modal', "data-target" => '#modal-window', remote: true do
@@ -12,6 +13,8 @@
       %tr
         %td
           = switch.ip_admin
+        %td
+          = switch.description
         %td
           = switch.occupied_ports_count
           \/

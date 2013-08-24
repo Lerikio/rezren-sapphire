@@ -7,7 +7,7 @@ module SessionsHelper
 
 	def signed_in_admin
     	redirect_to connexion_path, notice: "Veuillez vous connecter." unless signed_in?
-    end
+    end 
 
     def signed_in?
     	!current_admin.nil?

@@ -124,6 +124,10 @@ class Computer < ActiveRecord::Base
 		return current_name
 	end
 
+# --------------------------------------------------------------------------------------------------
+#	Filtres non faisables via des scopes
+# --------------------------------------------------------------------------------------------------
+
 	def self.supelec
 		computers = []
 		Computer.all.each do |computer|

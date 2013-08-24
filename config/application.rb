@@ -60,7 +60,8 @@ module Sapphire
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    config.autoload_paths += Dir["#{config.root}/lib/snmp_interface/"]
-
+    # Chargement de dossiers supplémentaires
+    config.autoload_paths += Dir[Rails.root.join('lib', 'snmp_interface')]    
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
   end
 end

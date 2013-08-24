@@ -38,8 +38,10 @@ scope :not_archived, -> { where(archived: false)}
 	has_one :credit, dependent: :destroy, inverse_of: :adherent
 
 # --------------------------------------------------------------------------------------------------
-#	Actions avant sauvegarde
+#	Actions avant sauvegarde et validation
 # --------------------------------------------------------------------------------------------------
+
+	before_validation :insure_consistency
 
 	before_save :encrypt_password
 	before_save { |adherent| adherent.email = adherent.email.downcase}
@@ -119,8 +121,26 @@ private
 			end
 		end
 
+	# Modifie les données pour s'assurer ques les informations de l'adhérent soient cohérentes
+		def insure_consistency
+			if not_resident?
+				room = nil
+			end
+			if not_supelec?
+				promotion = nil
+				password = nil
+				username = nil
+				supelec_email = nil
+				use_supelec_email = false
+			end
+		end
+
+	# Aliases
 		def not_resident?
 			not resident?
 		end
 
+		def not_supelec?
+			not supelec?
+		end
 end

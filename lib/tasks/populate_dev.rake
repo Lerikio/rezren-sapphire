@@ -99,7 +99,7 @@ namespace :populate_dev do
 		begin
 
 		    admin = Admin.new
-		    admin.username = ask("Admin Username:")
+		    admin.display_name = ask("Admin Username:")
 
 		    begin
 		      password = ask("Admin Password:") {|q| q.echo = false}

@@ -1,6 +1,9 @@
 # -*- encoding : utf-8 -*-
 Sapphire::Application.routes.draw do
 
+  resources :logs
+
+
   resources :roles
 
 

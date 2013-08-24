@@ -43,5 +43,7 @@
 				= f.input_field :supelec_email, required: true, id: "appendedInput", :placeholder => "Adresse Supélec"
 				%span.add-on{style: 'margin-bottom: 3px;', rel: "tooltip", title: "E-mail Supélec"}
 					= "@supelec.fr"
-			= f.check_box :use_supelec_email, "true", "false"
-			Utiliser
+
+			%button.btn#supelec-mail-button{style: "margin-bottom: 2px;"} Utiliser l'adresse Supélec			
+
+			= f.hidden_field :use_supelec_email, id: "supelec-mail-check"

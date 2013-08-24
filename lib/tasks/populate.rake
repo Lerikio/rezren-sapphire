@@ -100,6 +100,29 @@ namespace :populate do
 	end
 
 # -----------------------------------------------------------------------------------------------------------------
+# Génération des switchs 
+# -----------------------------------------------------------------------------------------------------------------
+
+	desc "Génère des switchs TOUS SIMILAIRES en terme de nombre de ports, à partir du nombre de switches à créer et le nombre de port à leur attribuer.
+		  Attention : il faudra définir l'IP et la community du switch à la main à travers l'interface web."
+	task :switches => :environment do |t, args|
+
+		require "highline/import"
+
+	    nbr_of_switches = ask("Number of switches:")
+	    nbr_of_ports = ask("Number of ports by switch:")
+
+		nbr_of_switches.to_i.times do
+			current_switch = Switch.new
+			current_switch.community = "private"
+			current_switch.ip_admin = "0.0.0.0"
+			current_switch.save(validate: false)
+			Rake::Task["populate:ports"].invoke(current_switch.id, nbr_of_ports)
+			current_switch.save!(validate: false)
+		end
+	end
+
+# -----------------------------------------------------------------------------------------------------------------
 # Génération des ports d'un switch 
 # -----------------------------------------------------------------------------------------------------------------
 
@@ -120,30 +143,9 @@ namespace :populate do
 		end
 	end
 
-
 # -----------------------------------------------------------------------------------------------------------------
-# Génération des switchs 
+# Génération des rôles des administrateurs 
 # -----------------------------------------------------------------------------------------------------------------
-
-	desc "Génère des switchs TOUS SIMILAIRES en terme de nombre de ports, à partir du nombre de switches à créer et le nombre de port à leur attribuer.
-		  Attention : il faudra définir l'IP et la community du switch à la main à travers l'interface web."
-	task :switches => :environment do |t, args|
-
-		require "highline/import"
-
-	    nbr_of_switches = ask("Number of switches:")
-	    nbr_of_ports = ask("Number of ports by switch:")
-
-		for switch in 1..nbr_of_switches.to_i
-			current_switch = Switch.new
-			current_switch.community = "private"
-			current_switch.ip_admin = "0.0.0.0"
-			current_switch.save(validate: false)
-			Rake::Task["populate:ports"].invoke(current_switch.id, nbr_of_ports)
-			current_switch.save!(validate: false)
-			
-		end
-	end
 
 	desc "Génère des rôles pour les admins"
 	task :roles => :environment do |t, args|

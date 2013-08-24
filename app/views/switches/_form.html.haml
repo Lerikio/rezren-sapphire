@@ -10,7 +10,14 @@
       %span.add-on
         %i.icon-sitemap{rel: "tooltip", title: "Nombre de ports", style: "margin-top: 10px", "data-placement" => "bottom"}
 
-.input-append
-  = f.input_field :community, as: :text, placeholder: "Community", rows: "1", style: "width: 457px"
-  %span.add-on
-    %i.icon-key{rel: "tooltip", title: "Community", style: "margin-top: 10px"}
+.controls
+  .input-append
+    = f.input_field :description, placeholder: "Description"
+    %span.add-on
+      %i.icon-question{rel: "tooltip", title: "Description", style: "margin-top: 10px"}
+
+
+  .input-append
+    = f.input_field :community, placeholder: "Community"
+    %span.add-on
+      %i.icon-key{rel: "tooltip", title: "Community", style: "margin-top: 10px"}

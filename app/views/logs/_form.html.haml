@@ -1,0 +1,10 @@
+= simple_form_for(@log) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :source
+    = f.input :status
+    = f.input :content
+
+  .form-actions
+    = f.button :submit

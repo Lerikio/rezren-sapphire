@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Source:
+  = @log.source
+%p
+  %b Status:
+  = @log.status
+%p
+  %b Content:
+  = @log.content
+
+= link_to 'Edit', edit_log_path(@log)
+\|
+= link_to 'Back', logs_path

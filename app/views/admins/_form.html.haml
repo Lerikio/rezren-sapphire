@@ -1,6 +1,6 @@
 = simple_form_for @admin do |f|
 
-	= f.input_field :username
+	= f.input_field :display_name
 
 	= f.input_field :roles, collection: Role.all, multiple: true, style: "width: 300px;"
 
