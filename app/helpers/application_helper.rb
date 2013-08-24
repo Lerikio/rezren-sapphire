@@ -31,13 +31,14 @@ module ApplicationHelper
           flash_messages_success << text if msg && type == :success
 		    end
 	    end
-	    errors = content_tag(:div,
+      text = ""
+	    text = text + errors = content_tag(:div,
                      content_tag(:button, raw("&times;"), :class => "close", "data-dismiss" => "alert") +
                      flash_messages_error.join("</br>\n").html_safe, :class => "alert fade in alert-error") if flash_messages_error.any?
-      success = content_tag(:div,
+      text = text + success = content_tag(:div,
                      content_tag(:button, raw("&times;"), :class => "close", "data-dismiss" => "alert") +
                      flash_messages_success.join("</br>\n").html_safe, :class => "alert fade in alert-success") if flash_messages_success.any?
-      errors + "\n" + success
+      text
 	end
 
 
