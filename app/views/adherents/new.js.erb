@@ -26,6 +26,9 @@ $('#years-select').select2({
 // Faire disparaitre le modal quand la requête réussie
 $("form").on("ajax:success", function(event, data, status, xhr){
     $('#modal-window').modal('hide');
+    if($("#adherents").length > 0){
+      reload_adherents();
+    }
   });
 
 

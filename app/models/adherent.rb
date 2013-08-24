@@ -61,7 +61,7 @@ scope :not_archived, -> { where(archived: false)}
 	validates :username, uniqueness: true, length: {minimum: 3},
 		:format => { :with => /^([a-zA-Z0-9_\-\.]+)$/ }, if: :supelec?
 	validates :supelec_email, uniqueness: true, presence: true, if: :supelec?
-	validates :supelec_email, format: { with: /^([a-zA-Z0-9_\-\.]+)$/ }
+	validates :supelec_email, format: { with: /^([a-zA-Z0-9_\-\.]+)$/ }, if: :supelec?
 
 	# S'il s'agit d'un résident :
 	validates :credit, presence: true, if: :resident?

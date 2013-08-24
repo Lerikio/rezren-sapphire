@@ -33,7 +33,6 @@ authorize_resource only: :create
         format.json { render json: @adherent, status: :created, location: @adherent }
       else        
         flash.now[:error] = @adherent.errors.full_messages
-        logger.info @adherent.errors
 
         @adherent.computers.build if @adherent.computers.empty?
         @computer = @adherent.computers.first
@@ -79,6 +78,13 @@ authorize_resource only: :create
     respond_to do |format|
       format.html { redirect_to adherents_url }
       format.json { head :no_content }
+    end
+  end
+
+  def reload
+    @adherents = Adherent.where(:archived => params[:archived].to_bool)
+    respond_to do |format|
+      format.html { render partial: "index_table" }
     end
   end
 
