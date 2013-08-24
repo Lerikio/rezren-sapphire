@@ -103,7 +103,10 @@ load_and_authorize_resource
 
   private
     def load_adherent
-      @adherent = Adherent.find(params[:adherent_id])
+      if @adherent = Adherent.find(params[:adherent_id])
+        @adherent
+      else
+      end
     end
 end
 

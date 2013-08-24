@@ -74,13 +74,8 @@ private
 
 	# Mise à jour du crédit de l'utilisateur lors de la création du paiement
 	def update_credit
-		credit = self.credit
-
-		credit.value += self.value
-
-		if self == credit.payments.first || credit.next_debit <= Date.today
-			credit.next_debit = Date.today + 1.month
-		end
+		credit.update_next_debit(archived)
+		credit.update_end_of_adhesion(self, archived)
 	end
 
 end
