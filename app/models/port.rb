@@ -19,21 +19,21 @@ class Port < ActiveRecord::Base
 
 	#charge l'état du port (enabled/disabled) et les vlans correspondants par SNMP
 	def refresh_from_snmp
-		#switch.access or return
-		#TODO
+		#Ne fonctionne pas
+
 		snmp_interface = self.switch.snmp_interface
 		vlans_nums = snmp_interface.vlans_ids
 
 		vlans_nums.each do |vlan_number|
-			if snmp_interface.is_on_vlan?(self.number,vlan_number) && !self.vlans.find_by_number(vlan_number)
-				self.vlans << Vlan.find_by_number(vlan_number)
+			if snmp_interface.is_on_vlan?(self.number,vlan_number) && self.vlan_connections.where(vlan: vlan_number).empty?
+				self.vlan_connections << new VlanConnection(vlan: Vlan.find_by_number(vlan_number))
 			end
 		end
 
-		self.connexions.each do |connexion|
-			vlan_number = connexion.vlan.number
+		self.vlan_connections.each do |vlan_connection|
+			vlan_number = vlan_connection.vlan
 			unless snmp_interface.is_on_vlan?(self.number,vlan_number)
-				connexion.destroy
+				vlan_connection.destroy
 				return
 			end
 			if vlans_nums.include? vlan_num 
@@ -45,27 +45,29 @@ class Port < ActiveRecord::Base
 		save
 	end
 
-	def update_snmp
-		#switch.access or return
-		#TODO
+	def update_vlans_by_snmp
 		snmp_interface = self.switch.snmp_interface
 		vlans_nums = snmp_interface.vlans_ids
 
 		vlans_nums.each do |vlan_number|
-			if snmp_interface.is_on_vlan?(self.number,vlan_number) && !self.vlans.find_by_number(vlan_number)
+			if snmp_interface.is_on_vlan?(self.number,vlan_number) && self.vlan_connections.where(vlan: vlan_number).empty?
 				snmp_interface.del_vlan(self.number,vlan_number)
 			end
 		end
 
-		self.connexions.each do |connexion|
-			vlan_number = connexion.vlan.number
-			if connexion.tagged
+		self.vlan_connections.each do |vlan_connection|
+			vlan_number = vlan_connection.vlan.number
+			if vlan_connection.tagged
 				snmp_interface.add_vlan_tagged(self.number,vlan_number)
 			else
 				snmp_interface.add_vlan_untagged(self.number,vlan_number)
 			end
 		end
-		self.enabled=snmp_interface.enabled?(self.number)
+	end
+
+	def update_mac_addresses_by_snmp
+
+
 	end
 	
 end
