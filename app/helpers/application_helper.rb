@@ -38,7 +38,7 @@ module ApplicationHelper
       text = text + success = content_tag(:div,
                      content_tag(:button, raw("&times;"), :class => "close", "data-dismiss" => "alert") +
                      flash_messages_success.join("</br>\n").html_safe, :class => "alert fade in alert-success") if flash_messages_success.any?
-      text
+      text.html_safe
 	end
 
 
