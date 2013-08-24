@@ -6,6 +6,7 @@ class CreateSwitches < ActiveRecord::Migration
       t.string    :ip_admin, null: false
       t.boolean   :archived, default: false
       t.string    :description
+      t.string    :design
 
       t.timestamps
     end
