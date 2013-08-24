@@ -1,0 +1,18 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3
+		Créer un paiement pour
+		= @adherent.full_name
+
+	= bootstrap_flash
+
+= simple_form_for @payment, url: adherent_payments_path(@adherent), validate: true, remote: true do |f|  
+
+	.modal-body
+
+		= render 'form', f: f
+
+	.modal-footer
+		= f.submit "Ajouter", {class: "btn btn-primary"}

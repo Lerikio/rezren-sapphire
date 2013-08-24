@@ -112,10 +112,10 @@ namespace :populate do
 	    nbr_of_switches = ask("Number of switches:")
 	    nbr_of_ports = ask("Number of ports by switch:")
 
-		nbr_of_switches.to_i.times do
+		for switch in 1..nbr_of_switches.to_i
 			current_switch = Switch.new
 			current_switch.community = "private"
-			current_switch.ip_admin = "0.0.0.0"
+			current_switch.ip_admin = "0.0.0." + switch.to_s
 			current_switch.save(validate: false)
 			Rake::Task["populate:ports"].invoke(current_switch.id, nbr_of_ports)
 			current_switch.save!(validate: false)

@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 class PaymentsController < ApplicationController
 
+before_filter :load_adherent
+
 # Charge @payment par id, ainsi que les autorisations du controller
 load_and_authorize_resource
 
@@ -38,12 +40,7 @@ load_and_authorize_resource
   # GET /payments/new
   # GET /payments/new.json
   def new
-    @payment = Payment.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @payment }
-    end
+    @payment = @adherent.credit.payments.build
   end
 
   # GET /payments/1/edit
@@ -52,24 +49,18 @@ load_and_authorize_resource
 
   # POST /payments
   # POST /payments.json
-  def create
-
-    ## !! IMPORTANT !!
-    # Créer un scénario, pour modifier le crédit correspondant en même temps
-    # Ajout d'argent et modif éventuelle de la date de prochain débit
-
-    @payment = Payment.new(params[:payment])
+   def create
+    @payment = @adherent.credit.payments.build(params[:payment])
+    @payment.admin = current_admin
 
     respond_to do |format|
       if @payment.save
 
         @payment.create_activity :create, owner: current_admin
-
-        format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
-        format.json { render json: @payment, status: :created, location: @payment }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
+        format.json { render json: @payment, status: :created }
+      else        
+        flash.now[:error] = @payment.errors.full_messages
+        format.js { render action: :new}
       end
     end
   end
@@ -109,4 +100,10 @@ load_and_authorize_resource
       format.json { head :no_content }
     end
   end
+
+  private
+    def load_adherent
+      @adherent = Adherent.find(params[:adherent_id])
+    end
 end
+

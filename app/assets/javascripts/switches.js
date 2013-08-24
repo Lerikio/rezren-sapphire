@@ -14,6 +14,7 @@ function register_datatable_switches() {
 		"bJQueryUI": true,
 		"aoColumns": [
 			null,
+			null,
 		    null,
 		    { "bSortable": false, "bSearchable": false }
 		]

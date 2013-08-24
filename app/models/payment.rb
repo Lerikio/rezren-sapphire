@@ -78,8 +78,8 @@ private
 
 		credit.value += self.value
 
-		if self == credit.payments.first || credit.next_debit <= Time.now
-			credit.next_debit = Time.now + 1.month
+		if self == credit.payments.first || credit.next_debit <= Date.today
+			credit.next_debit = Date.today + 1.month
 		end
 	end
 

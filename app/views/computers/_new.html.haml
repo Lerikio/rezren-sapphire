@@ -1,0 +1,18 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3
+		Créer un ordinteur pour
+		= @adherent.full_name
+
+	= bootstrap_flash
+
+= simple_form_for @computer, url: adherent_computers_path(@adherent), validate: true, remote: true do |f|  
+
+	.modal-body
+
+		= render 'form', f: f
+
+	.modal-footer
+		= f.submit "Créer", {class: "btn btn-primary"}

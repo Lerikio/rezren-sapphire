@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 class ComputersController < ApplicationController
 
+before_filter :load_adherent
+
 # Charge @computer par id, ainsi que les autorisations du controller
 load_and_authorize_resource
 
@@ -27,12 +29,7 @@ load_and_authorize_resource
   # GET /computers/new
   # GET /computers/new.json
   def new
-    @computer = Computer.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @computer }
-    end
+    @computer = @adherent.computers.build
   end
 
   # GET /computers/1/edit
@@ -42,18 +39,16 @@ load_and_authorize_resource
   # POST /computers
   # POST /computers.json
   def create
-    @computer = Computer.new(params[:computer])
+    @computer = @adherent.computers.build(params[:computer])
 
     respond_to do |format|
       if @computer.save
- 
-        @computer.create_activity :create, owner: current_admin
 
-        format.html { redirect_to @computer, notice: 'Computer was successfully created.' }
+        @computer.create_activity :create, owner: current_admin
         format.json { render json: @computer, status: :created, location: @computer }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @computer.errors, status: :unprocessable_entity }
+      else        
+        flash.now[:error] = @computer.errors.full_messages
+        format.js { render action: :new}
       end
     end
   end
@@ -88,4 +83,9 @@ load_and_authorize_resource
       format.json { head :no_content }
     end
   end
+
+  private
+    def load_adherent
+      @adherent = Adherent.find(params[:adherent_id])
+    end
 end
