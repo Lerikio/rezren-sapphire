@@ -4,9 +4,9 @@ class SnmpInterface
 
   attr_reader :ip, :model
 
-  def initialize(ip, options = {})
+  def initialize(ip, community, options = {})
     @ip = ip
-    @manager = Manager.new(:Version => :SNMPv1, :Host => @ip, :Port => 161, :Community => "private")
+    @manager = Manager.new(:Version => :SNMPv1, :Host => @ip, :Port => 161, :Community => community)
     @vlans_ids = options[:vlans_ids] if options[:vlans_ids]
     @bridges = options[:bridges] if options[:bridges]
     @model = self.get_model
