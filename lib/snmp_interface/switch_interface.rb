@@ -212,7 +212,7 @@ class SwitchInterface < SnmpInterface
       end
     end.collect do |id|
       vlans[id][:num].to_s +
-        if is_on_tagged_vlan(port_id, id) then "[T]" else "[U]" end +
+        if is_on_tagged_vlan?(port_id, id) then "[T]" else "[U]" end +
         " (id #{id})"
     end.join(", ")
     print string
