@@ -75,45 +75,28 @@ scope :not_archived, -> { where(archived: false)}
 	accepts_nested_attributes_for :credit, reject_if: :not_resident?
 
 # --------------------------------------------------------------------------------------------------
-#	Machine d'état
+#	Création du compte discourse 
 # --------------------------------------------------------------------------------------------------
 
-state_machine :state, initial: :created do
-	
-	event :validate do
-		transition :created => :connected
-	end
-	
-	event :disconnect do
-		transition [:connected, :freely_connected] => :disconnected
-	end
-	
-	event :to_rezoman do
-		transition [:connected, :created, :disconnected] => :freely_connected
-	end
-
-  end
+	after_validation on: :create, :create_discourse_user
 
 # --------------------------------------------------------------------------------------------------
 #	Méthodes
 # --------------------------------------------------------------------------------------------------
 
-	def room_id
-		room.id if room
-	end
-	
-	def full_name
-		self.first_name + " " + self.last_name
-	end
+# Création d'un utilisateur discourse
 
-	def full_supelec_address
-		if supelec_email
-			supelec_email + "@supelec.fr"
+	def create_discourse_user 
+		if supelec?
+			client = DiscourseApi::Client.new("193.54.193.2")
+			client.api_key = "59f0959060761f1414c6cf7c23b843841059b4bf7d34ad808d979e4598faab27"
+			client.api_username = "Lerik"
+			client.new_user(name: :full_name, email: :email_to_use, password: password, username: username)
 		end
 	end
-private
 
-	# Devrait être déplacé pour factorisation du code avec les admins
+
+# Devrait être déplacé pour factorisation du code avec les admins
 		def encrypt_password
 			if password.present?
 				self.password_salt = BCrypt::Engine.generate_salt
@@ -134,7 +117,42 @@ private
 			end
 		end
 
-	# Aliases
+# --------------------------------------------------------------------------------------------------
+#	Helpers
+# --------------------------------------------------------------------------------------------------
+
+	def room_id
+		room.id if room
+	end
+	
+	def full_name
+		self.first_name + " " + self.last_name
+	end
+
+	def full_supelec_address
+		if supelec_email
+			supelec_email + "@supelec.fr"
+		end
+	end
+
+	def email_to_use
+		if use_supelec_email
+			supelec_email
+		else
+			email
+		end
+	end
+
+	def actif?
+		credit.actif?
+	end
+
+	def should_be_disconnected?
+		credit.should_be_disconnected?
+	end
+
+private
+	
 		def not_resident?
 			not resident?
 		end

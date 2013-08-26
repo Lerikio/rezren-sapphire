@@ -87,10 +87,6 @@ load_and_authorize_resource
   # DELETE /payments/1.json
   def destroy
 
-    ## !! IMPORTANT !!
-    # Créer un scénario, pour modifier le crédit correspondant en même temps
-    # Retirer l'argent
-
     # On archive au lieu de supprimer de la base de donnée
     @payment.update_attribute(:archived, true)
     @payment.create_activity :destroy, owner: current_admin

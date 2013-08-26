@@ -23,12 +23,6 @@ attr_accessible :payments_attributes
 # Nested attributes
 	accepts_nested_attributes_for :payments
 
-# Méthodes
-
- def value
- 	payments.not_archived.sum{|i| i.value} - debited_value
- end
-
 ####################################################################################################
 #
 #                                Méthodes de gestion du crédit 	  
@@ -68,4 +62,22 @@ attr_accessible :payments_attributes
 		end
 	end
 
+####################################################################################################
+#
+#                                            Helpers	  
+#
+####################################################################################################
+
+
+	def value
+		payments.not_archived.sum{|i| i.value} - debited_value
+	end
+
+	def actif?
+		Date.today < next_debit + 1.month || adherent.rezoman
+	end
+
+	def should_be_disconnected?
+		not actif?
+	end
 end

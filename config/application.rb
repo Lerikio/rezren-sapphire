@@ -62,6 +62,8 @@ module Sapphire
 
     # Chargement de dossiers supplémentaires
     config.autoload_paths += Dir[Rails.root.join('lib', 'snmp_interface')]    
+    config.autoload_paths += Dir[Rails.root.join('lib', 'discourse_api', '{**}')]
     config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
+
   end
 end
