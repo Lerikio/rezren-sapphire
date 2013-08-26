@@ -153,7 +153,7 @@ class SnmpInterface
   # Définit la valeur associée à un OID.
   def set_oid(oid, value, type)
     #Lecture seule: on n'écrit rien pour l'instant!!!
-    return nil
+    #return nil
     varbind = VarBind.new(oid, type.new(value))
     response = @manager.set(varbind)
     raise "set_oid: error (#{response.error_status}) while trying to define OID #{oid}" if response.error_index != 0
