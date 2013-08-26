@@ -26,7 +26,7 @@ attr_accessible :payments_attributes
 # Méthodes
 
  def value
- 	payments.not_archived.sum{|i| i.value} - debitted_value
+ 	payments.not_archived.sum{|i| i.value} - debited_value
  end
 
 ####################################################################################################
