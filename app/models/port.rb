@@ -66,19 +66,40 @@ class Port < ActiveRecord::Base
 	end
 
 	def update_mac_addresses_by_snmp
+		return nil unless room && room.adherent
 		snmp_interface = self.switch.snmp_interface
-		macs_to_add = []
+		old_macs = format_mac_addresses(snmp_interface.list_macs(self.number))
+		new_macs = []
 		supelec = self.room.adherent.supelec?
 		vlan = if supelec then VLAN::Supelec else VLAN::Exterieur end
 		self.room.adherent.computers.each do |computer|
-			macs_to_add << {:mac => computer.mac_address, :vlan => vlan}
+			new_macs << {:mac => computer.mac_address, :vlan => vlan}
 		end
 
-		snmp_interface.flush_macs(self.number)
-		
-		macs_to_add.each do |mac_vlan|
-			add_mac(self.number, mac_vlan[:vlan], mac_vlan[:mac])
+		#Apparement on peut faire des différences de tableaux de hashs
+		macs_to_add = new_macs - old_macs
+		macs_to_delete = old_macs - new_macs
+
+		macs_to_add.each do |mac|
+			add_mac(self.number, mac[:vlan], mac[:mac])
 		end
+
+		macs_to_delete.each do |mac|
+			del_mac(self.number, mac[:vlan], mac[:mac])
+		end
+
+		{:port => self.number, :added => macs_to_add, :deleted => macs_to_delete}
 	end
 	
+	private
+
+	#Le texte brut est de la forme "VLAN1 MAC1,VLAN1 MAC2"
+	def format_mac_addresses(text)
+		macs = []
+		text.split(",").each do |part|
+			tmp = part.split("\s")
+			macs << {:mac => tmp[1], :vlan => tmp[0]}
+		end
+		macs
+	end
 end
