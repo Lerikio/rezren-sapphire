@@ -66,8 +66,19 @@ class Port < ActiveRecord::Base
 	end
 
 	def update_mac_addresses_by_snmp
+		snmp_interface = self.switch.snmp_interface
+		macs_to_add = []
+		supelec = self.room.adherent.supelec?
+		vlan = if supelec then VLAN::Supelec else VLAN::Exterieur end
+		self.room.adherent.computers.each do |computer|
+			macs_to_add << {:mac => computer.mac_address, :vlan => vlan}
+		end
 
-
+		snmp_interface.flush_macs(self.number)
+		
+		macs_to_add.each do |mac_vlan|
+			add_mac(self.number, mac_vlan[:vlan], mac_vlan[:mac])
+		end
 	end
 	
 end
