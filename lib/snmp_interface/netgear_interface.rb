@@ -267,7 +267,7 @@ class NetgearInterface < SwitchInterface
   end
 
   #Récupération de la liste des addresses MAC autorisées sur un VLAN sur un port
-  def list_macs
+  def list_macs(port_id)
     get_oid(OID_NG_PORTSECURITY + '.6.' + port_id.to_s)
   end
 
