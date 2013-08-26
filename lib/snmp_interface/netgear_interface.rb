@@ -271,6 +271,16 @@ class NetgearInterface < SwitchInterface
     get_oid(OID_NG_PORTSECURITY + '.6.' + port_id.to_s)
   end
 
+  def flush_macs(port_id)
+    macs = list_macs(port_id).split(',')
+    macs.each do |mac|
+      tab = mac.split("\s")
+      vlan_id = tab[0]
+      mac_address = tab[1]
+      del_mac(port_id, vlan_id, mac_address)
+    end
+  end
+
   #Renvoie 1 si PortSecurity est actif, 2 sinon 
   def get_port_security_status(port_id)
     get_oid(OID_NG_PORTSECURITY + '.1.' + port_id.to_s)
