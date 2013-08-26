@@ -8,7 +8,6 @@ class Port < ActiveRecord::Base
 
 	attr_accessible :number, :switch_id
 
-	has_many :vlan_connections, inverse_of: :port, dependent: :destroy
 	has_one :room, inverse_of: :port
 	belongs_to :switch, inverse_of: :ports
 
@@ -46,8 +45,18 @@ class Port < ActiveRecord::Base
 	# end
 
 	def update_vlans_by_snmp
+		#On récupère l'interface SNMP et les numéros des VLANs gérés par ce switch
 		snmp_interface = self.switch.snmp_interface
 		vlans_nums = snmp_interface.vlans_ids
+
+		#On met les chambres non rézotées sur le VLAN de prérézotage
+		unless room.nil? or room.adherent.nil? or room.adherent.should_be_disconnected?
+			if snmp_interface.is_on_vlan?(self.number,VLAN::Prerezotage)
+				snmp_interface.add_vlan_untagged(self.number,VLAN::Prerezotage)
+				return {:vlan => VLAN::Prerezotage, :tagged => false}
+			end
+			return true
+		end
 
 		vlans_nums.each do |vlan_number|
 			if snmp_interface.is_on_vlan?(self.number,vlan_number) && self.vlan_connections.where(vlan: vlan_number).empty?

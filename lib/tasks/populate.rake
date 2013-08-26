@@ -134,10 +134,6 @@ namespace :populate do
 			current_port = Port.new
 			current_port.switch_id = args.switch_id
 			current_port.number = port_number
-			vlan_connection = VlanConnection.new
-			vlan_connection.port = current_port
-			vlan_connection.vlan = VLAN::Supelec
-			vlan_connection.save!
 			current_port.save!
 
 		end
