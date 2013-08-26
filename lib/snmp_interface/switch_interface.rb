@@ -194,7 +194,6 @@ class SwitchInterface < SnmpInterface
       end
     end.each do |vlan_id, vlan|
       puts "VLAN #{vlan[:num]} " +
-        if vlan[:tag].nil? then "(tag inconnu)" elsif vlan[:tag] then "(tagguée)    " else "(non-taguée) " end +
         " : #{vlan_id}"
     end
     return nil
@@ -212,8 +211,8 @@ class SwitchInterface < SnmpInterface
         vlans[a][:num] <=> vlans[b][:num]
       end
     end.collect do |id|
-      vlans[id][:num].to_s +
-        if vlans[id][:tag].nil? then "[?]" elsif vlans[id][:tag] then "[T]" else "[U]" end +
+      vlans[id][:num].to_s + " " +
+        if is_on_tagged_vlan?(port_id, id) then "[T]" else "[U]" end +
         " (id #{id})"
     end.join(", ")
     print string

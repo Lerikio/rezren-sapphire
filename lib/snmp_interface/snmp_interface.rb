@@ -4,9 +4,9 @@ class SnmpInterface
 
   attr_reader :ip, :model
 
-  def initialize(ip, options = {})
+  def initialize(ip, community, options = {})
     @ip = ip
-    @manager = Manager.new(:Version => :SNMPv1, :Host => @ip, :Port => 161, :Community => "private")
+    @manager = Manager.new(:Version => :SNMPv1, :Host => @ip, :Port => 161, :Community => community)
     @vlans_ids = options[:vlans_ids] if options[:vlans_ids]
     @bridges = options[:bridges] if options[:bridges]
     @model = self.get_model
@@ -153,7 +153,7 @@ class SnmpInterface
   # Définit la valeur associée à un OID.
   def set_oid(oid, value, type)
     #Lecture seule: on n'écrit rien pour l'instant!!!
-    return nil
+    #return nil
     varbind = VarBind.new(oid, type.new(value))
     response = @manager.set(varbind)
     raise "set_oid: error (#{response.error_status}) while trying to define OID #{oid}" if response.error_index != 0
