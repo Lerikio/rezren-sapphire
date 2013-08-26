@@ -311,21 +311,21 @@ class NetgearInterface < SwitchInterface
       puts ifName if (options[:debug])
       name_value = ifName.value.to_s
 
-      if name_value.include?("DEFAULT_VLAN")
-        vlan_num = 1
-        @vlans[vlan_num] = {:name => "VLAN1"}
-      elsif name_value.include?("VLAN10") #cas part. pour le masterswitch
-        vlan_num = 10
-        @vlans[vlan_num] = {:name => "VLAN10"}
-      elsif name_value.include?("VLAN")
-        vlan_num = ifName.value.to_str[-1].to_i
-        @vlans[vlan_num] = {:name => name_value}
-      elsif !(name_value.include?("lo")) 
+      # if name_value.include?("DEFAULT_VLAN")
+      #   vlan_num = 1
+      #   @vlans[vlan_num] = {:name => "VLAN1"}
+      # elsif name_value.include?("VLAN10") #cas part. pour le masterswitch
+      #   vlan_num = 10
+      #   @vlans[vlan_num] = {:name => "VLAN10"}
+      # elsif name_value.include?("VLAN")
+      #   vlan_num = ifName.value.to_str[-1].to_i
+      #   @vlans[vlan_num] = {:name => name_value}
+      if !(name_value.include?("lo")) 
         port_id = ifName.name.to_s.split('.').last.to_i
         @ports[port_id] = {:name => name_value}
       end
-      @vlans_ids = @vlans.keys
     end
+    @vlans_ids = [1,2,3,4,5,6,7]
     return true
   end
 
