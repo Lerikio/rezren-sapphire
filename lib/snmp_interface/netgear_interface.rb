@@ -327,7 +327,7 @@ class NetgearInterface < SwitchInterface
     end
     @vlans_ids = [1,2,3,4,5,6,7]
     @vlans_ids.each do |vlan_id|
-      @vlans[vlan_id] = {:name => "VLAN"+vlan_id.to_s}
+      @vlans[vlan_id] = {:name => "VLAN"+vlan_id.to_s, :num => vlan_id}
     end
     return true
   end
