@@ -23,7 +23,6 @@ attr_accessible :payments_attributes
 # Nested attributes
 	accepts_nested_attributes_for :payments
 
-
 ####################################################################################################
 #
 #                                Méthodes de gestion du crédit 	  
