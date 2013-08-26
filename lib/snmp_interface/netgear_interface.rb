@@ -256,6 +256,31 @@ class NetgearInterface < SwitchInterface
     end
   end
 
+  #Ajout d'une adresse MAC autorisée sur un VLAN sur un port
+  def add_mac(port_id, vlan_id, mac_address)
+    set_oid(OID_NG_PORTSECURITY + '.8.' + port_id.to_s, vlan_id.to_s + ' ' + mac_address, SNMP::OctetString)
+  end
+
+  #Suppression d'une adresse MAC autorisée sur un VLAN sur un port
+  def del_mac(port_id, vlan_id, mac_address)
+    set_oid(OID_NG_PORTSECURITY + '.9.' + port_id.to_s, vlan_id.to_s + ' ' + mac_address, SNMP::OctetString)
+  end
+
+  #Récupération de la liste des addresses MAC autorisées sur un VLAN sur un port
+  def list_macs
+    get_oid(OID_NG_PORTSECURITY + '.6.' + port_id.to_s)
+  end
+
+  #Renvoie 1 si PortSecurity est actif, 2 sinon 
+  def get_port_security_status(port_id)
+    get_oid(OID_NG_PORTSECURITY + '.1.' + port_id.to_s)
+  end
+
+  #1 pour activer PortSecurity, 2 sinon
+  def set_port_security_status(port_id, status)
+    set_oid(OID_NG_PORTSECURITY + '.1.' + port_id.to_s, status, SNMP::Integer)
+  end
+
   #private
 
   OID_BRIDGE = '1.3.6.1.2.1.17'
@@ -265,6 +290,7 @@ class NetgearInterface < SwitchInterface
   OID_VLAN_STATIC_EGRESS_PORTS    = '1.3.6.1.2.1.17.7.1.4.3.1.2'
   OID_VLAN_FORBIDDEN_EGRESS_PORTS = '1.3.6.1.2.1.17.7.1.4.3.1.3'
   OID_VLAN_STATIC_UNTAG_PORTS     = '1.3.6.1.2.1.17.7.1.4.3.1.4'
+  OID_NG_PORTSECURITY = '1.3.6.1.4.1.4526.10.20.1.2.1'
 
   def load_ports_and_vlans(options = {})
     options[:debug] ||= false

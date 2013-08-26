@@ -18,32 +18,32 @@ class Port < ActiveRecord::Base
 	validates :switch, presence: true
 
 	#charge l'état du port (enabled/disabled) et les vlans correspondants par SNMP
-	def refresh_from_snmp
-		#Ne fonctionne pas
+	#Ne fonctionne pas
+	# def refresh_from_snmp
 
-		snmp_interface = self.switch.snmp_interface
-		vlans_nums = snmp_interface.vlans_ids
+	# 	snmp_interface = self.switch.snmp_interface
+	# 	vlans_nums = snmp_interface.vlans_ids
 
-		vlans_nums.each do |vlan_number|
-			if snmp_interface.is_on_vlan?(self.number,vlan_number) && self.vlan_connections.where(vlan: vlan_number).empty?
-				self.vlan_connections << new VlanConnection(vlan: Vlan.find_by_number(vlan_number))
-			end
-		end
+	# 	vlans_nums.each do |vlan_number|
+	# 		if snmp_interface.is_on_vlan?(self.number,vlan_number) && self.vlan_connections.where(vlan: vlan_number).empty?
+	# 			self.vlan_connections << new VlanConnection(vlan: Vlan.find_by_number(vlan_number))
+	# 		end
+	# 	end
 
-		self.vlan_connections.each do |vlan_connection|
-			vlan_number = vlan_connection.vlan
-			unless snmp_interface.is_on_vlan?(self.number,vlan_number)
-				vlan_connection.destroy
-				return
-			end
-			if vlans_nums.include? vlan_num 
-				connexion.tagged=snmp_interface.is_on_tagged_vlan?(self.number,vlan_number)
-				connexion.save
-			end
-		end
-		self.enabled=snmp_interface.enabled?(self.number)
-		save
-	end
+	# 	self.vlan_connections.each do |vlan_connection|
+	# 		vlan_number = vlan_connection.vlan
+	# 		unless snmp_interface.is_on_vlan?(self.number,vlan_number)
+	# 			vlan_connection.destroy
+	# 			return
+	# 		end
+	# 		if vlans_nums.include? vlan_num 
+	# 			connexion.tagged=snmp_interface.is_on_tagged_vlan?(self.number,vlan_number)
+	# 			connexion.save
+	# 		end
+	# 	end
+	# 	self.enabled=snmp_interface.enabled?(self.number)
+	# 	save
+	# end
 
 	def update_vlans_by_snmp
 		snmp_interface = self.switch.snmp_interface
