@@ -81,7 +81,7 @@ scope :not_archived, -> { where(archived: false)}
 #	Création du compte discourse 
 # --------------------------------------------------------------------------------------------------
 
-	after_create :create_discourse_user
+	#after_create :create_discourse_user
 
 # --------------------------------------------------------------------------------------------------
 #	Méthodes
