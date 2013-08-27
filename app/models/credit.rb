@@ -23,6 +23,8 @@ attr_accessible :payments_attributes
 # Nested attributes
 	accepts_nested_attributes_for :payments
 
+
+	before_
 ####################################################################################################
 #
 #                                Méthodes de gestion du crédit 	  
@@ -34,6 +36,11 @@ attr_accessible :payments_attributes
 # --------------------------------------------------------------------------------------------------
 
 	def update_next_debit(archived)
+		
+		unless next_debit
+			next_debit = Date.today - 1.month
+		end
+
 		unless archived
 			if payments.order("created_at ASC").last.created_at.to_date >= next_debit
 				next_debit = payments.order("created_at ASC").last.created_at.to_date + 1.month
@@ -50,6 +57,10 @@ attr_accessible :payments_attributes
 		number_of_months = value_to_add / Monthly_cotisation
 		number_of_days = value_to_add / (Monthly_cotisation/30.0)
 		total_time = number_of_days.days + number_of_months.months
+
+		unless end_of_adhesion
+			end_of_adhesion = Date.today - 1.month
+		end
 
 		if archived
 			end_of_adhesion -= total_time
