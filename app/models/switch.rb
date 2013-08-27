@@ -37,7 +37,7 @@ class Switch < ActiveRecord::Base
         #@interface=interfaceClass.new(ip)
         #return @interface
 
-        @interface=DummyInterface.new
+        @interface = NetgearInterface.new(self.ip_admin, self.community)
       end
     end
 end
