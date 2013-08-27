@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Port < ActiveRecord::Base
-
+	default_scope order('number ASC')
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
 
