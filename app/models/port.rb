@@ -46,6 +46,7 @@ class Port < ActiveRecord::Base
 
 	#Méthode qui met à jour les VLANs autorisés sur un port ainsi que la sécurité
 	def update_vlans_by_snmp
+		return nil unless managed
 		#On Vérifie sur quel VLAN on doit mettre ce port
 		if room.nil? or room.adherent.nil? or room.adherent.should_be_disconnected?
 			new_vlan = {:vlan => VLAN::Prerezotage, :tagged => false}
@@ -99,6 +100,7 @@ class Port < ActiveRecord::Base
 
 	#Méthode qui permet de mettre à jour les adresses macs autorisées sur un port
 	def update_mac_addresses_by_snmp
+		return nil unless managed
 		#On vérifie les adresses MACs qui doivent être autorisées sur ce port
 		new_macs = []
 		unless room.nil? or room.adherent.nil? or room.adherent.should_be_disconnected?
@@ -138,5 +140,5 @@ class Port < ActiveRecord::Base
 			macs << {:mac => tmp[1], :vlan => tmp[0]}
 		end
 		macs
-	end
+	end_of_adhesion
 end

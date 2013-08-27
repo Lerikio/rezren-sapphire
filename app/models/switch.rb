@@ -1,6 +1,8 @@
 # -*- encoding : utf-8 -*-
 class Switch < ActiveRecord::Base
 
+scope :not_archived, -> { where(archived: false)}
+
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
 

@@ -5,6 +5,7 @@ class CreatePorts < ActiveRecord::Migration
       t.integer :number
       t.integer :switch_id, null: false, index: true
       t.boolean :archived, default: false
+      t.boolean :managed, default: false
 
 
       t.timestamps
