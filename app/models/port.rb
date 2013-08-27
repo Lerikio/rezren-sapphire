@@ -80,11 +80,11 @@ class Port < ActiveRecord::Base
 		changes = {:port => self.number, :added => [], :deleted => deleted_vlans, :port_security => :unchanged}
 
 		#On ajoute le bon VLAN si nécessaire
-		unless !new_vlan[:tagged] && intf.is_on_untagged_vlan?(self.number, new_vlan[:vlan])
+		if !new_vlan[:tagged] && !intf.is_on_untagged_vlan?(self.number, new_vlan[:vlan])
 			intf.add_vlan_untagged(self.number, new_vlan[:vlan])
 			changes[:added] << new_vlan
 		end
-		unless new_vlan[:tagged] && intf.is_on_tagged_vlan?(self.number, new_vlan[:vlan])
+		if new_vlan[:tagged] && !intf.is_on_tagged_vlan?(self.number, new_vlan[:vlan])
 			intf.add_vlan_tagged(self.number, new_vlan[:vlan])
 			changes[:added] << new_vlan
 		end

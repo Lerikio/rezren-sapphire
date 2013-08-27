@@ -203,7 +203,6 @@ class NetgearInterface < SwitchInterface
     del_vlan_forbidden(port_id, vlan_id)
     del_vlan_untagged(port_id, vlan_id)
     portstu  = get_tagged_or_untagged_ports_binary(vlan_id)
-    puts portstu
     if portstu[port_id-1,1]!= "1"
       portstu[port_id-1,1] = "1"
       set_oid(OID_VLAN_STATIC_EGRESS_PORTS + '.' + vlan_id.to_s, encode_octet_string(portstu,get_tagged_or_untagged_ports(vlan_id)), SNMP::OctetString)
