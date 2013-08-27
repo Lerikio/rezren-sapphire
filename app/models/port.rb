@@ -63,7 +63,7 @@ class Port < ActiveRecord::Base
 			new_vlan = {:vlan => VLAN::Exterieur, :tagged => false}
 			new_port_security = 1
 		end
-
+		puts new_vlan
 		#On récupère l'interface SNMP
 		intf = self.switch.snmp_interface
 
