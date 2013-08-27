@@ -26,8 +26,8 @@ namespace :snmp do
 	end
 
 	desc "Met à jour les adresses MACs autorisées sur les switches"
-	task :vlans => :environment do |t, args|
-		changes = []
+	task :macs => :environment do |t, args|
+		changes = {}
 		Switch.not_archived.each do |switch|
 			switch_changes = []
 			switch.ports.each do |port|
