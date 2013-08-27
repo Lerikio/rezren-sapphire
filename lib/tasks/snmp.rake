@@ -19,6 +19,7 @@ namespace :snmp do
 			switch.ports.each do |port|
 				switch_changes << port.update_vlans_by_snmp
 			end
+			switch_changes.delete_if { |k, v| v.nil? }
 			changes[switch.description] = switch_changes
 		end
 		#TODO formater les logs
@@ -33,6 +34,7 @@ namespace :snmp do
 			switch.ports.each do |port|
 				switch_changes << port.update_mac_addresses_by_snmp
 			end
+			switch_changes.delete_if { |k, v| v.nil? }
 			changes[switch.description] = switch_changes
 		end
 		#TODO formater les logs
