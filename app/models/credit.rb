@@ -35,8 +35,8 @@ attr_accessible :payments_attributes
 
 	def update_next_debit(archived)
 		unless archived
-			if last_payment.created_at.to_date >= next_debit
-				next_debit = last_payment.created_at.to_date + 1.month
+			if payments.order("created_at ASC").last.created_at.to_date >= next_debit
+				next_debit = payments.order("created_at ASC").last.created_at.to_date + 1.month
 			end
 		end
 	end

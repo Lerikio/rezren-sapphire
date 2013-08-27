@@ -16,6 +16,11 @@ class Port < ActiveRecord::Base
 	validates :number, presence: true
 	validates :switch, presence: true
 
+	def designation
+		switch.ip_admin + ":" + number.to_s
+	end
+
+
 	#charge l'état du port (enabled/disabled) et les vlans correspondants par SNMP
 	#Ne fonctionne pas
 	# def refresh_from_snmp
