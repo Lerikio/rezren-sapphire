@@ -23,6 +23,9 @@ authorize_resource only: :create
   end
 
   def edit
+    @switch = Switch.find(params[:id], :include => {:ports => :room })
+    #Pour éviter des requêtes SQL
+    @not_archived_rooms = Room.not_archived
   end
 
   def create
@@ -56,7 +59,9 @@ authorize_resource only: :create
   # PUT /switches/1
   # PUT /switches/1.json
   def update
-
+    params[:switch][:ports_attributes].each do |port_number|
+      params[:switch][:ports_attributes][port_number[0]][:room] = Room.find_by_id(params[:switch][:ports_attributes][port_number[0]][:room])
+    end
     respond_to do |format|
       if @switch.update_attributes(params[:switch])
 

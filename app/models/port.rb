@@ -6,7 +6,7 @@ class Port < ActiveRecord::Base
 
 # Attributs et associations	
 
-	attr_accessible :number, :switch_id
+	attr_accessible :number, :switch_id, :room, :managed
 
 	has_one :room, inverse_of: :port
 	belongs_to :switch, inverse_of: :ports

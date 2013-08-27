@@ -8,7 +8,8 @@ scope :not_archived, -> { where(archived: false)}
 
 # Attributs et associations	
 
-	attr_accessible :community, :ip_admin, :description
+	attr_accessible :community, :ip_admin, :description,
+                    :ports_attributes
   attr_accessor :number_of_ports #Permet à l'utilisateur de rentrer le nombre de ports à créer pour le switch
 
 	has_many :ports, dependent: :destroy, inverse_of: :switch
@@ -18,6 +19,8 @@ scope :not_archived, -> { where(archived: false)}
 	validates :community, presence: true
 	validates :ip_admin, presence: true, uniqueness: true
   validates :description, presence: true
+
+  accepts_nested_attributes_for :ports
 
 
   def occupied_ports_count

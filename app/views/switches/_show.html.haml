@@ -2,7 +2,7 @@
 	%button.close{ type:"button", 'data-dismiss' => "modal"}
 		%i.icon-remove
 
-	%h3= @switch.ip_admin
+	%h3= @switch.description
 
 .modal-body
 	%p
@@ -10,5 +10,12 @@
 		= @switch.community
 
 	%p
-		%b Description:
-		= @switch.description
+		%b IP:
+		= @switch.ip_admin
+	%p
+		%b Ports - Chambre - managed:
+		- @switch.ports.each do |port|
+			%br
+			= port.number.to_s + " - "
+			= if port.room then port.room.full_address else "Aucune" end
+			= " - " + port.managed.to_s

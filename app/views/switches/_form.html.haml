@@ -1,23 +1,31 @@
 .controls
-  .input-append
-    = f.input_field :ip_admin, placeholder: "Ip d'administration"
-    %span.add-on
-      %i.icon-double-angle-up{rel: "tooltip", title: "Ip d'administration", style: "margin-top: 10px", "data-placement" => "bottom"}
+	.input-append
+		= f.input_field :ip_admin, placeholder: "Ip d'administration"
+		%span.add-on
+			%i.icon-double-angle-up{rel: "tooltip", title: "Ip d'administration", style: "margin-top: 10px", "data-placement" => "bottom"}
 
-  - if @switch.new_record?
-    .input-append
-      = f.input_field :number_of_ports, placeholder: "Nombre de ports"
-      %span.add-on
-        %i.icon-sitemap{rel: "tooltip", title: "Nombre de ports", style: "margin-top: 10px", "data-placement" => "bottom"}
+	- if @switch.new_record?
+		.input-append
+			= f.input_field :number_of_ports, placeholder: "Nombre de ports"
+			%span.add-on
+				%i.icon-sitemap{rel: "tooltip", title: "Nombre de ports", style: "margin-top: 10px", "data-placement" => "bottom"}
 
 .controls
-  .input-append
-    = f.input_field :description, placeholder: "Description"
-    %span.add-on
-      %i.icon-question{rel: "tooltip", title: "Description", style: "margin-top: 10px"}
+	.input-append
+		= f.input_field :description, placeholder: "Description"
+		%span.add-on
+			%i.icon-question{rel: "tooltip", title: "Description", style: "margin-top: 10px"}
 
 
-  .input-append
-    = f.input_field :community, placeholder: "Community"
-    %span.add-on
-      %i.icon-key{rel: "tooltip", title: "Community", style: "margin-top: 10px"}
+	.input-append
+		= f.input_field :community, placeholder: "Community"
+		%span.add-on
+			%i.icon-key{rel: "tooltip", title: "Community", style: "margin-top: 10px"}
+
+	- if !@switch.new_record?
+		= f.simple_fields_for :ports do |builder|
+			%br
+			= "Port " + builder.object.number.to_s + " : "
+			= builder.input_field :room, collection: @not_archived_rooms, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;', selected: (if builder.object.room then builder.object.room.id else 0 end), :include_blank => "Aucune"
+			= "Managed : "
+			= builder.input_field :managed
