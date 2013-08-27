@@ -60,6 +60,7 @@ class Computer < ActiveRecord::Base
 				end
 				current_ip = increment_ip(current_ip)
 			end
+			self.ip_address = self.to_ip(current_ip)
 		end
 	end
 
