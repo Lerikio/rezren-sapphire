@@ -34,10 +34,7 @@ attr_accessible :payments_attributes
 # --------------------------------------------------------------------------------------------------
 
 	def update_next_debit(archived)
-		
-		unless next_debit
-			next_debit = Date.today - 1.month
-		end
+		next_debit ||= Date.today - 1.month
 
 		unless archived
 			if payments.order("created_at ASC").last.created_at.to_date >= next_debit
@@ -56,9 +53,7 @@ attr_accessible :payments_attributes
 		number_of_days = ((value_to_add - number_of_months * Monthly_cotisation) / (Monthly_cotisation/30.0)).to_i
 		total_time = number_of_days.days + number_of_months.months
 
-		unless end_of_adhesion
-			end_of_adhesion = Date.today - 1.month
-		end
+		end_of_adhesion ||= Date.today - 1.month
 
 		if archived
 			end_of_adhesion -= total_time
