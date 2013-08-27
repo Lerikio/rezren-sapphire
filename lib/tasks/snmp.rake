@@ -23,6 +23,7 @@ namespace :snmp do
 			changes[switch.description] = switch_changes
 		end
 		#TODO formater les logs
+		puts changes
 		Log.new(:content => changes, :source => "Script de mise à jour des VLANs", :status => "info").save
 	end
 
@@ -38,6 +39,7 @@ namespace :snmp do
 			changes[switch.description] = switch_changes
 		end
 		#TODO formater les logs
+		puts changes
 		Log.new(:content => changes, :source => "Script de mise à jour des MACs", :status => "info").save
 	end
 
