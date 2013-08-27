@@ -143,7 +143,7 @@ class Port < ActiveRecord::Base
 		macs = []
 		text.split(",").each do |part|
 			tmp = part.split("\s")
-			macs << {:mac => tmp[1], :vlan => tmp[0]}
+			macs << {:mac => tmp[1], :vlan => tmp[0].to_i}
 		end
 		macs
 	end
