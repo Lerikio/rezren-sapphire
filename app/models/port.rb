@@ -63,18 +63,16 @@ class Port < ActiveRecord::Base
 			new_vlan = {:vlan => VLAN::Exterieur, :tagged => false}
 			new_port_security = 1
 		end
-		puts new_vlan
+
 		#On récupère l'interface SNMP
 		intf = self.switch.snmp_interface
 
 		#On supprime les VLANs non désirés sur ce port
 		deleted_vlans = []
 		old_vlans = intf.get_vlans(self.number)
-		puts old_vlans
+
 		old_vlans.each do |vlan|
-			puts vlan
 			if vlan != new_vlan[:vlan] or intf.is_on_tagged_vlan?(self.number, vlan) != new_vlan[:tagged]
-				puts "deleted"
 				deleted_vlans << {:vlan => vlan, :tagged => intf.is_on_tagged_vlan?(self.number, vlan)}
 				intf.del_vlan(self.number, vlan)
 			end
@@ -84,12 +82,10 @@ class Port < ActiveRecord::Base
 
 		#On ajoute le bon VLAN si nécessaire
 		if !new_vlan[:tagged] && !intf.is_on_untagged_vlan?(self.number, new_vlan[:vlan])
-			puts "add tagged"
 			intf.add_vlan_untagged(self.number, new_vlan[:vlan])
 			changes[:added] << new_vlan
 		end
 		if new_vlan[:tagged] && !intf.is_on_tagged_vlan?(self.number, new_vlan[:vlan])
-			puts "add untagged"
 			intf.add_vlan_tagged(self.number, new_vlan[:vlan])
 			changes[:added] << new_vlan
 		end

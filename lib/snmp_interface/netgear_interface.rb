@@ -64,12 +64,12 @@ class NetgearInterface < SwitchInterface
 
   # Indique si un vlan est taggué sur un port
   def is_on_tagged_vlan?(port_id, vlan_id)
-    return ((is_on_vlan?(port_id,vlan_id)) and !(is_on_untagged_vlan?(port_id,vlan_id)))
+    return ((is_on_vlan?(port_id,vlan_id)) and !(get_untagged_ports_binary(vlan_id)[port_id-1,1].to_i == 1))
   end
 
   # Indique si un vlan est untaggué sur un port
   def is_on_untagged_vlan?(port_id, vlan_id)
-    return get_untagged_ports_binary(vlan_id)[port_id-1,1].to_i == 1
+    return ((is_on_vlan?(port_id,vlan_id)) and get_untagged_ports_binary(vlan_id)[port_id-1,1].to_i == 1)
   end
 
   # Indique si un vlan est interdit sur un port
