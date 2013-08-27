@@ -145,5 +145,5 @@ class Port < ActiveRecord::Base
 			macs << {:mac => tmp[1], :vlan => tmp[0]}
 		end
 		macs
-	end_of_adhesion
+	end
 end
