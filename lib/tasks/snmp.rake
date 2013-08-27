@@ -13,7 +13,7 @@ namespace :snmp do
 
 	desc "Met à jour les VLANs sur les switches"
 	task :vlans => :environment do |t, args|
-		changes = []
+		changes = {}
 		Switch.not_archived.each do |switch|
 			switch_changes = []
 			switch.ports.each do |port|
