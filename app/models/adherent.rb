@@ -34,7 +34,6 @@ scope :not_archived, -> { where(archived: false)}
 	has_many :payments, through: :credit
 
 	has_one :room, inverse_of: :adherent	# Un adhérent resident a une chambre
-	#has_one :admin, inverse_of: :adherent  # Un adhérent peut être lié à un administrateur
 
 	# Association forte
 	has_many :computers, dependent: :destroy, inverse_of: :adherent
@@ -58,10 +57,9 @@ scope :not_archived, -> { where(archived: false)}
 		format: { with: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }
 	
 	# S'il s'agit d'un supélec :
-	validates :password, confirmation: true, length: {minimum: 6}, presence: true, if: :supelec?
+	validates :password, confirmation: true, presence: true, length: {minimum: 6}, on: :create, if: :supelec?
 	validates :promotion, presence: true, if: :supelec?
-	validates :username, presence: true, if: :supelec?
-	validates :username, uniqueness: true, length: {minimum: 3},
+	validates :username, uniqueness: true, length: {minimum: 3}, presence: true,
 		:format => { :with => /^([a-zA-Z0-9_\-\.]+)$/ }, if: :supelec?
 	validates :supelec_email, uniqueness: true, presence: true, if: :supelec?
 	validates :supelec_email, format: { with: /^([a-zA-Z0-9_\-\.]+)$/ }, if: :supelec?
