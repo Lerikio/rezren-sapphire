@@ -5,3 +5,5 @@
 		= f.input_field :number, class: "label-field", :placeholder => "Numéro de la chambre"
 		%span.add-on
 			%i.icon-male{rel: "tooltip", title: "Numéro de la chambre", style: "margin-top: 10px", "data-placement" => "bottom"}
+
+= f.input_field :port, collection: Port.not_archived, label_method: :designation, id: "ports-select", style: 'width: 254px; margin-bottom: 10px;'
