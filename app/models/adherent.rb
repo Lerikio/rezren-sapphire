@@ -1,6 +1,9 @@
 # -*- encoding : utf-8 -*-
 class Adherent < ActiveRecord::Base
 
+require 'discourse_api/discourse_api'
+
+
 scope :not_archived, -> { where(archived: false)}
 
 # Surveillance par la gem public_activity
@@ -78,7 +81,7 @@ scope :not_archived, -> { where(archived: false)}
 #	Création du compte discourse 
 # --------------------------------------------------------------------------------------------------
 
-	after_validation on: :create, :create_discourse_user
+	after_create :create_discourse_user
 
 # --------------------------------------------------------------------------------------------------
 #	Méthodes
