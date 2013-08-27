@@ -53,12 +53,12 @@ class Port < ActiveRecord::Base
 	def update_vlans_by_snmp
 		return nil unless managed
 		#On Vérifie sur quel VLAN on doit mettre ce port
-		if room.nil? or room.adherent.nil? or room.adherent.should_be_disconnected?
+		if self.room.nil? or self.room.adherent.nil? or self.room.adherent.should_be_disconnected?
 			new_vlan = {:vlan => VLAN::Prerezotage, :tagged => false}
 			new_port_security = 2 #1 pour activer, 2 pour désactiver
-		elsif room.adherent.supelec?
+		elsif self.room.adherent.supelec?
 			new_vlan = {:vlan => VLAN::Supelec, :tagged => false}
-			new_port_security = if room.adherent.rezoman then 2 else 1 end
+			new_port_security = if self.room.adherent.rezoman then 2 else 1 end
 		else
 			new_vlan = {:vlan => VLAN::Exterieur, :tagged => false}
 			new_port_security = 1
@@ -108,7 +108,7 @@ class Port < ActiveRecord::Base
 		return nil unless managed
 		#On vérifie les adresses MACs qui doivent être autorisées sur ce port
 		new_macs = []
-		unless room.nil? or room.adherent.nil? or room.adherent.should_be_disconnected?
+		unless self.room.nil? or self.room.adherent.nil? or self.room.adherent.should_be_disconnected?
 			supelec = self.room.adherent.supelec?
 			vlan = if supelec then VLAN::Supelec else VLAN::Exterieur end
 			self.room.adherent.computers.each do |computer|
