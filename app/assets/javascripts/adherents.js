@@ -24,7 +24,7 @@ function register_datatable_adherents() {
 
 function register_delete_buttons_adherents() {
 	$('#adherents a.remote-delete').click(function() {
-		if (confirm("Êtes vous sûr de vouloir supprimer cette mailing ?")) {
+		if (confirm("Êtes vous sûr de vouloir supprimer cet adhérent ?")) {
 	    	$.post(this.href, { _method: 'delete' }, null , "json").always(
 	  	  			function(data) { reload_adherents(); }
 	  		  	);
