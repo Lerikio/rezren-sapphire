@@ -47,8 +47,8 @@ attr_accessible :payments_attributes
 
 	def update_end_of_adhesion(payment, archived)
 		value_to_add = payment.value
-		number_of_months = (value_to_add / Monthly_cotisation).floor
-		number_of_days = ((value_to_add - number_of_months * Monthly_cotisation) / (Monthly_cotisation/30.0)).floor
+		number_of_months = (value_to_add / Monthly_cotisation).to_i
+		number_of_days = ((value_to_add - number_of_months * Monthly_cotisation) / (Monthly_cotisation/30.0)).to_i
 		total_time = number_of_days.days + number_of_months.months
 
 		if archived
