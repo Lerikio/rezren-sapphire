@@ -23,6 +23,6 @@
 		%i.icon-envelope-alt{rel: "tooltip", title: "E-mail", style: "margin-top: 10px"}
 
 %div{style: 'display: none'}
-	= f.hidden_field :resident
-	= f.hidden_field :supelec
-	= f.hidden_field :rezoman
+	= f.hidden_field :resident, value: (if f.object.resident then "true" else "false" end)
+	= f.hidden_field :supelec, value: (if f.object.supelec then "true" else "false" end)
+	= f.hidden_field :rezoman, value: (if f.object.rezoman then "true" else "false" end)

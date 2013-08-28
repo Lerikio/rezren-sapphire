@@ -61,6 +61,7 @@ authorize_resource only: :create
         end
         
         @adherent.create_activity :update, owner: current_admin
+        format.js { head :no_content }
         format.json { render json: @adherent, status: :updated, location: @adherent }
       else        
         flash.now[:error] = @adherent.errors.full_messages
