@@ -67,6 +67,7 @@ authorize_resource only: :create
 
         @switch.create_activity :update, owner: current_admin
 
+        format.js { head :no_content }
         format.html { redirect_to @switch, notice: 'Switch was successfully updated.' }
         format.json { head :no_content }
       else
