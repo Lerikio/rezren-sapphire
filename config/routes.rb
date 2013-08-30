@@ -9,7 +9,7 @@ Sapphire::Application.routes.draw do
 
 	# En vrac
 		# Permet de visualiser la totalité des instances d'un modèle malgré une nested_route
-		get "computers", to: "computers#index", as: "computers"
+		resources :computers, :only => [:index, :show]
 		get "payments", to: "payments#index_all", as: "payments"
 
 		# Sessions
