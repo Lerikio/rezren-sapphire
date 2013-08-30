@@ -21,9 +21,8 @@
 					- else
 						\--
 				%td
-					- if activity.trackable
-						Il y a
-						= time_ago_in_words(activity.created_at)
+					Il y a
+					= time_ago_in_words(activity.created_at)
 					[
 					= activity.created_at.to_s(:short)
 					]
