@@ -26,7 +26,7 @@ namespace :regenerate do
 
 	desc "Upload des fichiers sur le serveur"
 	task :upload_dhcp => :environment do
-		lemuria_password = "PlsFindAWayToPutPasswordHere"
+		lemuria_password = Passwords::Lemuria
 		Net::SCP.upload!("10.2.0.3", "sapphire",
 			"#{Rails.root}/tmp/hosts_supelec.conf", "/tmp/hosts_supelec.conf",
 			:password => lemuria_password)
