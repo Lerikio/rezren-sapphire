@@ -38,4 +38,11 @@ namespace :regenerate do
 		end
 	end
 
+	desc "Génération des fichiers et upload sur le serveur"
+	task :dhcp_all => :environment do
+		Rake::Task["regenerate:supelec_dhcp"].invoke
+		Rake::Task["regenerate:others_dhcp"].invoke
+		Rake::Task["regenerate:upload_dhcp"].invoke
+	end
+
 end
