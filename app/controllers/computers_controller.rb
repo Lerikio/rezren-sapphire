@@ -45,6 +45,7 @@ load_and_authorize_resource
       if @computer.save
 
         @computer.create_activity :create, owner: current_admin
+        format.js { head :no_content }
         format.json { render json: @computer, status: :created, location: @computer }
       else        
         flash.now[:error] = @computer.errors.full_messages
