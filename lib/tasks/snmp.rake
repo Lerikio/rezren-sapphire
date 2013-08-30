@@ -43,4 +43,8 @@ namespace :snmp do
 		Log.new(:content => changes, :source => "Script de mise à jour des MACs", :status => "info").save
 	end
 
+	task :all => :environment
+		Rake::Task["snmp:vlans"].invoke
+		Rake::Task["snmp:macs"].invoke
+	end
 end
