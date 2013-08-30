@@ -80,6 +80,7 @@ class Computer < ActiveRecord::Base
 				raise "The argument #{self.to_ip(current_ip)} is already at max..."
 			end
 		end
+		current_ip
 	end
 
 
