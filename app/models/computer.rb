@@ -50,12 +50,13 @@ class Computer < ActiveRecord::Base
 		end
 		current_ip = [10, vlan, 1, 1]
 
-		if Computer.all.empty?
+		computers = Computer.where(:archived => false)
+
+		if computers.empty?
 			self.ip_address = self.to_ip(current_ip)
 		else 
-			Computer.all.each do |other_computer|
-				if other_computer.ip_address != to_ip(current_ip)
-					self.ip_address = self.to_ip(current_ip)
+			while true do
+				if computers.where(:ip_address => self.to_ip(current_ip)).empty?
 					break
 				end
 				current_ip = increment_ip(current_ip)
