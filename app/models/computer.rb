@@ -43,6 +43,7 @@ class Computer < ActiveRecord::Base
 # --------------------------------------------------------------------------------------------------
 
 	def generate_ip
+		return if self.ip_address
 		if self.adherent.supelec
 			vlan = VLAN::Supelec
 		else
