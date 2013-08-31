@@ -43,7 +43,6 @@ class DiscourseApi::Resource
     actual_args = api_args(actual_args)
     req = Net::HTTP::Get.new(path, initheader = {'Content-Type' =>'application/json'})
     r = Net::HTTP.new(host, port).start {|http| http.request(req) }
-    puts r.body
   end
 
   def perform_post(parsed_path, args)
