@@ -8,6 +8,7 @@ Sapphire::Application.routes.draw do
 
 
 	# En vrac
+		get '/computers/reload', :controller => 'computers', :action => 'reload'
 		resources :computers, :only => [:index, :show]
 
 		get '/payments/reload', :controller => 'payments', :action => 'reload'

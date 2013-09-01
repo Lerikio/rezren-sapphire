@@ -1,31 +1,6 @@
 - content_for :title do
   Liste des ordinateurs
 
-
-%table#computers
-  %thead
-    %tr
-      %th DNS
-      %th Propriétaire
-      %th Adresse MAC
-      %th Adresse IP
-      %th 
-  %tbody
-    -@computers.each do |computer|
-      %tr
-        %td
-          = computer.name
-        %td
-          = link_to computer.adherent.full_name, computer.adherent 
-        %td
-          = computer.mac_address
-        %td
-          = computer.ip_address
-        %td.actions
-          = link_to edit_adherent_computer_path(computer.adherent.id, computer.id),remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-warning" do
-            %i.icon-pencil.icon-large
-            Editer
-          = link_to adherent_computer_path(computer.adherent.id, computer.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + computer.mac_address + "?") } do
-            %i.icon-trash.icon-large
-            Supprimer
-
+#wrapper
+  = render partial: 'index_table'
+  

@@ -86,6 +86,13 @@ load_and_authorize_resource
     end
   end
 
+  def reload
+    @computers = Computer.where(:archived => params[:archived].to_bool)
+    respond_to do |format|
+      format.html { render partial: "index_table" }
+    end
+  end
+
   private
     def load_adherent
       @adherent = Adherent.find(params[:adherent_id]) if params[:adherent_id]
