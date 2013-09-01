@@ -19,6 +19,9 @@ class Computer < ActiveRecord::Base
 	before_validation :on => :create do 
 		self.name = Computer.generate_name(adherent.last_name)
 	end
+	before_validation do
+		mac_address.lowercase
+	end
 	
 
 # Validations
