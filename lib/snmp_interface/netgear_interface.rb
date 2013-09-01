@@ -290,6 +290,16 @@ class NetgearInterface < SwitchInterface
     set_oid(OID_NG_PORTSECURITY + '.1.' + port_id.to_s, status, SNMP::Integer)
   end
 
+  #Modifie le PVID du port
+  def set_pvid(port_id, vlan_id)
+    set_oid(OID_PVID + '.' + port_id.to_s, vlan_id, SNMP::Integer)
+  end
+
+  #Recupère le PVID du port
+  def get_pvid(port_id)
+    get_oid(OID_PVID + '.' + port_id.to_s)
+  end
+
   #private
 
   OID_BRIDGE = '1.3.6.1.2.1.17'
@@ -300,6 +310,7 @@ class NetgearInterface < SwitchInterface
   OID_VLAN_FORBIDDEN_EGRESS_PORTS = '1.3.6.1.2.1.17.7.1.4.3.1.3'
   OID_VLAN_STATIC_UNTAG_PORTS     = '1.3.6.1.2.1.17.7.1.4.3.1.4'
   OID_NG_PORTSECURITY = '1.3.6.1.4.1.4526.10.20.1.2.1'
+  OID_PVID = '1.3.6.1.2.1.17.7.1.4.5.1.1'
 
   def load_ports_and_vlans(options = {})
     options[:debug] ||= false
