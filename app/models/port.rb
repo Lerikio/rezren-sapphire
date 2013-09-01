@@ -78,7 +78,7 @@ class Port < ActiveRecord::Base
 			end
 		end
 
-		changes = {:port => self.number, :added => [], :deleted => deleted_vlans, :port_security => :unchanged}
+		changes = {:port => self.number, :added => [], :deleted => deleted_vlans}
 
 		#On ajoute le bon VLAN si nécessaire
 		if !new_vlan[:tagged] && !intf.is_on_untagged_vlan?(self.number, new_vlan[:vlan])
@@ -102,6 +102,11 @@ class Port < ActiveRecord::Base
 
 		#On change le PVID
 		intf.set_pvid(self.number, new_vlan[:vlan])
+
+		#On nettoie les logs
+		changes.delete(:added) if changes[:added].empty?
+		changes.delete(:deleted) if changes[:deleted].empty?
+		return true unless changes[:added] || changes[:deleted] || changes[:port_security]
 
 		#On retourne un hash des modifications effectuées
 		changes
