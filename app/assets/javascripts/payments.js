@@ -39,19 +39,3 @@ function register_delete_buttons_payments() {
 function reload_payments() {
 	$('#wrapper').load('payments/reload', function () {register_all_payments();});
 }
-
-//Pour le tri par date
-jQuery.extend( jQuery.fn.dataTableExt.oSort, {
-    "title-numeric-pre": function ( a ) {
-        var x = a.match(/title="*(-?[0-9\.]+)/)[1];
-        return parseFloat( x );
-    },
- 
-    "title-numeric-asc": function ( a, b ) {
-        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
-    },
- 
-    "title-numeric-desc": function ( a, b ) {
-        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
-    }
-} );

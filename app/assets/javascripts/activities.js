@@ -6,8 +6,8 @@ $(document).ready( function () {
 		"aoColumns": [
 		    { "bSortable": false },
 		    null,
-		    null
+		    { "sType": "title-numeric" }
 		],
-		"aaSorting": [[ 2, "asc" ]]
+		"aaSorting": [[ 2, "desc" ]]
 	} );
 } );

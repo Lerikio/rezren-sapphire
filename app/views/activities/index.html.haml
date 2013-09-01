@@ -21,9 +21,10 @@
 					- else
 						\--
 				%td
-					Il y a
-					= time_ago_in_words(activity.created_at)
-					[
-					= activity.created_at.to_s(:short)
-					]
+					%span{:title => activity.created_at.to_i}
+						Il y a
+						= time_ago_in_words(activity.created_at)
+						[
+						= activity.created_at.to_s(:short)
+						]
 
