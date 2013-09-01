@@ -25,4 +25,4 @@
 .controls
 	= f.input_field :comment, as: :text, placeholder: "Commentaire. Nécessaire si les deux valeurs du paiements sont différentes.", rows: "4", style: "width: 490px"
 
-	= f.hidden_field :mean
+	= f.hidden_field :mean, id: "payment_mean"
