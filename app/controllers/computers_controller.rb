@@ -62,11 +62,12 @@ load_and_authorize_resource
 
         @computer.create_activity :update, owner: current_admin
 
+        format.js { head :no_content }
         format.html { redirect_to @computer, notice: 'Computer was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @computer.errors, status: :unprocessable_entity }
+        flash.now[:error] = @mailing.errors.full_messages
+        format.js { render action: :edit}
       end
     end
   end
