@@ -11,4 +11,5 @@ $('#adherents-select').select2({
 // Faire disparaitre le modal quand la requête réussie
 $("form").on("ajax:success", function(event, data, status, xhr){
     $('#modal-window').modal('hide');
+    reload_computers();
   });
