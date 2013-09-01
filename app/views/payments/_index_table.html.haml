@@ -6,6 +6,7 @@
       %th Valeur sur le compte
       %th Valeur payée
       %th Adhérent
+      %th Admin
       %th Moyen de paiement
       %th 
   %tbody
@@ -20,6 +21,8 @@
           = formatted_amount_with_currency(payment.paid_value)
         %td
           = link_to payment.adherent.full_name, payment.adherent
+        %td
+          = link_to payment.admin.display_name, payment.admin
         %td
           = if payment.mean_is_cheque then "Chèque (#{payment.bank_name})" else "Liquide" end
 

@@ -20,6 +20,7 @@ function register_datatable_payments() {
 		    null,
 		    null,
 		    null,
+		    null,
 		    { "bSortable": false, "bSearchable": false }
 		]
 	} );
@@ -27,7 +28,7 @@ function register_datatable_payments() {
 
 function register_delete_buttons_payments() {
 	$('#payments a.remote-delete').click(function() {
-		if (confirm("Êtes vous sûr de vouloir supprimer ce payement ?")) {
+		if (confirm("Êtes vous sûr de vouloir supprimer ce paiement ?")) {
 	    	$.post(this.href, { _method: 'delete' }, null , "json").always(
 	  	  			function(data) { reload_mailings(); }
 	  		  	);
