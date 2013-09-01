@@ -141,7 +141,15 @@ class Port < ActiveRecord::Base
 			intf.del_mac(self.number, mac[:vlan], mac[:mac])
 		end
 
-		{:port => self.number, :added => macs_to_add, :deleted => macs_to_delete}
+		changes = {:port => self.number, :added => macs_to_add, :deleted => macs_to_delete}
+
+		#On nettoie les logs
+		changes.delete(:added) if changes[:added].empty?
+		changes.delete(:deleted) if changes[:deleted].empty?
+		return true unless changes[:added] || changes[:deleted]
+
+		#On retourne un hash des modifications effectuées
+		changes
 	end
 	
 	private
