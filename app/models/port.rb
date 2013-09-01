@@ -100,6 +100,9 @@ class Port < ActiveRecord::Base
 			end
 		end
 
+		#On change le PVID
+		intf.set_pvid(self.number, new_vlan[:vlan])
+
 		#On retourne un hash des modifications effectuées
 		changes
 	end
