@@ -106,7 +106,7 @@ load_and_authorize_resource
 
   def cash
     @payment.cash
-
+    @payment.create_activity :update, owner: current_admin
     respond_to do |format|
       format.js { head :no_content }
       format.html { redirect_to payments_url }
@@ -116,7 +116,7 @@ load_and_authorize_resource
 
   def by_treasurer
     @payment.by_treasurer
-
+    @payment.create_activity :update, owner: current_admin
     respond_to do |format|
       format.js { head :no_content }
       format.html { redirect_to payments_url }
