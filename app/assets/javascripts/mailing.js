@@ -14,6 +14,7 @@ function register_datatable_mailings() {
 		"bJQueryUI": true,	
 		"aoColumns": [
 			null,
+			null,
 		    null,
 		    null,
 		    { "bSortable": false, "bSearchable": false }

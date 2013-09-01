@@ -22,7 +22,11 @@ load_and_authorize_resource
     @payments = Payment.where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
-      format.html # index.html.erb
+      if @adherent 
+        format.html { render action: "index" }
+      else
+        format.html { render action: "index_all" }
+      end
       format.json { render json: @payments }
     end
   end
@@ -30,11 +34,6 @@ load_and_authorize_resource
   # GET /payments/1
   # GET /payments/1.json
   def show
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @payment }
-    end
   end
 
   # GET /payments/new
@@ -74,11 +73,12 @@ load_and_authorize_resource
 
         @payment.create_activity :update, owner: current_admin
 
+        format.js { head :no_content }
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @payment.errors, status: :unprocessable_entity }
+        flash.now[:error] = @payment.errors.full_messages
+        format.js { render action: :edit}
       end
     end
   end
@@ -97,11 +97,38 @@ load_and_authorize_resource
     end
   end
 
+  def reload
+    @payments = Payment.where(:archived => params[:archived].to_bool)
+    respond_to do |format|
+      format.html { render partial: "index_table" }
+    end
+  end
+
+  def cash
+    @payment.cash
+
+    respond_to do |format|
+      format.js { head :no_content }
+      format.html { redirect_to payments_url }
+      format.json { head :no_content }
+    end
+  end
+
+  def by_treasurer
+    @payment.by_treasurer
+
+    respond_to do |format|
+      format.js { head :no_content }
+      format.html { redirect_to payments_url }
+      format.json { head :no_content }
+    end
+  end
+
   private
     def load_adherent
+      return unless params[:adherent_id]
       if @adherent = Adherent.find(params[:adherent_id])
         @adherent
-      else
       end
     end
 end

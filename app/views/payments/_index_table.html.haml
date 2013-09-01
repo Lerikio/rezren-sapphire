@@ -1,0 +1,32 @@
+%table#payments
+  %thead
+    %tr
+      %th Etat
+      %th Date
+      %th Valeur sur le compte
+      %th Valeur payée
+      %th Adhérent
+      %th Moyen de paiement
+      %th 
+  %tbody
+    -@payments.each do |payment|
+      %tr
+        %td{:class => if payment.state == "received" then "red" elsif payment.state == "received_by_treasurer" then "orange" elsif payment.state == "cashed" then "green" end}
+        %td
+          %span{:title => payment.created_at.to_i}= payment.created_at.to_s(:short)
+        %td
+          = formatted_amount_with_currency(payment.value)
+        %td
+          = formatted_amount_with_currency(payment.paid_value)
+        %td
+          = link_to payment.adherent.full_name, payment.adherent
+        %td
+          = if payment.mean_is_cheque then "Chèque (#{payment.bank_name})" else "Liquide" end
+
+        %td.actions
+          = link_to edit_payment_path(payment.id), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-warning", remote: true do
+            %i.icon-pencil.icon-large
+            Editer
+          = link_to payment_path(payment.id), class:"btn btn-danger remote-delete", :method => :delete do
+            %i.icon-trash.icon-large
+            Supprimer

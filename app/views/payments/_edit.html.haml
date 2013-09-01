@@ -1,0 +1,19 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3 Edition d'un payement
+
+	= bootstrap_flash
+
+= simple_form_for @payment, validate: true, remote: true do |f|
+	.modal-body
+		= render partial: "form", locals: {f: f}  
+	.modal-footer
+		- if @payment.state == "received"
+			= link_to by_treasurer_payment_path(@payment.id), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-primary", remote: true do
+				Recevoir
+		- if @payment.state == "received" or @payment.state == "received_by_treasurer"
+			= link_to cash_payment_path(@payment.id), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-primary", remote: true do
+				Encaisser
+		= f.submit "Modifier", {class: "btn btn-primary"}

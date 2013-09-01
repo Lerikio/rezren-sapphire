@@ -47,6 +47,10 @@ state_machine :state, initial: :received do
 	
 end
 
+	def mean_is_cheque
+		mean == "cheque"
+	end
+
 private
 
 	# Validation du moyen de paiement
@@ -62,10 +66,6 @@ private
 
 	def equality_of_values
 		paid_value == value
-	end
-
-	def mean_is_cheque
-		mean == "cheque"
 	end
 
 	def set_cached_date

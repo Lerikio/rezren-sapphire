@@ -2,31 +2,5 @@
   Liste des paiements
 
 
-%table#payments
-  %thead
-    %tr
-      %th Valeur sur le compte
-      %th Valeur payée
-      %th Moyen de paiement
-      %th 
-  %tbody
-    -@payments.each do |payment|
-      %tr
-        %td
-          = formatted_amount_with_currency(payment.value)
-        %td
-          = formatted_amount_with_currency(payment.paid_value)
-        %td
-          = link_to payment.adherent.full_name, payment.adherent
-
-        %td.actions
-          = link_to adherent_payment_path(payment.adherent, payment.id), class:"btn btn-success" do
-            %i.icon-eye-open.icon-large
-            Voir
-          = link_to edit_adherent_payment_path(payment.adherent, payment.id), class:"btn btn-warning" do
-            %i.icon-pencil.icon-large
-            Editer
-          = link_to adherent_payment_path(payment.adherent, payment.id), class:"btn btn-danger", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer le paiement de " + payment.adherent.full_name + "?") } do
-            %i.icon-trash.icon-large
-            Supprimer
-
+#wrapper
+  = render partial: 'index_table'

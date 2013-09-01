@@ -1,0 +1,22 @@
+.modal-header
+  %button.close{ type:"button", 'data-dismiss' => "modal"}
+    %i.icon-remove
+
+  %h3= @payment.adherent.full_name
+
+.modal-body
+  %p
+    %b Value:
+    = @payment.value
+  %p
+    %b Paid value:
+    = @payment.paid_value
+  %p
+    %b Mean:
+    = @payment.mean
+  %p
+    %b Comment:
+    = @payment.comment
+  %p
+    %b Archived:
+    = @payment.archived

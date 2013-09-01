@@ -12,6 +12,10 @@ function init_buttons() {
     if ($('#adherent_rezoman').attr('value')=="true") {
       $("#rezoman-btn").addClass("btn-info active");
     }
+    if ($('#payment_mean').attr('value')=="liquid") {
+      $("#cheque-btn").removeClass("btn-info active");
+      $("#liquid-btn").addClass("btn-info active");
+    }
 }
 
 function activate_button() {
@@ -88,12 +92,12 @@ function payment_is_cheque_or_liquid(){
   var $input = $('#bank :input');
 
   if( $("#cheque-btn").hasClass("active")){
-    $('#mean').val("cheque");
+    $('#payment_mean').val("cheque");
     $field.animate({opacity: 1}, 200);
     $input.removeAttr('disabled');
 
   } else {
-    $('#mean').val("liquid");
+    $('#payment_mean').val("liquid");
     $field.animate({opacity: 0}, 200);
     setTimeout(function(){
       $input.delay(800).attr('disabled', true);
