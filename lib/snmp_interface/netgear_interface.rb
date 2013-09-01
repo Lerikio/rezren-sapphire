@@ -292,7 +292,7 @@ class NetgearInterface < SwitchInterface
 
   #Modifie le PVID du port
   def set_pvid(port_id, vlan_id)
-    set_oid(OID_PVID + '.' + port_id.to_s, vlan_id, SNMP::Integer)
+    set_oid(OID_PVID + '.' + port_id.to_s, vlan_id, SNMP::Gauge32)
   end
 
   #Recupère le PVID du port
