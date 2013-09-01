@@ -20,7 +20,7 @@ class Computer < ActiveRecord::Base
 		self.name = Computer.generate_name(adherent.last_name)
 	end
 	before_validation do
-		mac_address.downcase
+		mac_address = mac_address.downcase
 	end
 	
 
