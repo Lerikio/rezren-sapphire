@@ -153,8 +153,8 @@ class Computer < ActiveRecord::Base
 	end
 
 	def uniqueness_mac_ip
-		return false unless Computer.not_archived.where(:ip_address => self.ip_address).where('id <> ?', self.id).empty?
-		return false unless Computer.not_archived.where(:mac_address => self.mac_address).where('id <> ?', self.id).empty?
+		errors.add(:ip_address, 'doit être unique') unless Computer.not_archived.where(:ip_address => self.ip_address).where('id <> ?', self.id).empty?
+		errors.add(:mac_address, 'doit être unique') unless Computer.not_archived.where(:mac_address => self.mac_address).where('id <> ?', self.id).empty?
 		true
 	end
 end
