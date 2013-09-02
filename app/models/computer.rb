@@ -28,9 +28,10 @@ class Computer < ActiveRecord::Base
     validates :mac_address, presence: true,
         format: { with: /^([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/i }
     validates :adherent, presence: true
-    validates :ip_address, presence: true, uniqueness: true, format: {with: Resolv::IPv4::Regex}
+    validates :ip_address, presence: true, format: {with: Resolv::IPv4::Regex}
    	validates :name, presence: true,
 		format: { with: /^([a-z0-9_\-\.]+)$/ }
+	validate :uniqueness_mac_ip
 
 ####################################################################################################
 #
@@ -149,5 +150,11 @@ class Computer < ActiveRecord::Base
 			computers << computer unless computer.adherent.supelec
 		end
 		computers
+	end
+
+	def uniqueness_mac_ip
+		return false unless Computer.not_archived.where(:ip_address => self.ip_address).where('id <> ?', self.id).empty?
+		return false unless Computer.not_archived.where(:mac_address => self.mac_address).where('id <> ?', self.id).empty?
+		true
 	end
 end
