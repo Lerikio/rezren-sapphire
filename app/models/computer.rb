@@ -25,8 +25,9 @@ class Computer < ActiveRecord::Base
 	
 
 # Validations
-    validates :mac_address, presence: true, uniqueness: true,
+    validates :mac_address, presence: true,
         format: { with: /^([0-9a-fA-F]{2}[:-]){5}[0-9a-fA-F]{2}$/i }
+    validates_uniqueness_of :mac_address, :scope => :not_archived
     validates :adherent, presence: true
     validates :ip_address, presence: true, uniqueness: true, format: {with: Resolv::IPv4::Regex}
    	validates :name, presence: true,
