@@ -44,6 +44,10 @@ state_machine :state, initial: :received do
 	event :cash do
 		transition [:received, :received_by_treasurer] => :cashed
 	end
+
+	event :reset_status do
+		transition [:cashed, :received_by_treasurer] => :received
+	end
 	
 end
 

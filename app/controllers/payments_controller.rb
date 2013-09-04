@@ -124,6 +124,16 @@ load_and_authorize_resource
     end
   end
 
+  def reset_status
+    @payment.reset_status
+    @payment.create_activity :update, owner: current_admin
+    respond_to do |format|
+      format.js { head :no_content }
+      format.html { redirect_to payments_url }
+      format.json { head :no_content }
+    end
+  end
+
   private
     def load_adherent
       return unless params[:adherent_id]

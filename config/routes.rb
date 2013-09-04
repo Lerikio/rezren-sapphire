@@ -16,6 +16,7 @@ Sapphire::Application.routes.draw do
 			member do
 				get 'cash'
 				get 'by_treasurer'
+				get 'reset_status'
 			end
 		end
 
