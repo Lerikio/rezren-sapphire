@@ -121,7 +121,7 @@ class Computer < ActiveRecord::Base
 		current_number = 2
 
 		# Normalisation de la chaîne de caractère
-		adherent_name = adherent_name.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.to_s
+		adherent_name = adherent_name.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').gsub(/\s+/, "").downcase.to_s
 		current_name = adherent_name
 
 		# Tant qu'une entrée DNS existe déjà avec ce nom, on augmente le nombre qui lui est rajouté
