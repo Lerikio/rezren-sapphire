@@ -11,7 +11,7 @@
 = simple_form_for @adherent, validate: true, remote: true do |f|	
 
 	.modal-body
-		= render "form", f: f
+		= render partial: "form", locals: {f: f}
 
 	.modal-footer
 		= f.submit "Editer", {class: "btn btn-primary"}

@@ -13,21 +13,21 @@
 
 	.tab-pane#resident
 
-		-#= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;', selected: @adherent.room_id
+		= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;', selected: @adherent.room_id
 
 		- if @adherent.new_record?
 			%hr
 			%h2 Ordinateur
 
-			-#= f.simple_fields_for :computers do |builder|
-			-#	= render 'computers/form', f: builder	
+			= f.simple_fields_for :computers do |builder|
+				= render 'computers/form', f: builder	
 			
 			%hr
 			%h2 Paiement
 
-			-#= f.simple_fields_for :credit do |builder|
-			-#	= builder.simple_fields_for :payments do |payment_builder|
-			-#		= render 'payments/form', f: payment_builder
+			= f.simple_fields_for :credit do |builder|
+				= builder.simple_fields_for :payments do |payment_builder|
+					= render 'payments/form', f: payment_builder
 
 	.tab-pane#supelec
 
@@ -37,7 +37,7 @@
 
 		.controls
 			= f.input_field :username, placeholder: "Username"
-			-#= f.input_field :promotion, as: :select, collection: (Time.now.year-5...Time.now.year+5), id: "years-select", style: 'width: 220px;'
+			= f.input_field :promotion, as: :select, collection: (Time.now.year-5...Time.now.year+5), id: "years-select", style: 'width: 220px;'
 
 		.controls
 			.input-append
