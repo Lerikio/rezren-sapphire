@@ -45,6 +45,6 @@
 							%li
 								= link_to new_adherent_payment_path(adherent.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
 									Nouveau paiement
-					= link_to adherent_path(adherent.id), class:"btn btn-danger remote-delete", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + adherent.full_name + "? Cette opération est irréversible.") } do
+					= link_to adherent_path(adherent.id), class:"btn btn-danger remote-delete", :method => :delete do
 						%i.icon-trash.icon-large
 						Supprimer
