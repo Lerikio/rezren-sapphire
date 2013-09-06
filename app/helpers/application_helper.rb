@@ -49,6 +49,7 @@ module ApplicationHelper
   end
   
   def formatted_amount_with_currency(value)
+    return value.to_s
     formatted_amount(value) + '€'
   end
   
