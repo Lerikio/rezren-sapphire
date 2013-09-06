@@ -61,7 +61,7 @@ class Computer < ActiveRecord::Base
 			self.ip_address = self.to_ip(current_ip)
 		else 
 			while true do
-				unless ips.include?(current_ip)
+				unless ips.include?(self.to_ip(current_ip))
 					break
 				end
 				current_ip = increment_ip(current_ip)
