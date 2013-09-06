@@ -20,9 +20,10 @@
             \--
         %td
           - if room.port
-            = link_to room.port.switch.ip_admin, switch_path(room.port.switch)
+            - switch = room.port.switch
+            = link_to switch.description, switch_path(switch)
             \:
-            = link_to room.port.number.to_s, switch_port_path(room.port.switch, room.port)
+            = link_to room.port.number.to_s, switch_port_path(switch, room.port)
           - else
             \--
         %td.actions
@@ -32,6 +33,6 @@
           = link_to edit_room_path(room), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-warning", remote: true do
             %i.icon-pencil.icon-large
             Editer
-          = link_to room_path(room), class:"btn btn-danger remote-delete", :method => :delete, :data => { :confirm =>  ("Êtes vous sûr de vouloir supprimer " + room.full_address + "?") } do
+          = link_to room_path(room), class:"btn btn-danger remote-delete", :method => :delete do
             %i.icon-trash.icon-large
             Supprimer
