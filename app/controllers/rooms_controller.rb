@@ -8,7 +8,7 @@ class RoomsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @rooms = Room.includes(:adherent, {port: switch}).where(:archived => params[:archived].to_bool)
+    @rooms = Room.includes(:adherent, {port: :switch}).where(:archived => params[:archived].to_bool)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @rooms }
