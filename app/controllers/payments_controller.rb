@@ -8,7 +8,7 @@ load_and_authorize_resource
 
   # Get /payments
   def index_all
-    @payments = Payment.where(:archived => params[:archived].to_bool)
+    @payments = Payment.includes(:adherent, :admin).where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index_all.html.erb
@@ -19,7 +19,7 @@ load_and_authorize_resource
   # GET /adherent/id/payments
   # GET /payments.json
   def index
-    @payments = Payment.where(:archived => params[:archived].to_bool)
+    @payments = Payment.includes(:adherent, :admin).where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       if @adherent 
