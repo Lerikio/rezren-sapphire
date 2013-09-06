@@ -1,50 +1,50 @@
-%table#adherents{style: "overflow: visible"}
-	%thead
-		%tr
-			%th Nom
-			%th Type
-			%th Solde
-			%th Chambre
-			%th 
-	%tbody
-		-@adherents.each do |adherent|
-			%tr
-				%td
-					= adherent.full_name
-				%td
-					- if adherent.rezoman
-						%i.icon-linux.icon-large{rel: "tooltip", title: "Rezoman", style: "margin-right: 5px"}
-					- if adherent.resident
-						%i.icon-home.icon-large{rel: "tooltip", title: "Résident", style: "margin-right: 5px"}
-					- if adherent.supelec
-						%i.icon-bolt.icon-large{rel: "tooltip", title: "Supélec"}
-					- unless adherent.resident || adherent.supelec || adherent.rezoman
-						\--
-
-				%td
-					- if adherent.credit
-						= formatted_amount_with_currency(adherent.credit.value)
-				%td
-					- if adherent.room
-						= adherent.room.full_address
-					- else
-						\--
-				%td.actions
-					= link_to adherent_path(adherent.id), class:"btn btn-success" do
-						%i.icon-eye-open.icon-large
-						Voir
-					.btn-group{style: "margin-top: 2px"}
-						= link_to edit_adherent_path(adherent.id), class:"btn btn-warning", remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
-							%i.icon-pencil.icon-large
-						%button.btn.btn-warning.dropdown-toggle{"data-toggle" => "dropdown"}
-							%span.caret
-						%ul.dropdown-menu
-							%li
-								= link_to new_adherent_computer_path(adherent.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
-									Nouvel ordinateur
-							%li
-								= link_to new_adherent_payment_path(adherent.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
-									Nouveau paiement
-					= link_to adherent_path(adherent.id), class:"btn btn-danger remote-delete", :method => :delete do
-						%i.icon-trash.icon-large
-						Supprimer
+-#%table#adherents{style: "overflow: visible"}
+-#	%thead
+-#		%tr
+-#			%th Nom
+-#			%th Type
+-#			%th Solde
+-#			%th Chambre
+-#			%th 
+-#	%tbody
+-#		-@adherents.each do |adherent|
+-#			%tr
+-#				%td
+-#					= adherent.full_name
+-#				%td
+-#					- if adherent.rezoman
+-#						%i.icon-linux.icon-large{rel: "tooltip", title: "Rezoman", style: "margin-right: 5px"}
+-#					- if adherent.resident
+-#						%i.icon-home.icon-large{rel: "tooltip", title: "Résident", style: "margin-right: 5px"}
+-#					- if adherent.supelec
+-#						%i.icon-bolt.icon-large{rel: "tooltip", title: "Supélec"}
+-#					- unless adherent.resident || adherent.supelec || adherent.rezoman
+-#						\--
+-#
+-#				%td
+-#					- if adherent.credit
+-#						= formatted_amount_with_currency(adherent.credit.value)
+-#				%td
+-#					- if adherent.room
+-#						= adherent.room.full_address
+-#					- else
+-#						\--
+-#				%td.actions
+-#					= link_to adherent_path(adherent.id), class:"btn btn-success" do
+-#						%i.icon-eye-open.icon-large
+-#						Voir
+-#					.btn-group{style: "margin-top: 2px"}
+						-#= link_to edit_adherent_path(adherent.id), class:"btn btn-warning", remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
+-#							%i.icon-pencil.icon-large
+-#						%button.btn.btn-warning.dropdown-toggle{"data-toggle" => "dropdown"}
+-#							%span.caret
+-#						%ul.dropdown-menu
+-#							%li
+								-#= link_to new_adherent_computer_path(adherent.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
+-#									Nouvel ordinateur
+-#							%li
+								-#= link_to new_adherent_payment_path(adherent.id), remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window'  do
+-#									Nouveau paiement
+-#					= link_to adherent_path(adherent.id), class:"btn btn-danger remote-delete", :method => :delete do
+-#						%i.icon-trash.icon-large
+-#						Supprimer
