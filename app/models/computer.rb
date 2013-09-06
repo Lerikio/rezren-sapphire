@@ -55,13 +55,13 @@ class Computer < ActiveRecord::Base
 		end
 		current_ip = [10, vlan, 1, 1]
 
-		computers = Computer.where(:archived => false)
+		ips = Computer.where(:archived => false).pluck(:ip_address)
 
 		if computers.empty?
 			self.ip_address = self.to_ip(current_ip)
 		else 
 			while true do
-				if computers.where(:ip_address => self.to_ip(current_ip)).empty?
+				unless ips.include?(current_ip)
 					break
 				end
 				current_ip = increment_ip(current_ip)
