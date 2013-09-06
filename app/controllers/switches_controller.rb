@@ -8,7 +8,7 @@ authorize_resource only: :create
   # GET /switches
   # GET /switches.json
   def index
-    @switches = Switch.includes({port: :room}).where(:archived => params[:archived].to_bool)
+    @switches = Switch.includes({ports: :room}).where(:archived => params[:archived].to_bool)
 
     respond_to do |format|
       format.html # index.html.erb
