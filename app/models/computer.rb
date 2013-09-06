@@ -57,7 +57,7 @@ class Computer < ActiveRecord::Base
 
 		ips = Computer.where(:archived => false).pluck(:ip_address)
 
-		if computers.empty?
+		if ips.empty?
 			self.ip_address = self.to_ip(current_ip)
 		else 
 			while true do
