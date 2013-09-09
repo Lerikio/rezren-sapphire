@@ -9,7 +9,7 @@ class DhcpConf
 
 	def output
 		out = ""
-		@computers.not_archived do |computer|
+		@computers.each do |computer|
 			#Au format :
 			#host NOMHOTE {
 			#	hardware ethernet ADRESSEMAC;

@@ -138,7 +138,7 @@ class Computer < ActiveRecord::Base
 
 	def self.supelec
 		computers = []
-		Computer.all.each do |computer|
+		Computer.not_archived.each do |computer|
 			computers << computer if computer.adherent.supelec
 		end
 		computers
@@ -146,7 +146,7 @@ class Computer < ActiveRecord::Base
 
 	def self.others
 		computers = []
-		Computer.all.each do |computer|
+		Computer.not_archived.each do |computer|
 			computers << computer unless computer.adherent.supelec
 		end
 		computers
