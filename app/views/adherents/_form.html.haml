@@ -13,7 +13,7 @@
 
 	.tab-pane#resident
 
-		= f.input_field :room, collection: Room.not_archived, label_method: :full_address, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;', selected: @adherent.room_id
+		= f.input_field :room, collection: Room.not_archived, label_method: :address_and_adherent, id: "rooms-select", style: 'width: 254px; margin-bottom: 10px;', selected: @adherent.room_id
 
 		- if @adherent.new_record?
 			%hr
