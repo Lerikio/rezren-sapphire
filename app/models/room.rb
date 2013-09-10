@@ -24,7 +24,7 @@ scope :not_archived, -> { where(archived: false)}
 	end
 
 	def address_and_adherent
-		return self.full_address if self.adherent
+		return self.full_address unless self.adherent
 		self.full_address + ' (' + self.adherent.full_name + ')'
 	end
 
