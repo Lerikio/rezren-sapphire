@@ -25,6 +25,7 @@ class Admin < ActiveRecord::Base
 	def self.authenticate(username, password)
 		username = username.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').downcase.to_s
 		user = find_by_username(username)
+		return nil if user.archived
 		if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
 			user
 		else
