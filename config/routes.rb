@@ -38,7 +38,12 @@ Sapphire::Application.routes.draw do
 		resources :rooms
 
 		get '/adherents/reload', :controller => 'adherents', :action => 'reload'
+		get '/adherents/index_discourse', :controller => 'adherents', :action => 'index_discourse'
 		resources :adherents do
+			member do
+				get 'new_discourse'
+				put 'create_discourse'
+			end
 			resources :computers
 			resources :payments
 			get "credit/destroy"

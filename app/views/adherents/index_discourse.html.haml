@@ -1,0 +1,21 @@
+- content_for :title do
+	Liste des adhérents
+
+#wrapper
+	%table#discourse{style: "overflow: visible"}
+		%thead
+			%tr
+				%th Nom
+				%th Créé
+				%th 
+		%tbody
+			-@adherents.each do |adherent|
+				%tr
+					%td
+						= adherent.full_name
+					%td
+						= adherent.discourse_created
+					%td.actions
+						= link_to new_discourse_adherent_path(adherent.id), class:"btn btn-warning", remote: true, "data-toggle" => 'modal', "data-target" => '#modal-window' do
+							%i.icon-eye-open.icon-large
+							Créer

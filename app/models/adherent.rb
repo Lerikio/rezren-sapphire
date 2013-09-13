@@ -57,7 +57,7 @@ scope :not_archived, -> { where(archived: false)}
 		format: { with: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/ }
 	
 	# S'il s'agit d'un supélec :
-	validates :password, confirmation: true, presence: true, length: {minimum: 6}, on: :create, if: :supelec?
+	validates :password, confirmation: true, presence: true, length: {minimum: 6}, if: :should_validate_password?
 	validates :promotion, presence: true, if: :supelec?
 	validates :username, uniqueness: true, length: {minimum: 3}, presence: true,
 		:format => { :with => /^([a-zA-Z0-9_\-\.]+)$/ }, if: :supelec?
@@ -152,6 +152,10 @@ scope :not_archived, -> { where(archived: false)}
 		#Temporairement
 		return self.archived
 		credit.should_be_disconnected?
+	end
+
+	def should_validate_password?
+		(self.password && !self.password.blank?) || ( supelec? && self.new_record?)
 	end
 
 private

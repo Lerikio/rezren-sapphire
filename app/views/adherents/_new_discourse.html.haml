@@ -1,0 +1,19 @@
+.modal-header
+	%button.close{ type:"button", 'data-dismiss' => "modal"}
+		%i.icon-remove
+
+	%h3 Création d'un compte Discourse
+
+	= bootstrap_flash
+
+= simple_form_for @adherent, validate: true, remote: true, :url => create_discourse_adherent_path(@adherent) do |f|	
+
+	.modal-body
+		= f.input :username
+
+		= f.input :password
+
+		= f.input :password_confirmation
+
+	.modal-footer
+		= f.submit "Créer", {class: "btn btn-primary"}

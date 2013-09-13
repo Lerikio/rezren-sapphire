@@ -28,7 +28,7 @@ authorize_resource only: :create
 
     respond_to do |format|
       if @adherent.save
-
+        @adherent.create_discourse_user
         @adherent.create_activity :create, owner: current_admin
         format.json { render json: @adherent, status: :created, location: @adherent }
       else        
@@ -87,6 +87,28 @@ authorize_resource only: :create
     respond_to do |format|
       format.html { render partial: "index_table" }
     end
+  end
+
+  def new_discourse
+
+  end
+
+  def create_discourse
+    respond_to do |format|
+      if @adherent.update_attributes(params[:adherent])
+        @adherent.create_discourse_user
+        @adherent.discourse_created = true
+        @adherent.save
+        format.js { head :no_content }
+      else        
+        flash.now[:error] = @adherent.errors.full_messages
+        format.js { render :new_discourse}
+      end  
+    end
+  end
+
+  def index_discourse
+    @adherents = Adherent.where(:archived => params[:archived].to_bool)
   end
 
 end
