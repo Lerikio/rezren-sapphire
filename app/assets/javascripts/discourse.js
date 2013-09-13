@@ -4,7 +4,6 @@ $(document).ready( function () {
 
 function register_all_discourse() {
 	register_datatable_discourse();
-	register_delete_buttons_discourse();
 }
 
 function register_datatable_discourse() {
