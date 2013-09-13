@@ -93,6 +93,8 @@ scope :not_archived, -> { where(archived: false)}
 			client.api_key = "59f0959060761f1414c6cf7c23b843841059b4bf7d34ad808d979e4598faab27"
 			client.api_username = "Lerik"
 			client.create_user(name: full_name, email: email_to_use, password: password, username: username)
+			self.discourse_created = true
+			self.save
 		end
 	end
 

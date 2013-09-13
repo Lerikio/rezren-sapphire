@@ -97,8 +97,6 @@ authorize_resource only: :create
     respond_to do |format|
       if @adherent.update_attributes(params[:adherent])
         @adherent.create_discourse_user
-        @adherent.discourse_created = true
-        @adherent.save
         format.js { head :no_content }
       else        
         flash.now[:error] = @adherent.errors.full_messages
