@@ -120,7 +120,7 @@ class Port < ActiveRecord::Base
 		unless self.room.nil? or self.room.adherent.nil? or self.room.adherent.should_be_disconnected?
 			supelec = self.room.adherent.supelec?
 			vlan = if supelec then VLAN::Supelec else VLAN::Exterieur end
-			self.room.adherent.computers.each do |computer|
+			self.room.adherent.computers.not_archived.each do |computer|
 				new_macs << {:mac => computer.mac_address, :vlan => vlan}
 			end
 		end
