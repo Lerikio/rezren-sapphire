@@ -33,12 +33,13 @@ attr_accessible :payments_attributes
 # 	Mise à jour de la date de prochain débit -- à appeler par les paiements
 # --------------------------------------------------------------------------------------------------
 
-	def update_next_debit(archived)
-		self.next_debit ||= Date.today - 1.month
-
-		unless archived
-			if payments.order("created_at ASC").last.created_at.to_date >= self.next_debit
-				self.next_debit = payments.order("created_at ASC").last.created_at.to_date + 1.month
+	def update_next_debit
+		if !self.next_debit
+			self.next_debit = 1.month.from_now
+		else
+			self.next_debit += 1.month
+			if self.next_debit > self.end_of_adhesion
+				self.next_debit = self.end_of_adhesion
 			end
 		end
 	end
@@ -47,23 +48,18 @@ attr_accessible :payments_attributes
 # 	Mise à jour de la date de fin d'adhésion -- à appeler par les paiements
 # --------------------------------------------------------------------------------------------------
 
-	def update_end_of_adhesion(payment, archived)
-		value_to_add = payment.value
-		number_of_months = (value_to_add / Monthly_cotisation).to_i
-		number_of_days = ((value_to_add - number_of_months * Monthly_cotisation) / (Monthly_cotisation/30.0)).to_i
+	def update_end_of_adhesion
+		number_of_months = (self.value / Monthly_cotisation).to_i
+		number_of_days = ((self.value - number_of_months * Monthly_cotisation) / (Monthly_cotisation/30.0)).to_i
 		total_time = number_of_days.days + number_of_months.months
 
-		self.end_of_adhesion ||= Date.today - 1.month
+		self.end_of_adhesion = self.next_debit + total_time - 1.month
+	end
 
-		if archived
-			self.end_of_adhesion -= total_time
-		else
-			if self.end_of_adhesion <= Date.today
-				self.end_of_adhesion = total_time.from_now
-			else
-				self.end_of_adhesion += total_time
-			end
-		end
+	def debit_cotisation
+		debited_value += [Monthly_cotisation, self.value].min
+		self.update_next_debit
+		self.update_end_of_adhesion
 	end
 
 ####################################################################################################
@@ -78,7 +74,7 @@ attr_accessible :payments_attributes
 	end
 
 	def actif?
-		Date.today < next_debit + 1.month || adherent.rezoman
+		Date.today < self.end_of_adhesion || adherent.rezoman
 	end
 
 	def should_be_disconnected?
