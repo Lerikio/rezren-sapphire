@@ -12,6 +12,7 @@ namespace :payments do
 		Adherent.not_archived.each do |a|
 			if a.credit
 				a.credit.debit_cotisation
+				a.credit.save
 			end
 		end
 	end
@@ -22,6 +23,7 @@ namespace :payments do
 			if a.credit
 				a.credit.next_debit = 1.month.from_now
 				a.credit.update_end_of_adhesion
+				a.credit.save
 			end
 		end
 	end
