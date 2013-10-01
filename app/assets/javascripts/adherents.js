@@ -14,6 +14,7 @@ function register_datatable_adherents() {
 		"bJQueryUI": true,
 		"aoColumns": [
 			null,
+			null,
 		    null,
 		    null,
 		    null,

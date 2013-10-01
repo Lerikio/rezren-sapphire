@@ -1,6 +1,7 @@
 %table#adherents{style: "overflow: visible"}
 	%thead
 		%tr
+			%th Etat
 			%th Nom
 			%th Type
 			%th Solde
@@ -9,6 +10,7 @@
 	%tbody
 		-@adherents.each do |adherent|
 			%tr
+				%td{:class => if adherent.should_be_disconnected? then "red" else "green" end}
 				%td
 					= adherent.full_name
 				%td

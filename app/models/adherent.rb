@@ -151,8 +151,6 @@ scope :not_archived, -> { where(archived: false)}
 	end
 
 	def should_be_disconnected?
-		#Temporairement
-		return self.archived
 		credit.should_be_disconnected?
 	end
 
