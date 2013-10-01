@@ -80,6 +80,7 @@ private
 	def update_credit
 		credit.update_next_debit
 		credit.update_end_of_adhesion
+		credit.save
 	end
 
 end
