@@ -151,7 +151,7 @@ scope :not_archived, -> { where(archived: false)}
 	end
 
 	def should_be_disconnected?
-		credit.should_be_disconnected?
+		!credit or credit.should_be_disconnected?
 	end
 
 	def should_validate_password?
