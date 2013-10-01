@@ -12,8 +12,9 @@ function register_datatable_adherents() {
 		"sPaginationType": "full_numbers",
 		"sDom": '<"H"Cfr>t<"F"ip>',
 		"bJQueryUI": true,
+		"aaSorting": [[1, "asc" ]],
 		"aoColumns": [
-			null,
+			{ "bSortable": false, "bSearchable": false },
 			null,
 		    null,
 		    null,
