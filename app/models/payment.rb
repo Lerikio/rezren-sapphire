@@ -78,8 +78,8 @@ private
 
 	# Mise à jour du crédit de l'utilisateur lors de la création du paiement
 	def update_credit
-		credit.update_next_debit(archived)
-		credit.update_end_of_adhesion(self, archived)
+		credit.update_next_debit
+		credit.update_end_of_adhesion
 	end
 
 end
