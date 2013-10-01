@@ -57,7 +57,7 @@ attr_accessible :payments_attributes
 	end
 
 	def debit_cotisation
-		debited_value += [Monthly_cotisation, self.value].min
+		self.debited_value += [Monthly_cotisation, self.value].min
 		self.update_next_debit
 		self.update_end_of_adhesion
 	end
