@@ -34,7 +34,7 @@ attr_accessible :payments_attributes
 # --------------------------------------------------------------------------------------------------
 
 	def update_next_debit
-		if !self.next_debit
+		if !self.next_debit or self.next_debit < Date.today or self.next_debit > Date.today + 1.month
 			self.next_debit = 1.month.from_now
 		else
 			self.next_debit += 1.month
