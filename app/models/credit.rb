@@ -57,7 +57,7 @@ attr_accessible :payments_attributes
 	end
 
 	def debit_cotisation
-		if self.next_debit < Date.today
+		if self.next_debit <= Date.today
 			self.debited_value += [Monthly_cotisation, self.value].min
 			self.update_next_debit
 			self.update_end_of_adhesion
