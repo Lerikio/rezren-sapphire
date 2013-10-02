@@ -10,6 +10,7 @@ function register_all_mailings() {
 function register_datatable_mailings() {
 	$('#mailings').dataTable( {
 		"sPaginationType": "full_numbers",
+		"iDisplayLength": 50,
 		"sDom": '<"H"Cfr>t<"F"ip>',
 		"bJQueryUI": true,	
 		"aoColumns": [

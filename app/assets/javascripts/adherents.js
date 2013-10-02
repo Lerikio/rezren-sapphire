@@ -10,6 +10,7 @@ function register_all_adherents() {
 function register_datatable_adherents() {
 	$('#adherents').dataTable( {
 		"sPaginationType": "full_numbers",
+		"iDisplayLength": 50,
 		"sDom": '<"H"Cfr>t<"F"ip>',
 		"bJQueryUI": true,
 		"aaSorting": [[1, "asc" ]],

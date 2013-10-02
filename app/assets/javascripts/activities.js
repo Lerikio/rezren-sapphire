@@ -2,6 +2,7 @@
 $(document).ready( function () {
 	$('#activities').dataTable( {
 		"sDom": '<"H"Cfr>t<"F"ip>',
+		"iDisplayLength": 50,
 		"bJQueryUI": true,
 		"aoColumns": [
 		    { "bSortable": false },

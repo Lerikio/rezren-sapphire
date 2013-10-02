@@ -10,6 +10,7 @@ function register_all_generic_dns_entries() {
 function register_datatable_generic_dns_entries() {
 	$('#generic_dns_entries').dataTable( {
 		"sPaginationType": "full_numbers",
+		"iDisplayLength": 50,
 		"sDom": '<"H"Cfr>t<"F"ip>',
 		"bJQueryUI": true,	
 		"aoColumns": [

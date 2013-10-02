@@ -10,6 +10,7 @@ function register_all_computers() {
 function register_datatable_computers() {
 	$('#computers').dataTable( {
 		"sPaginationType": "full_numbers",
+		"iDisplayLength": 50,
 		"sDom": '<"H"Cfr>t<"F"ip>',
 		"bJQueryUI": true,	
 		"aoColumns": [
