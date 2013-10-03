@@ -6,7 +6,7 @@ load_and_authorize_resource except: :create
 authorize_resource only: :create
 
   def index
-    @adherents = Adherent.includes({:credit => :payments}, :room).where(:archived => params[:archived].to_bool)
+    @adherents = Adherent.includes({:credit => :not_archived_payments}, :room).where(:archived => params[:archived].to_bool)
   end
 
   def show
@@ -83,7 +83,7 @@ authorize_resource only: :create
   end
 
   def reload
-    @adherents = Adherent.includes({:credit => :payments}, :room).where(:archived => params[:archived].to_bool)
+    @adherents = Adherent.includes({:credit => :not_archived_payments}, :room).where(:archived => params[:archived].to_bool)
     respond_to do |format|
       format.html { render partial: "index_table" }
     end

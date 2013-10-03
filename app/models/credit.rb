@@ -11,6 +11,7 @@ attr_accessible :payments_attributes
 # Attributs et associations	
 
 	has_many :payments, inverse_of: :credit
+	has_many :not_archived_payments, :class_name => "Payment", :conditions => {:archived => false}
 	belongs_to :adherent, dependent: :destroy, inverse_of: :credit
 
 	# Permet de stocker une HashMap dans la base de donnée
@@ -72,7 +73,7 @@ attr_accessible :payments_attributes
 
 
 	def value
-		payments.not_archived.sum{|i| i.value} - debited_value
+		self.not_archived_payments.sum{|i| i.value} - debited_value
 	end
 
 	def actif?
