@@ -4,8 +4,6 @@ class Credit < ActiveRecord::Base
 # Cotisation mensuelle en euros
 	Monthly_cotisation = 6
 
-scope :not_archived, -> { where(archived: false)}
-
 attr_accessible :payments_attributes
 
 # Attributs et associations	
