@@ -6,7 +6,7 @@ load_and_authorize_resource except: :create
 authorize_resource only: :create
 
   def index
-    @adherents = Adherent.includes({:credit => :not_archived_payments}, :room).where(:archived => params[:archived].to_bool)
+    @adherents = Adherent.includes({:credit => :active_payments}, :room).where(:archived => params[:archived].to_bool)
   end
 
   def show
