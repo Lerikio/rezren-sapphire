@@ -93,3 +93,5 @@ source 'https://rubygems.org'
 # Bibliothèques SSH et SCP pour l'administration des autres serveurs
 	gem 'net-ssh'
 	gem 'net-scp'
+
+	gem 'active_model_serializers'

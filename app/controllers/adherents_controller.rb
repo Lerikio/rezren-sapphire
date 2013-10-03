@@ -8,7 +8,7 @@ authorize_resource only: :create
   def index
     @adherents = Adherent.includes({:credit => :active_payments}, :room).where(:archived => params[:archived].to_bool)
     respond_to do |format|
-      format.json { render json: @adherents }
+      format.json { render json: @adherents, each_serializer: AdherentSerializer }
       format.html
     end
   end
