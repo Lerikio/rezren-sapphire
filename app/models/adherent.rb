@@ -31,7 +31,6 @@ scope :not_archived, -> { where(archived: false)}
 # --------------------------------------------------------------------------------------------------
 
 	has_many :mailings, inverse_of: :adherent 	# Un adhérent peut être propriétaire de mailings
-	has_many :payments, through: :credit
 
 	has_one :room, inverse_of: :adherent	# Un adhérent resident a une chambre
 
