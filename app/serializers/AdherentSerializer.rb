@@ -1,3 +1,3 @@
 class AdherentSerializer < ActiveModel::Serializer
-  attributes :id, :first_name
+  attributes :id, :state, :full_name, :resident, :supelec, :rezoman, :credit_value, :room_number
 end

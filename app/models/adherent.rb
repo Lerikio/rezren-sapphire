@@ -157,6 +157,14 @@ scope :not_archived, -> { where(archived: false)}
 		(self.password && !self.password.blank?) || ( supelec? && self.new_record?)
 	end
 
+	def credit_value
+		self.credit.value
+	end
+
+	def room_number
+		self.room.full_address
+	end
+
 private
 	
 		def not_resident?
