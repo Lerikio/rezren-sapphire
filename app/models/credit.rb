@@ -71,7 +71,10 @@ attr_accessible :payments_attributes
 
 
 	def value
-		self.active_payments.sum{|i| i.value} - debited_value
+		# Apparement la methode sum n'utilise pas l'eager loading, donc on fait ça moche
+		sum = 0
+		self.active_payments.each {|p| sum += p.point_value}
+		sum - debited_value
 	end
 
 	def actif?
