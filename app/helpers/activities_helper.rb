@@ -2,6 +2,7 @@
 module ActivitiesHelper
 	#Pour l'eager loading
 	def payment_from_trackable(trackable)
-		@payments.detect{|p| p.id == trackable.id}
+		payment = @payments.detect{|p| p.trackable.id == trackable.id}
+		payment.id
 	end
 end
