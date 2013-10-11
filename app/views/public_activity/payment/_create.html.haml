@@ -2,7 +2,7 @@
 	Un 
 	= link_to "paiement", activity.trackable
 	pour
-	payment_from_trackable(activity.trackable).adherent.full_name
+	= payment_from_trackable(activity.trackable).adherent.full_name
 	a été créé.
 - else
 	Un paiement a été créé, mais a été supprimé depuis.

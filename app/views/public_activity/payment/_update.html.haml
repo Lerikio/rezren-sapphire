@@ -2,7 +2,7 @@
 	Un 
 	= link_to "paiement", activity.trackable
 	de
-	payment_from_trackable(activity.trackable).adherent.full_name
+	= payment_from_trackable(activity.trackable).adherent.full_name
 	a été mis à jour.
 - else
 	Un paiement a été mis à jour, mais a été supprimé depuis.
