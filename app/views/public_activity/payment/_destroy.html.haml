@@ -2,7 +2,7 @@
 	Un 
 	= link_to "paiement", activity.trackable
 	de
-	= payment_from_trackable(activity.trackable).full_name
+	= payment_from_trackable(activity.trackable).adherent.full_name
 	a été archivé.
 - else
 	Un paiement a été archivé, mais a été supprimé depuis.
