@@ -24,7 +24,7 @@ namespace :snmp do
 		end
 		#TODO formater les logs
 		puts changes
-		Log.new(:content => changes, :source => "Script de mise à jour des VLANs", :status => "info").save
+		#Log.new(:content => changes, :source => "Script de mise à jour des VLANs", :status => "info").save
 	end
 
 	desc "Met à jour les adresses MACs autorisées sur les switches"
@@ -40,7 +40,7 @@ namespace :snmp do
 		end
 		#TODO formater les logs
 		puts changes
-		Log.new(:content => changes, :source => "Script de mise à jour des MACs", :status => "info").save
+		#Log.new(:content => changes, :source => "Script de mise à jour des MACs", :status => "info").save
 	end
 
 	task :all => :environment do
