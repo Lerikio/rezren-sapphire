@@ -118,4 +118,37 @@ namespace :populate_dev do
 		end while !saved
 	end
 
+
+# -----------------------------------------------------------------------------------------------------------------
+# Changement du mot de passe d'un administrateur
+# -----------------------------------------------------------------------------------------------------------------
+
+
+    desc "Change le mot de passe d'un administrateur"
+    task "admin_passwd" => :environment do
+
+        require 'highline/import'
+
+        begin
+
+            nick = ask("Admin Username:")
+            admin = Admin.find_by_display_name(nick)
+
+            begin
+                password = ask("Admin Password:") {|q| q.echo = false}
+                password_confirmation = ask("Repeat password:") {|q| q.echo = false}
+
+            end while password != password_confirmation
+
+            admin.password = password
+            saved = admin.save!
+
+            unless saved
+                puts admin.errors.full_messages.join("\n")
+                next
+            end
+
+        end while !saved
+    end
+
 end
