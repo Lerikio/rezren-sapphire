@@ -6,3 +6,4 @@ db/development.sqlite3
 /Gemfile.lock
 config/database.yml
 db/schema.rb
+*~
