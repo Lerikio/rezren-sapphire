@@ -24,7 +24,7 @@ source 'https://rubygems.org'
 			# Tables de données ultra pratiques en JQuery
 				gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 			# Bootstrap (CSS & JS Twitter)
-				gem 'bootstrap-sass'
+				gem 'bootstrap-sass', '2.3.2.2'
 				gem "font-awesome-rails"
 			# Aide pour les "select" des formulaires
 				gem 'select2-rails'
