@@ -8,7 +8,7 @@ scope :not_archived, -> { where(archived: false)}
 
 # Attributs et associations	
 
-	attr_accessible :comment, :mean, :paid_value, :value, :bank_name
+	attr_accessible :comment, :mean, :paid_value, :value, :bank_name, :cotisation
 
 	belongs_to :credit, inverse_of: :payments
 	belongs_to :admin, inverse_of: :payments
@@ -55,6 +55,14 @@ end
 		mean == "cheque"
 	end
 
+	def save_current_cotisation
+		if cotisation == nil then cotisation = Monthly_cotisation end
+	end
+
+	def time_value
+		value*30.0/Monthly_cotisation
+	end
+
 private
 
 	# Validation du moyen de paiement
@@ -78,7 +86,6 @@ private
 
 	# Mise à jour du crédit de l'utilisateur lors de la création du paiement
 	def update_credit
-		credit.update_next_debit
 		credit.update_end_of_adhesion
 		credit.save
 	end

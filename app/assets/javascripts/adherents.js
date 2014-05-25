@@ -20,6 +20,7 @@ function register_datatable_adherents() {
 		    null,
 		    null,
 		    null,
+		    null,
 		    { "bSortable": false, "bSearchable": false }
 		]
 	});

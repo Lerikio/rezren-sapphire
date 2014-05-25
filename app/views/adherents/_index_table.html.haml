@@ -5,6 +5,7 @@
 			%th Nom
 			%th Type
 			%th Solde
+			%th Temps
 			%th Chambre
 			%th 
 	%tbody
@@ -26,6 +27,11 @@
 				%td
 					- if adherent.credit
 						= formatted_amount_with_currency(adherent.credit.value)
+				%td
+					- if adherent.credit
+						= adherent.credit.time_value
+				
+
 				%td
 					- if adherent.room
 						= adherent.room.full_address
