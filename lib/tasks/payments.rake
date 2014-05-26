@@ -19,7 +19,7 @@ namespace :payments do
 
 	desc "Initialisation de la valeur des cotisation de chaque paiement (si necessaire)"
 	task :init_cotisation => :environment do
-		Payment.each do |p|
+		Payment.all.each do |p|
 			p.save_current_cotisation
 		end
 	end

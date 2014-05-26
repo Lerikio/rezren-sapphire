@@ -1,9 +1,8 @@
 # -*- encoding : utf-8 -*-
+class Credit < ActiveRecord::Base
 
 # Cotisation mensuelle en euros
-	Monthly_cotisation = 6
-
-class Credit < ActiveRecord::Base
+        Monthly_cotisation = 6
 
 attr_accessible :payments_attributes
 

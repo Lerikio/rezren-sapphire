@@ -56,11 +56,11 @@ end
 	end
 
 	def save_current_cotisation
-		if cotisation == nil then cotisation = Monthly_cotisation end
+		if cotisation == nil then cotisation = Credit::Monthly_cotisation end
 	end
 
 	def time_value
-		value*30.0/Monthly_cotisation
+		value*30.0/Credit::Monthly_cotisation
 	end
 
 private

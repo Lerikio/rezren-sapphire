@@ -4,7 +4,6 @@
 			%th Etat
 			%th Nom
 			%th Type
-			%th Solde
 			%th Temps
 			%th Chambre
 			%th 
@@ -24,9 +23,6 @@
 					- unless adherent.resident || adherent.supelec || adherent.rezoman
 						\--
 
-				%td
-					- if adherent.credit
-						= formatted_amount_with_currency(adherent.credit.value)
 				%td
 					- if adherent.credit
 						= adherent.credit.time_value
