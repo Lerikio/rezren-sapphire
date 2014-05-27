@@ -22,6 +22,7 @@ function register_datatable_payments() {
 		    null,
 		    null,
 		    null,
+		    null,
 		    { "bSortable": false, "bSearchable": false }
 		]
 	} );

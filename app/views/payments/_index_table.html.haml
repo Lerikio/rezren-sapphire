@@ -3,7 +3,8 @@
     %tr
       %th Etat
       %th Date
-      %th Valeur sur le compte
+      %th Temps ajouté
+      %th Valeur ajoutée
       %th Valeur payée
       %th Adhérent
       %th Admin
@@ -15,6 +16,8 @@
         %td{:class => if payment.state == "received" then "red" elsif payment.state == "received_by_treasurer" then "orange" elsif payment.state == "cashed" then "green" end}
         %td
           %span{:title => payment.created_at.to_i}= payment.created_at.to_s(:short)
+        %td
+          = payment.time_value.to_s + " jours"
         %td
           = formatted_amount_with_currency(payment.value)
         %td
@@ -30,6 +33,3 @@
           = link_to edit_payment_path(payment.id), "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-warning", remote: true do
             %i.icon-pencil.icon-large
             Editer
-          = link_to payment_path(payment.id), class:"btn btn-danger remote-delete", :method => :delete do
-            %i.icon-trash.icon-large
-            Supprimer
