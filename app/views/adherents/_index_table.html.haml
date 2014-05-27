@@ -5,6 +5,7 @@
 			%th Nom
 			%th Type
 			%th Temps
+			%th Date d'expiration
 			%th Chambre
 			%th 
 	%tbody
@@ -26,7 +27,9 @@
 				%td
 					- if adherent.credit
 						= adherent.credit.time_value
-				
+				%td
+					- if adherent.credit
+						= adherent.credit.end_of_adhesion
 
 				%td
 					- if adherent.room
