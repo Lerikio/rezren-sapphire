@@ -29,21 +29,6 @@ attr_accessible :payments_attributes
 ####################################################################################################
 
 # --------------------------------------------------------------------------------------------------
-# 	Mise à jour de la date de prochain débit -- à appeler par les paiements
-# --------------------------------------------------------------------------------------------------
-
-	def update_next_debit
-		if !self.next_debit or self.next_debit < Date.today or self.next_debit > Date.today + 1.month
-			self.next_debit = 1.month.from_now
-		else
-			self.next_debit += 1.month
-			if self.next_debit > self.end_of_adhesion
-				self.next_debit = self.end_of_adhesion
-			end
-		end
-	end
-
-# --------------------------------------------------------------------------------------------------
 # 	Mise à jour de la date de fin d'adhésion -- à appeler par les paiements
 # --------------------------------------------------------------------------------------------------
 
@@ -60,6 +45,7 @@ attr_accessible :payments_attributes
 			end
 		end
 	end
+
 ####################################################################################################
 #
 #                                            Helpers	  
