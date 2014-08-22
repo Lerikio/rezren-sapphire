@@ -11,35 +11,26 @@ namespace :regenerate do
 	require 'net/ssh'
 
 	desc "Création du fichier DHCP pour les supélecs"
-	task :supelec_dhcp => :environment do
-		File.open("#{Rails.root}/tmp/hosts_supelec.conf",'w+') do |f|
+	task :refresh_file_dhcp => :environment do
+		File.open("#{Rails.root}/tmp/hosts_dhcp.conf",'w+') do |f|
 			f.write(DhcpConf.new(Computer.supelec).output)
-		end
-	end
-
-	desc "Création du fichier DHCP pour les non supélecs"
-	task :others_dhcp => :environment do
-		File.open("#{Rails.root}/tmp/hosts_others.conf",'w+') do |f|
-			f.write(DhcpConf.new(Computer.others).output)
 		end
 	end
 
 	desc "Upload des fichiers sur le serveur"
 	task :upload_dhcp => :environment do
 		lemuria_password = Passwords::Lemuria
-		Net::SCP.start("10.2.0.3", "sapphire", :password => lemuria_password) do |scp|
-			scp.upload! "#{Rails.root}/tmp/hosts_supelec.conf", "/tmp/hosts_supelec.conf"
-			scp.upload! "#{Rails.root}/tmp/hosts_others.conf", "/tmp/hosts_others.conf"
+		Net::SCP.start("10.2.0.2", "sapphire", :password => lemuria_password) do |scp|
+			scp.upload! "#{Rails.root}/tmp/hosts_dhcp.conf", "/etc/dhcp/users.conf"
 		end
-		Net::SSH.start('10.2.0.3', 'sapphire', :password => lemuria_password) do |ssh|
+		Net::SSH.start('10.2.0.2', 'sapphire', :password => lemuria_password) do |ssh|
 			ssh.exec("/home/sapphire/scripts/reload_dhcp.sh")
 		end
 	end
 
 	desc "Génération des fichiers et upload sur le serveur"
 	task :dhcp_all => :environment do
-		Rake::Task["regenerate:supelec_dhcp"].invoke
-		Rake::Task["regenerate:others_dhcp"].invoke
+		Rake::Task["regenerate:refresh_file_dhcp"].invoke
 		Rake::Task["regenerate:upload_dhcp"].invoke
 	end
 
