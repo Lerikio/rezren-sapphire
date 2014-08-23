@@ -24,7 +24,7 @@ namespace :regenerate do
 			scp.upload! "#{Rails.root}/tmp/hosts_dhcp.conf", "/etc/dhcp/users.conf"
 		end
 		Net::SSH.start('10.2.0.2', 'sapphire', :password => lemuria_password) do |ssh|
-			ssh.exec("/home/sapphire/scripts/reload_dhcp.sh")
+			ssh.exec("sudo service isc-dhcp-server restart")
 		end
 	end
 
