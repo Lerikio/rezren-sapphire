@@ -1,3 +1,4 @@
+# encoding : UTF-8
 #N'utiliser sous aucun pretexte
 
 namespace :console do
