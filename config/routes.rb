@@ -1,6 +1,7 @@
 # -*- encoding : utf-8 -*-
 Sapphire::Application.routes.draw do
 
+  match '/synchronisation', :to => "switchs_management#synchronisation"
   resources :logs
 
 

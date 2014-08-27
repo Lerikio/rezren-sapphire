@@ -1,0 +1,2 @@
+module SwitchsManagementHelper
+end

@@ -73,7 +73,7 @@
 					%li.divider-vertical
 
 					%li
-						= button_to "Synchronisation", "#", :class => "btn btn-primary"
+						=link_to "Synchronisation", "/synchronisation", "data-toggle" => 'modal', "data-target" => '#modal-window', class:"btn btn-primary", remote: true
 
 					%li.divider-vertical
 
