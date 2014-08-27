@@ -23,11 +23,10 @@ $grayMediumLight: #eaeaea;
 	line-height: 100%
 }
 
-.btn-synchronisation:hover
+.btn-synchronisation:hover, .btn-synchronisation:focus, .btn-synchronisation:active
 {
 	background-position: 0px 0px;
 }
-
 /* mixins, variables, etc. */
 
 @mixin box_sizing {
