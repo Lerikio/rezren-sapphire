@@ -250,7 +250,6 @@ class Port < ActiveRecord::Base
 		if(self.managed == true)
 			vlan = get_authorized_vlan
 			status = get_port_status_by_netconf(session)
-			puts status
 			if(vlan == 2)		
 				if(status[:enabled] == false)
 					set_port_status_by_netconf(true, session)
