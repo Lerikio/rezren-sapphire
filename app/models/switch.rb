@@ -6,6 +6,11 @@ scope :not_archived, -> { where(archived: false)}
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
 
+# Bibliothèques netconf
+	require 'pp'
+	require 'net/netconf/jnpr'
+	require 'junos-ez/stdlib'
+
 # Attributs et associations	
 
 	attr_accessible :community, :ip_admin, :description,
@@ -45,4 +50,55 @@ scope :not_archived, -> { where(archived: false)}
         @interface = NetgearInterface.new(self.ip_admin, self.community)
       end
     end
+
+    def connect_by_netconf
+	login = { :target => self.ip_admin, :username => "root", :password => "abc123" }
+	#Ouverture de session
+	session = Netconf::SSH::new(login)
+
+	if(session.open())
+		#Chargement des fonctions nécessaires
+		Junos::Ez::Provider(session) #Fonctionnalités de base : version firmware ...
+		Junos::Ez::L1ports::Provider(session, :l1_ports) #Management des ports physiques
+		Junos::Ez::L2ports::Provider(session, :l2_ports) #Management couche 2
+		Junos::Ez::Vlans::Provider(session, :vlans) #Management des vlans
+		Junos::Ez::Config::Utils(session, :cu) # Fonctions nécessaires au commit
+	else
+		puts "Erreur lors de la connection vers " + self.ip_admin.to_s
+	end
+
+	session
+    end
+
+    def disconnect_by_netconf(session)
+	if(session)
+		puts "Fermeture..."
+		session.close
+		puts "Fermé."
+	end
+    end
+
+    def connected_by_netconf?(session)
+	begin
+		if(session.facts.read! != nil)
+			true
+		end
+	rescue 
+		false 
+	end
+    end
+
+
+    def commit_modifs_by_netconf(session)
+	if (session.cu.commit?)
+		if (session.cu.commit!)
+			puts "Commit réussi"
+		else
+			puts "Echec du commit"
+		end
+	else
+		puts "Les données à commiter sont invalides"
+	end
+    end
+
 end

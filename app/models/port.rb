@@ -4,6 +4,12 @@ class Port < ActiveRecord::Base
 # Surveillance par la gem public_activity
 	include PublicActivity::Common
 
+# Bibliothèques netconf
+	require 'pp'
+	require 'net/netconf/jnpr'
+	require 'junos-ez/stdlib'
+	require 'net/ssh'
+
 # Attributs et associations	
 
 	attr_accessible :number, :switch_id, :room, :managed
@@ -151,6 +157,140 @@ class Port < ActiveRecord::Base
 		#On retourne un hash des modifications effectuées
 		changes
 	end
+
+	def set_tagged_by_netconfd(tag_status, session)
+		port_name = "ge-0/0/" + (self.number-1).to_s
+		p = session.l2_ports[port_name]
+		if(p[:vlan_tagging] != tag_status)
+			p[:vlan_tagging] = tag_status
+			if(p.write!)
+				puts "Tag status modified."
+			else
+				puts "Echec lors de la modification du statut du tag"
+			end
+		end
+	end
+
+	def get_port_status_by_netconf(session)
+		port_name = "ge-0/0/" + (self.number-1).to_s
+		pl1 = session.l1_ports[port_name]
+		pl2 = session.l2_ports[port_name]
+		@enabled = nil
+		if (pl1[:admin] == :up)
+			@enabled = true
+		else
+			@enabled = false
+		end
+		@vlan_name = pl2[:untagged_vlan]
+		@vlan_number = @vlan_name.to_i
+
+		#if (@vlan_name == "default")
+		#	@vlan_number = 0
+	#	elsif (@vlan_name == "users")
+	#		@vlan_number = 2
+	#	elsif (@vlan_name == "deco")
+	#		@vlan_number = 4
+	#	end
+		return { :enabled => @enabled, :untagged_vlan_name => @vlan_name, :untagged_vlan_number => @vlan_number }
+	end
+
+
+	#def set_allowed_mac(mac)
+	#	Net::SSH.start(self.switch.ip_admin, 'root', :password => 'abc123') do |ssh|
+	#		ssh.open_channel do |c|
+	#			c.exec("cli")
+	#			c.exec("exit")
+	#			#puts ssh.exec("configure")
+	#			#puts ssh.exec("edit ethernet-switching-options")
+	#			#puts ssh.exec("edit secure-access-port")
+	#			#puts ssh.exec("edit interface ge-0/0/#{self.number.to_s}")
+	#			#puts ssh.exec("set allowed-mac #{mac}")
+	#		end
+	#		c.close
+	#	end
+
+	#end
+
+	#Méthode permettant d'activer ou de désactiver un port
+	#	enabled : boolean
+	#	session : l'objet session sur le switch
+	def set_port_status_by_netconf(enabled, session)
+		port_name = "ge-0/0/" + (self.number-1).to_s
+
+		p = session.l1_ports[port_name]
+		if (enabled == true)
+			p[:admin] = :up
+		else
+			p[:admin] = :down
+		end
+		p.write!
+		#if (p.write!)
+		#	puts "Port status modified"
+	#	else
+		#	puts "Erreur lors de la modification du statut du port"
+	#	end
+	end
+
+	def set_untagged_vlan_by_netconf(number, session)
+		port_name = "ge-0/0/" + (self.number-1).to_s
+
+		p = session.l2_ports[port_name]
+		p[:untagged_vlan] = number.to_s
+		p.write!
+	end
+
+	def update_vlans(session)
+		#TODO : gestion de différents modèles
+		#if(self.switch.model == "Juniper")
+			update_vlans_by_netconf(session)
+		#end
+	end
+
+	def update_vlans_by_netconf(session)
+		if(self.managed == true)
+			vlan = get_authorized_vlan
+			status = get_port_status_by_netconf(session)
+			puts status
+			if(vlan == 2)		
+				if(status[:enabled] == false)
+					set_port_status_by_netconf(true, session)
+				end
+				if(status[:untagged_vlan_number] != vlan)
+					puts "Ouverture du port " + (self.number-1).to_s + "; switch " + self.switch.description
+					set_untagged_vlan_by_netconf(vlan, session)
+				end
+			elsif(vlan == 4)
+				if(status[:untagged_vlan_number] != vlan)
+					puts "Fermeture du port " + (self.number-1).to_s + "; switch " + self.switch.description
+					set_untagged_vlan_by_netconf(vlan, session)
+				end
+				if(status[:enabled] == true)
+					set_port_status_by_netconf(false, session)
+				end
+			end
+		end
+	end
+
+
+	def get_authorized_vlan
+		if(self.room != nil && self.room.adherent != nil)
+			if(self.room.adherent.should_be_disconnected?)
+				vlan = 4
+			else
+				vlan = 2
+			end
+		else
+			vlan = 4
+		end
+	end
+
+	def update_mac_adresses
+		#TODO
+	end
+
+	def update_mac_adresses_by_netconf(session)
+		#TODO
+	end
 	
 	private
 
@@ -163,4 +303,5 @@ class Port < ActiveRecord::Base
 		end
 		macs
 	end
+
 end
