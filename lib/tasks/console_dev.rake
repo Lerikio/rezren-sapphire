@@ -1,3 +1,4 @@
+# encoding : UTF-8
 #N'utiliser sous aucun pretexte
 
 namespace :console do
@@ -63,5 +64,29 @@ namespace :console do
 				p.destroy
 			end
 		end
+	end
+
+	desc "Test netconf"
+	task :test => :environment do
+		s = Switch.find(2)
+		session = s.connect_by_netconf
+		if(session != nil)
+			puts "Connection établie"
+		else
+			puts "Connection non établie."
+		end
+		
+		port_status = s.ports.find_by_number(2).get_port_status(session)
+		puts "Enabled : #{port_status[:enabled]}\n"
+		puts "Vlan : #{port_status[:untagged_vlan_number]}"
+		s.disconnect_by_netconf(session)
+	end
+
+	require "#{Rails.root}/app/helpers/switchs_management_helper"
+	include SwitchsManagementHelper 
+
+	desc "Test synchronise"
+	task :synchronise => :environment do
+		synchronisation
 	end
 end

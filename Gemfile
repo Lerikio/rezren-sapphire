@@ -95,3 +95,5 @@ source 'https://rubygems.org'
 	gem 'net-scp'
 
 	gem 'active_model_serializers'
+#Bibliothèque pour le management des switch Juniper
+	gem 'junos-ez-stdlib'

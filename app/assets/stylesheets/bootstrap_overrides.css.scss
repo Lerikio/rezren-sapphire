@@ -14,8 +14,19 @@ $grayMediumLight: #eaeaea;
 @import "bootstrap-responsive";
 @import "font-awesome";
 @import "dataTables/jquery.dataTables";
-@import "dataTables/jquery.dataTables.bootstrap";
+@import "dataTables/bootstrap/2/jquery.dataTables.bootstrap";
 
+
+.btn-synchronisation
+{
+	vertical-align: 50%;
+	line-height: 100%
+}
+
+.btn-synchronisation:hover, .btn-synchronisation:focus, .btn-synchronisation:active
+{
+	background-position: 0px 0px;
+}
 /* mixins, variables, etc. */
 
 @mixin box_sizing {
@@ -111,8 +122,8 @@ p {
 #title {
 
   float: right;
-  margin-right: 15px;
-  font-size: 1.3em;
+  margin-right: 5px;
+  font-size: 1.1em;
   color: #BABABA;
   padding-top: 12px;
   font-weight: bold;
