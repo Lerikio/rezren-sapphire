@@ -64,7 +64,7 @@ attr_accessible :payments_attributes
 	end
 
 	def actif?
-		Date.today < self.end_of_adhesion || adherent.rezoman
+		Date.today < self.end_of_adhesion
 	end
 
 	def should_be_disconnected?
