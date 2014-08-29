@@ -19,14 +19,22 @@ module SwitchsManagementHelper
 
 	def synchronisation
 		Switch.not_archived.each do |s|
-			puts "Switch " + s.description
-			session = s.connect_by_netconf
+			port_managed = 0
 			s.ports.each do |p|
-				p.update_vlans_by_netconf(session)
-				p.update_mac_adresses_by_netconf(session)
+				if(p.managed == true)
+					port_managed += 1
+				end
 			end
-			s.commit_modifs_by_netconf(session)
-			s.disconnect_by_netconf(session)
+			if(port_managed > 0)
+				puts "Switch " + s.description
+				session = s.connect_by_netconf
+				s.ports.each do |p|
+					p.update_vlans_by_netconf(session)
+					p.update_mac_adresses_by_netconf(session)
+				end
+				s.commit_modifs_by_netconf(session)
+				s.disconnect_by_netconf(session)
+			end
 		end
 	end
 
