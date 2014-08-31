@@ -58,8 +58,11 @@ attr_accessible :payments_attributes
 	end
 
 	def time_value
-		(self.end_of_adhesion - Date.today).to_i.to_s + " jours"
-		if self.end_of_adhesion < Date.today then "0 jour" end
+		if self.end_of_adhesion < Date.today then 
+			"0 jour" 
+		else
+			(self.end_of_adhesion - Date.today).to_i.to_s + " jours"
+		end
 		#ligne commentée pendant les tests avant production => permet de savoir de combien on a dépassé la date d'expiration
 	end
 
