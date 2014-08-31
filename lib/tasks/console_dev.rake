@@ -89,4 +89,24 @@ namespace :console do
 	task :synchronise => :environment do
 		synchronisation
 	end
+
+	desc "Crée une chambre"
+	task :add_room => :environment do
+		r = Room.new
+        r.number = ask("Numéro de chambre:")
+        r.building = ask("Bâtiment (ex. A):")
+		r.save!
+	end
+
+    task :del_room => :environment do
+        number = ask("Numéro de chambre:")
+        building = ask("Bâtiment (ex. A):")
+
+        Room.all.each do |r|
+            if r.number.include?(number) && r.building.include?(building) then
+                puts "destroyed " + r.building + " at " + r.number
+                r.destroy
+            end
+        end
+    end
 end
