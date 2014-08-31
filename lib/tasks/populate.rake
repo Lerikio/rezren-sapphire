@@ -109,8 +109,14 @@ namespace :populate do
 
 		require "highline/import"
 
-	    nbr_of_switches = ask("Number of switches:")
-	    nbr_of_ports = ask("Number of ports by switch:")
+        if Rails.env == "development" then
+            settings = YAML.load_file("#{Rails.root}/config/dev_settings.yml")
+            nbr_of_switches = settings['switch_quantity']
+            nbr_of_ports = settings['ports_per_switch']
+        else
+            nbr_of_switches = ask("Number of switches:")
+            nbr_of_ports = ask("Number of ports per switch:")
+        end
 
 		for switch in 1..nbr_of_switches.to_i
 			current_switch = Switch.new

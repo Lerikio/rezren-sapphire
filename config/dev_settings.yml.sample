@@ -1,0 +1,4 @@
+switch_quantity: 10
+ports_per_switch: 24
+admin_user: admin
+admin_pass: plopiloup

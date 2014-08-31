@@ -95,19 +95,14 @@ namespace :populate_dev do
 	task "admin" => :environment do
 
 		require 'highline/import'
+        settings = YAML.load_file("#{Rails.root}/config/dev_settings.yml")
 
 		begin
 
 		    admin = Admin.new
-		    admin.display_name = ask("Admin Username:")
+		    admin.display_name = settings['admin_user']
 
-		    begin
-		      password = ask("Admin Password:") {|q| q.echo = false}
-		      password_confirmation = ask("Repeat password:") {|q| q.echo = false}
-
-		    end while password != password_confirmation
-
-		    admin.password = password
+		    admin.password = settings['admin_pass']
 		    saved = admin.save!
 
 		    unless saved
