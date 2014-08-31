@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module SwitchsManagementHelper
 	def ouverture_fenetre
 		code = "

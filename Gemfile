@@ -34,6 +34,8 @@ source 'https://rubygems.org'
 	group :production do
 		# PostgreSQL
 			gem 'pg'
+		# unicorn
+			gem 'unicorn'
 	end
 	
 # Développement
