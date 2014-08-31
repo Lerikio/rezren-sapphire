@@ -255,12 +255,12 @@ class Port < ActiveRecord::Base
 					set_port_status_by_netconf(true, session)
 				end
 				if(status[:untagged_vlan_number] != vlan)
-					puts "Ouverture du port " + (self.number-1).to_s + "; switch " + self.switch.description
+					puts "Ouverture du port " + self.number.to_s + "; switch " + self.switch.description
 					set_untagged_vlan_by_netconf(vlan, session)
 				end
 			elsif(vlan == 4)
 				if(status[:untagged_vlan_number] != vlan)
-					puts "Fermeture du port " + (self.number-1).to_s + "; switch " + self.switch.description
+					puts "Fermeture du port " + self.number.to_s + "; switch " + self.switch.description
 					set_untagged_vlan_by_netconf(vlan, session)
 				end
 				if(status[:enabled] == true)
