@@ -54,7 +54,7 @@ attr_accessible :payments_attributes
 
 
 	def value
-		(self.end_of_adhesion - Date.today).to_i*Monthly_cotisation/30.0
+		(self.end_of_adhesion - Date.today).to_i*Monthly_cotisation/31.0
 	end
 
 	def time_value

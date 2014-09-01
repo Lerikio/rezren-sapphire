@@ -60,7 +60,7 @@ end
 	end
 
 	def time_value
-		value*30.0/Credit::Monthly_cotisation
+		value*31.0/Credit::Monthly_cotisation
 	end
 
 private
