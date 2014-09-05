@@ -1,4 +1,5 @@
-# encoding : UTF-8
+# encoding : utf-8
+
 #N'utiliser sous aucun pretexte
 
 namespace :console do
@@ -83,7 +84,11 @@ namespace :console do
 	end
 
 	require "#{Rails.root}/app/helpers/switchs_management_helper"
+	require "#{Rails.root}/lib/netconf_interface/juniper_netconf_interface"
+	require 'net/netconf'
+
 	include SwitchsManagementHelper 
+	include JuniperNetconfInterface
 
 	desc "Test synchronise"
 	task :synchronise => :environment do
@@ -109,4 +114,11 @@ namespace :console do
             end
         end
     end
+
+	desc "Tests netconf"
+	task :tests_netconf => :environment do	
+			session = connection("192.168.1.1", "root", "abc123")
+			get_mapping_vlans(session)
+			deconnexion(session)
+	end
 end
