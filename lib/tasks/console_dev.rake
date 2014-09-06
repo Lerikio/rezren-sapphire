@@ -118,7 +118,7 @@ namespace :console do
 	desc "Tests netconf"
 	task :tests_netconf => :environment do	
 			session = connection("192.168.1.1", "root", "abc123")
-			get_mapping_vlans(session)
+			puts get_ports_config(session)
 			deconnexion(session)
 	end
 end

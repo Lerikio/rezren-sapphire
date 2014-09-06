@@ -19,7 +19,7 @@ module JuniperNetconfInterface
 	# - password (string)
 	#
 	# Renvoie un objet représentant la session SSH
-	# pour les autres fonctions
+	# à passer aux autres fonctions
 	#---------------------------------------------
 	def connection(ip, username, password)
 		# Informations de login
@@ -58,38 +58,135 @@ module JuniperNetconfInterface
 	#
 	# - session (Objet de session SSH)
 	#
-	# Renvoie un hash de hash
+	# Renvoie un hash :
+	# {:nom_vlan_0 => :id_vlan_0, :nom_vlan_1 => ...}
 	#---------------------------------------------
 	def get_mapping_vlans(session)
 		# Récupération de la config entière du switch dans une variable
 		# get_config est l'une des méthodes de netconf
+		
 		inv = session.rpc.get_config
 
-		vlans = inv.xpath("configuration/vlans/vlan")
+		vlans = inv.xpath("configuration/vlans/vlan")		
 
-		tableau_a_retourner = Array.new
-		
-		vlans.each_with_index do |vlan, i|
-			hash_a_retourner {
+		hash = Hash.new
+
+		@id_courant = nil
+		@nom_courant = nil
+		@vlan_id_present = false
+
+		vlans.each do |vlan|
+			# Premier passage dans la liste des enfants pour voir si la balise vlan-id est présent
+			@vlan_id_present = false
+			vlan.children.each do |child|
+				if (child.to_s.include? "vlan-id")
+					@vlan_id_present = true
+				end
+			end
+			
+			if @vlan_id_present
+				vlan.children.each do |child|
+					if (child.to_s.include? "name")
+						@nom_courant = child.content
+					elsif (child.to_s.include? "vlan-id")
+						@id_courant = child.content
+					end
+				end
+
+			else # Sinon c'est que c'est le vlan default
+				@id_courant = "0"
+				@nom_courant = "default"
+			end
+			
+			# Ajout du VLAN au hash
+			hash[@nom_courant] = @id_courant
 		end
 
-		puts vlans
+		return hash
 	end
 
 
-	#---------------------------------------------
-	# Obtention de la config des ports
-	#
-	# - session (Objet de session SSH)
-	#
-	# Renvoie un hash {:numero_port, :numero_vlan,
-	# :macs_autorisees }
-	#---------------------------------------------
-	def get_ports_config(session)
+	#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	#UNIQUEMENT POUR LES TESTS
+	#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	def get_config(session)
 		# Récupération de la config entière du switch dans une variable
 		# get_config est l'une des méthodes de netconf
 		inv = session.rpc.get_config
 
 		puts inv
+	end
+
+
+	#---------------------------------------------
+	# Obtention de la config des ports
+	# On ne s'occupe que des ports managés par Sapphire,
+	# qui sont en untagged (ou access)
+	#
+	# - session (Objet de session SSH)
+	#
+	# Renvoie un tableau de hash :
+	# - indice du tableau = numéro du port
+	# - {:vlan_id => id du untagged vlan du port,
+	# :macs_autorisees => [tableau des macs autorisées]}
+	#---------------------------------------------
+	def get_ports_config(session)
+		# Récupération du mapping des VLANs
+		mapping = get_mapping_vlans(session)		
+
+		# Récupération de la config entière du switch dans une variable
+		# get_config est l'une des méthodes de netconf
+		inv = session.rpc.get_config
+
+		ports = inv.xpath('configuration/interfaces/interface') # Partie de la conf qui nous intéresse
+		
+		tableau = Array.new # Tableau qu'on renvoie
+
+		@nom_courant = nil # Nom du VLAN du port
+		@id_courant = nil # ID du VLAN du port
+		@macs_courantes = nil # Macs autorisées sur le port
+		@numero = nil
+		ports.each do |port|
+			
+			#**********************************************			
+			# 1) Choix de la bonne case dans le tableau
+			#**********************************************		
+			nom = port.xpath("name")
+			if nom.children.first.to_s[0..6] == "ge-0/0/" # On ne s'occupe pas des ports fibre
+				@numero = nom.children.first.to_s[7..8] # On ne récupère que le numéro effectif (sans le ge....)
+			end
+			
+			#**********************************************			
+			# 2) Récupération du VLAN
+			#**********************************************
+			vlan_params = port.xpath("unit/family/ethernet-switching")
+			# 1er cas : ethernet-switching ne contient pas d'info sur le port mode. Alors le VLAN est 0
+			if (vlan_params.xpath("port-mode").to_s == "")
+				@nom_courant = "default"			
+				@id_courant = "0"
+
+			# 2eme cas : le port est en trunk. On met nil pour l'id courant et "trunk"
+			# pour le nom du vlan
+			else
+				vlan_mode = vlan_params.xpath("port-mode").children.first.to_s
+				if (vlan_mode != "access")
+					@nom_courant = "trunk"
+					@id_courant = "none"
+			
+			# 3eme cas : le port est en access. On récupère son vlan
+				else
+					vlan = vlan_params.xpath("vlan/members").children.first.to_s
+					@nom_courant = vlan
+					@id_courant = mapping[@nom_courant]
+				end
+			end
+			
+			# Remplissage du tableau avec le port actuel
+			tableau[@numero.to_i] = {:vlan_id => @id_courant}
+
+		end
+		
+		return tableau
+
 	end
 end
