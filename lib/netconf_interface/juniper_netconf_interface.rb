@@ -137,52 +137,87 @@ module JuniperNetconfInterface
 		# Récupération de la config entière du switch dans une variable
 		# get_config est l'une des méthodes de netconf
 		inv = session.rpc.get_config
-
-		ports = inv.xpath('configuration/interfaces/interface') # Partie de la conf qui nous intéresse
 		
 		tableau = Array.new # Tableau qu'on renvoie
 
+		@numero = nil
+
+		#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		# RECUPERATION DU STATUT ADMINISTRATIF DE TOUS LES
+		# PORTS
+		#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+		interfaces = session.rpc.get_interface_information.xpath("physical-interface")
+
+		@admin_status_courant = nil
+
+		interfaces.each_with_index do |interface|
+			#**********************************************			
+			# Choix de la bonne case dans le tableau
+			#**********************************************		
+			nom = interface.xpath("name")
+			if nom.children.first.to_s[1..7] == "ge-0/0/" # On ne s'occupe pas des ports fibre
+				@numero = nom.children.first.to_s[8..9] # On ne récupère que le numéro effectif (sans le ge....)
+
+				if interface.xpath("admin-status").children.first.to_s.include? "up"
+					@admin_status_courant = "up"
+				else
+					@admin_status_courant = "down"
+				end
+
+				# Ajout au tableau
+				tableau[@numero.to_i] = Hash.new
+				tableau[@numero.to_i]["admin_status"] = @admin_status_courant
+			end
+		end
+					
+		#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		# RECUPERATION DU VLAN DE TOUS LES PORTS
+		#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		@nom_courant = nil # Nom du VLAN du port
 		@id_courant = nil # ID du VLAN du port
 		@macs_courantes = nil # Macs autorisées sur le port
 		@numero = nil
+
+		ports = inv.xpath('configuration/interfaces/interface') # Partie de la conf qui nous intéresse
+
 		ports.each do |port|
 			
 			#**********************************************			
-			# 1) Choix de la bonne case dans le tableau
+			# Choix de la bonne case dans le tableau
 			#**********************************************		
 			nom = port.xpath("name")
 			if nom.children.first.to_s[0..6] == "ge-0/0/" # On ne s'occupe pas des ports fibre
 				@numero = nom.children.first.to_s[7..8] # On ne récupère que le numéro effectif (sans le ge....)
-			end
 			
-			#**********************************************			
-			# 2) Récupération du VLAN
-			#**********************************************
-			vlan_params = port.xpath("unit/family/ethernet-switching")
-			# 1er cas : ethernet-switching ne contient pas d'info sur le port mode. Alors le VLAN est 0
-			if (vlan_params.xpath("port-mode").to_s == "")
-				@nom_courant = "default"			
-				@id_courant = "0"
+				#**********************************************			
+				# Récupération du VLAN
+				#**********************************************
+				vlan_params = port.xpath("unit/family/ethernet-switching")
+				# 1er cas : ethernet-switching ne contient pas d'info sur le port mode. Alors le VLAN est 0
+				if (vlan_params.xpath("port-mode").to_s == "")
+					@nom_courant = "default"			
+					@id_courant = "0"
 
-			# 2eme cas : le port est en trunk. On met nil pour l'id courant et "trunk"
-			# pour le nom du vlan
-			else
-				vlan_mode = vlan_params.xpath("port-mode").children.first.to_s
-				if (vlan_mode != "access")
-					@nom_courant = "trunk"
-					@id_courant = "none"
-			
-			# 3eme cas : le port est en access. On récupère son vlan
+				# 2eme cas : le port est en trunk. On met nil pour l'id courant et "trunk"
+				# pour le nom du vlan
 				else
-					vlan = vlan_params.xpath("vlan/members").children.first.to_s
-					@nom_courant = vlan
-					@id_courant = mapping[@nom_courant]
-				end
-			end
+					vlan_mode = vlan_params.xpath("port-mode").children.first.to_s
+					if (vlan_mode != "access")
+						@nom_courant = "trunk"
+						@id_courant = "none"
 			
-			# Remplissage du tableau avec le port actuel
-			tableau[@numero.to_i] = {:vlan_id => @id_courant}
+				# 3eme cas : le port est en access. On récupère son vlan
+					else
+						vlan = vlan_params.xpath("vlan/members").children.first.to_s
+						@nom_courant = vlan
+						@id_courant = mapping[@nom_courant]
+					end
+				end
+
+				# Remplissage du tableau avec le vlan du port actuel
+				tableau[@numero.to_i]["vlan_id"] = @id_courant
+			end
 
 		end
 		
