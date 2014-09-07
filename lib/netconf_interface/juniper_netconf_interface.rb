@@ -329,12 +329,21 @@ module JuniperNetconfInterface
     	}}
 
 		#**********************************************			
-		# Push de la config sur le switch
+		# Ecriture de la config
 		#**********************************************
 		session.rpc.lock 'candidate'
 
 		session.rpc.edit_config(xml)
+	end
 
+
+	#---------------------------------------------
+	# Commit de la config sur le switch
+	#
+	# - session (Objet de session SSH)
+	#
+	#---------------------------------------------
+	def commit_config(session)
 		if session.rpc.validate 'candidate'
 		else
 			puts "Erreur de syntaxe"
