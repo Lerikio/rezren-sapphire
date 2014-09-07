@@ -88,6 +88,26 @@ scope :not_archived, -> { where(archived: false)}
 	end
     end
 
+    def get_config_BDD
+        config = Array.[]
+        
+        this.ports.each do |p|
+            #Status admin des ports
+            #A modifier lorsque le prerezotage sera disponible.
+            conf_port[:admin_status] = p.room.adherent.actif?
+
+            #Vlan
+            conf_port[:vlan_id] = p.get_authorized_vlan
+            
+            #Mac
+            p.room.adherent.computers.each do |computer|
+                conf_port[:mac_addresses] << computer.mac_address
+            end
+            
+            config << conf_port
+        end
+        config
+    end
 
     def commit_modifs_by_netconf(session)
 	if (session.cu.commit?)

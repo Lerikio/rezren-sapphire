@@ -158,7 +158,7 @@ class Port < ActiveRecord::Base
 		changes
 	end
 
-	def set_tagged_by_netconfd(tag_status, session)
+	def set_tagged_by_netconf(tag_status, session)
 		port_name = "ge-0/0/" + (self.number-1).to_s
 		p = session.l2_ports[port_name]
 		if(p[:vlan_tagging] != tag_status)
@@ -274,14 +274,30 @@ class Port < ActiveRecord::Base
 	def get_authorized_vlan
 		if(self.room != nil && self.room.adherent != nil)
 			if(self.room.adherent.should_be_disconnected?)
-				vlan = 4
+				VLAN::Prerezotage
 			else
-				vlan = 2
+				if(self.room.adherent.supelec)
+                    VLAN::Supelec
+                else
+                    VLAN::Exterieur
+                end
 			end
 		else
-			vlan = 4
+			VLAN::Deconnexion
 		end
 	end
+
+    def update_by_netconf(session, changes)
+        if(changes[:active])
+            set_port_status_by_netconf(changes[:active], session)
+        end
+        if(changes[:vlan])
+            set_untagged_vlan_by_netconf(changes[:vlan], session)
+        end
+        if(changes[:mac_addresses][:add].length != 0)
+            
+        end
+    end
 
 	def update_mac_adresses
 		#TODO

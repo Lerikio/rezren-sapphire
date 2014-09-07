@@ -146,7 +146,7 @@ scope :not_archived, -> { where(archived: false)}
 	end
 
 	def actif?
-		credit.actif?
+		credit and credit.actif?
 	end
 
 	def should_be_disconnected?

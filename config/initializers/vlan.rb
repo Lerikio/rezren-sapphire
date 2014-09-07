@@ -2,11 +2,11 @@
 
 module VLAN
 
-	Admin = 1
+	Admin = 5
 	Supelec = 2
-	Exterieur = 3
+	Exterieur = 2
 	Prerezotage = 4
-	Deconnexion = 5
+	Deconnexion = 6
 
 	List = [Admin, Supelec, Exterieur, Prerezotage, Deconnexion]
 

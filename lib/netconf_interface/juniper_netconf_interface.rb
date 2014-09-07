@@ -21,7 +21,7 @@ module JuniperNetconfInterface
 	# Renvoie un objet représentant la session SSH
 	# à passer aux autres fonctions
 	#---------------------------------------------
-	def connection(ip, username, password)
+	def connexion(ip, username, password)
 		# Informations de login
 		login = { :target => ip, :username => username, :password => password }
 		
@@ -127,7 +127,7 @@ module JuniperNetconfInterface
 	#
 	# Renvoie un tableau de hash :
 	# - indice du tableau = numéro du port
-	# - {:admin_status => statut administraif (up ou down),
+	# - {:admin_status => statut administratif (up ou down),
 	# :vlan_id => id du untagged vlan du port,
 	# :allowed_macs => [tableau des macs autorisées]}
 	#

@@ -1,5 +1,6 @@
 # -*- encoding : utf-8 -*-
 module SwitchsManagementHelper
+
 	def ouverture_fenetre
 		code = "
 			<div class=\"modal-header\">
@@ -27,14 +28,16 @@ module SwitchsManagementHelper
 				end
 			end
 			if(port_managed > 0)
-				puts "Switch " + s.description
-				session = s.connect_by_netconf
-				s.ports.each do |p|
-					p.update_vlans_by_netconf(session)
-					p.update_mac_adresses_by_netconf(session)
-				end
-				s.commit_modifs_by_netconf(session)
-				s.disconnect_by_netconf(session)
+                #Etablissement de la connection au switch
+                session = JuniperNetconfInterface::connexion(s.ip_admin, "root", Passwords::Juniper)
+
+				#Configuration du switch
+                JuniperNetconfInterface::set_ports_config(session, s.get_config_BDD)
+                
+                puts "Commiting..."
+				JuniperNetconfInterface::commit_conf(session)
+				JuniperNetconfInterface::deconnexion(session)
+                puts "Disconnected."
 			end
 		end
 	end
