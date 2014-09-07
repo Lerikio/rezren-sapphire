@@ -120,6 +120,11 @@ namespace :console do
 			session = connection("192.168.1.1", "root", "abc123")
 			puts get_ports_config(session)
 			#puts get_config(session)
-			deconnexion(session)
+
+#			location = Nokogiri::XML::Builder.new{ |x| 
+#    		x.configuration {
+#					x.interfaces {
+#						
+#			deconnexion(session)
 	end
 end

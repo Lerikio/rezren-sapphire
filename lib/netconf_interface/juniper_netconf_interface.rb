@@ -127,8 +127,11 @@ module JuniperNetconfInterface
 	#
 	# Renvoie un tableau de hash :
 	# - indice du tableau = numéro du port
-	# - {:vlan_id => id du untagged vlan du port,
-	# :macs_autorisees => [tableau des macs autorisées]}
+	# - {:admin_status => statut administraif (up ou down),
+	# :vlan_id => id du untagged vlan du port,
+	# :allowed_macs => [tableau des macs autorisées]}
+	#
+	# Toutes les valeurs du hash sont des string
 	#---------------------------------------------
 	def get_ports_config(session)
 		# Récupération du mapping des VLANs
@@ -170,7 +173,7 @@ module JuniperNetconfInterface
 
 				# Ajout au tableau
 				tableau[@numero.to_i] = Hash.new
-				tableau[@numero.to_i]["admin_status"] = @admin_status_courant
+				tableau[@numero.to_i][:admin_status] = @admin_status_courant
 			end
 		end
 					
@@ -219,7 +222,7 @@ module JuniperNetconfInterface
 				end
 
 				# Remplissage du tableau avec le vlan du port actuel
-				tableau[@numero.to_i]["vlan_id"] = @id_courant
+				tableau[@numero.to_i][:vlan_id] = @id_courant
 			end
 
 		end
@@ -251,10 +254,17 @@ module JuniperNetconfInterface
 				end
 
 			# Remplissage du tableau final avec les macs
-			tableau[@numero.to_i]["allowed_macs"] = @macs_courantes
+			tableau[@numero.to_i][:allowed_macs] = @macs_courantes
 
 			end
 		
+		end
+
+		# Ajout d'un tableau vide pour les ports qui n'ont pas de mac autorisée
+		tableau.length.times do |i|
+			if tableau[i][:allowed_macs] == nil
+				tableau[i][:allowed_macs] = Array.new
+			end
 		end
 
 		return tableau
