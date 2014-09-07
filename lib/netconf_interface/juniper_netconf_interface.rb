@@ -311,7 +311,20 @@ module JuniperNetconfInterface
 									}						
 								}
 							}
-					}        	
+					}
+					
+					# Modification des macs
+					xml.send('ethernet-switching-options') do
+						xml.send('secure-access-port') do
+							xml.interface {
+								xml.name "ge-0/0/#{i}"
+								xml.send('allowed-mac', 'operation' => 'delete')
+								config[i][:allowed_macs].length.times do |j|
+									xml.send :'allowed-mac', config[i][:allowed_macs][j]
+								end
+							}
+						end
+					end        	
 				end
     	}}
 
