@@ -118,13 +118,20 @@ namespace :console do
 	desc "Tests netconf"
 	task :tests_netconf => :environment do	
 			session = connection("192.168.1.1", "root", "abc123")
-			puts get_ports_config(session)
+			#puts get_ports_config(session)
 			#puts get_config(session)
 
-#			location = Nokogiri::XML::Builder.new{ |x| 
-#    		x.configuration {
-#					x.interfaces {
-#						
-#			deconnexion(session)
+			tableau = Array.new
+			hash = Hash.new
+			hash[:admin_status] = "down"
+			hash[:vlan] = "users"
+			
+			tableau[0] = hash
+			tableau[1] = hash
+			tableau[2] = hash
+
+			set_ports_config(session, tableau)
+			
+			deconnexion(session)
 	end
 end

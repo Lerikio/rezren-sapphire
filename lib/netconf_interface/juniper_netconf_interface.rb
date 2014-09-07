@@ -270,4 +270,71 @@ module JuniperNetconfInterface
 		return tableau
 
 	end
+
+
+	#---------------------------------------------
+	# Modification de la config des ports
+	#
+	# - session (Objet de session SSH)
+	# - config (tableau du même type que celui renvoyé
+	# par get_ports_config
+	#---------------------------------------------
+	def set_ports_config(session, config)
+
+		xml = Nokogiri::XML::Builder.new {|xml| xml.configuration {
+				config.length.times do |i|       	
+					xml.interfaces {       	
+							xml.interface { 
+								xml.name "ge-0/0/#{i}"
+									# Modification du statut administratif des ports
+									if (config[i][:admin_status] == "up")
+										xml.enable;
+									else
+										xml.disable;
+									end
+							}
+					}
+					xml.interfaces {
+							xml.interface {
+								# Modification du VLAN
+								xml.name "ge-0/0/#{i}"
+								xml.unit {
+									xml.name "0"
+									xml.family {
+										xml.send 'ethernet-switching' do
+											xml.send :"port-mode", "access"
+											xml.vlan {
+												xml.members('operation' => 'delete')
+												xml.members config[i][:vlan]
+											}
+										end
+									}						
+								}
+							}
+					}        	
+				end
+    	}}
+
+		#**********************************************			
+		# Push de la config sur le switch
+		#**********************************************
+		session.rpc.lock 'candidate'
+
+		session.rpc.edit_config(xml)
+
+		if session.rpc.validate 'candidate'
+		else
+			puts "Erreur de syntaxe"
+		end
+
+		puts "Commit en cours..."
+
+		if session.rpc.commit
+			puts "Commit réussi"
+		else
+			puts "Echec lors du commit"
+		end
+
+		session.rpc.unlock 'candidate'	
+	end
 end
