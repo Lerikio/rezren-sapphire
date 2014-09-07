@@ -159,6 +159,9 @@ module JuniperNetconfInterface
 			if nom.children.first.to_s[1..7] == "ge-0/0/" # On ne s'occupe pas des ports fibre
 				@numero = nom.children.first.to_s[8..9] # On ne récupère que le numéro effectif (sans le ge....)
 
+				#**********************************************			
+				# Récupération du statut
+				#**********************************************	
 				if interface.xpath("admin-status").children.first.to_s.include? "up"
 					@admin_status_courant = "up"
 				else
@@ -220,7 +223,40 @@ module JuniperNetconfInterface
 			end
 
 		end
+
+		#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		# RECUPERATION DES MACS AUTORISEES SUR CHAQUE PORT
+		#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		
+		secure_interfaces = inv.xpath("configuration/ethernet-switching-options/secure-access-port/interface")
+
+		secure_interfaces.each do |interface|
+			@macs_courantes = Array.new
+			#**********************************************			
+			# Choix de la bonne case dans le tableau
+			#**********************************************		
+			nom = interface.xpath("name")
+			if nom.children.first.to_s[0..6] == "ge-0/0/" # On ne s'occupe pas des ports fibre
+				@numero = nom.children.first.to_s[7..8] # On ne récupère que le numéro effectif (sans le ge....)
+				if @numero[1] == '.'
+					@numero = @numero[0]
+				end
+
+				#**********************************************			
+				# Récupération des macs
+				#**********************************************
+				macs = interface.xpath("allowed-mac")
+				macs.each do |mac|
+					@macs_courantes.push(mac.children.first.to_s)
+				end
+
+			# Remplissage du tableau final avec les macs
+			tableau[@numero.to_i]["allowed_macs"] = @macs_courantes
+
+			end
+		
+		end
+
 		return tableau
 
 	end

@@ -119,7 +119,7 @@ namespace :console do
 	task :tests_netconf => :environment do	
 			session = connection("192.168.1.1", "root", "abc123")
 			puts get_ports_config(session)
-
+			#puts get_config(session)
 			deconnexion(session)
 	end
 end
