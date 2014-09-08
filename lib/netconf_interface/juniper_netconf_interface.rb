@@ -166,9 +166,9 @@ module JuniperNetconfInterface
 				# Récupération du statut
 				#**********************************************	
 				if interface.xpath("admin-status").children.first.to_s.include? "up"
-					@admin_status_courant = "up"
+					@admin_status_courant = true
 				else
-					@admin_status_courant = "down"
+					@admin_status_courant = false
 				end
 
 				# Ajout au tableau
@@ -203,7 +203,7 @@ module JuniperNetconfInterface
 				# 1er cas : ethernet-switching ne contient pas d'info sur le port mode. Alors le VLAN est 0
 				if (vlan_params.xpath("port-mode").to_s == "")
 					@nom_courant = "default"			
-					@id_courant = "0"
+					@id_courant = 0
 
 				# 2eme cas : le port est en trunk. On met nil pour l'id courant et "trunk"
 				# pour le nom du vlan
@@ -211,13 +211,13 @@ module JuniperNetconfInterface
 					vlan_mode = vlan_params.xpath("port-mode").children.first.to_s
 					if (vlan_mode != "access")
 						@nom_courant = "trunk"
-						@id_courant = "none"
+						@id_courant = -1
 			
 				# 3eme cas : le port est en access. On récupère son vlan
 					else
 						vlan = vlan_params.xpath("vlan/members").children.first.to_s
 						@nom_courant = vlan
-						@id_courant = mapping[@nom_courant]
+						@id_courant = mapping[@nom_courant].to_i
 					end
 				end
 
@@ -282,49 +282,57 @@ module JuniperNetconfInterface
 	def set_ports_config(session, config)
 
 		xml = Nokogiri::XML::Builder.new {|xml| xml.configuration {
-				config.length.times do |i|       	
-					xml.interfaces {       	
-							xml.interface { 
-								xml.name "ge-0/0/#{i}"
-									# Modification du statut administratif des ports
-									if (config[i][:admin_status] == "up")
-										xml.enable;
-									else
-										xml.disable;
-									end
-							}
-					}
-					xml.interfaces {
-							xml.interface {
-								# Modification du VLAN
-								xml.name "ge-0/0/#{i}"
-								xml.unit {
-									xml.name "0"
-									xml.family {
-										xml.send 'ethernet-switching' do
-											xml.send :"port-mode", "access"
-											xml.vlan {
-												xml.members('operation' => 'delete')
-												xml.members config[i][:vlan]
-											}
-										end
-									}						
-								}
-							}
-					}
+		     	config.length.times do |i| 
+                    if(config[i] != nil)      	
+                        if(config[i][:admin_status] != nil)
+    	    				xml.interfaces {
+	    				    		xml.interface {
+		    		    				xml.name "ge-0/0/#{i}"
+			    					    	# Modification du statut administratif des ports
+				    			    		if (config[i][:admin_status] == true)
+					    	    				xml.enable;
+					        				else
+				    		    				xml.disable;
+			    				    		end
+		    					    }
+	    				    }
+                        end
+                        if(config[i][:vlan_id] != nil)
+        					xml.interfaces {
+	    					    	xml.interface {
+		    			    			# Modification du VLAN
+			    	    				xml.name "ge-0/0/#{i}"
+			        					xml.unit {
+		    		    					xml.name "0"
+	    				    				xml.family {
+    						    				xml.send 'ethernet-switching' do
+								    	    		xml.send :"port-mode", "access"
+								        			xml.vlan {
+							    		    			xml.members('operation' => 'delete')
+						    				    		xml.members config[i][:vlan_id]
+					    						    }
+    				    						end
+	    		    						}						
+		        						}
+	    	    					}
+    			    		}
+                        end
 					
-					# Modification des macs
-					xml.send('ethernet-switching-options') do
-						xml.send('secure-access-port') do
-							xml.interface {
-								xml.name "ge-0/0/#{i}"
-								xml.send('allowed-mac', 'operation' => 'delete')
-								config[i][:allowed_macs].length.times do |j|
-									xml.send :'allowed-mac', config[i][:allowed_macs][j]
-								end
-							}
-						end
-					end        	
+					    # Modification des macs
+				    	xml.send('ethernet-switching-options') do
+			    			xml.send('secure-access-port') do
+		    					xml.interface {
+	    							xml.name "ge-0/0/#{i}"
+    								xml.send('allowed-mac', 'operation' => 'delete')
+                                    if(config[i][:allowed_macs])
+								        config[i][:allowed_macs].length.times do |j|
+							    		    xml.send :'allowed-mac', config[i][:allowed_macs][j]
+						    		    end
+                                    end
+					    		}
+					    	end
+				    	end   
+                    end     	
 				end
     	}}
 

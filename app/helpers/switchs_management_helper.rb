@@ -32,7 +32,7 @@ module SwitchsManagementHelper
                 session = JuniperNetconfInterface::connexion(s.ip_admin, "root", Passwords::Juniper)
 
 				#Configuration du switch
-                JuniperNetconfInterface::set_ports_config(session, s.get_config_BDD)
+                JuniperNetconfInterface::set_ports_config(session, s.get_changes(JuniperNetconfInterface::get_ports_config(session)))
                 
                 puts "Commiting..."
 				JuniperNetconfInterface::commit_config(session)

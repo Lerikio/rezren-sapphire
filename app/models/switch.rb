@@ -88,25 +88,40 @@ scope :not_archived, -> { where(archived: false)}
 	end
     end
 
-    def get_config_BDD
+    def get_changes(switch_conf)
         config = Array.new
         
-        this.ports.each do |p|
-            #Status admin des ports
-            #A modifier lorsque le prerezotage sera disponible.
-            conf_port[:admin_status] = p.room.adherent.actif?
+        self.ports.each do |p|
+            if(p.managed)
+                conf_port = Hash.new
 
-            #Vlan
-            conf_port[:vlan_id] = p.get_authorized_vlan
+                #Vlan
+                if(switch_conf[p.number+1][:vlan_id] != p.get_authorized_vlan)
+                    conf_port[:vlan_id] = p.get_authorized_vlan
+                else
+                    conf_port[:vlan_id] = nil
+                end
 
-            conf_port[:allowed_macs] = Array.new
-            
-            #Mac
-            p.room.adherent.computers.each do |computer|
-                conf_port[:allowed_macs] << computer.mac_address
+                #Status admin des ports
+                #A modifier lorsque le prerezotage sera disponible.
+                if(p.room != nil && p.room.adherent != nil)
+                    if(switch_conf[p.number+1][:admin_status] != p.room.adherent.actif?)
+                        conf_port[:admin_status] = p.room.adherent.actif?
+                    else
+                        conf_port[:admin_status] = nil
+                    end
+                
+                    conf_port[:allowed_macs] = Array.new
+
+                    #Gestion des allowed macs
+                    p.room.adherent.computers.each do |computer|
+                        conf_port[:allowed_macs] << computer.mac_address
+                    end
+                end
+                config << conf_port
+            else
+                config << nil
             end
-            
-            config << conf_port
         end
 
         puts "Config BDD = \n" + config.to_s
