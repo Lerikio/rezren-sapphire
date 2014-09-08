@@ -114,11 +114,15 @@ scope :not_archived, -> { where(archived: false)}
                     conf_port[:allowed_macs] = Array.new
 
                     #Gestion des allowed macs
+                    diff = false
                     p.room.adherent.computers.each do |computer|
                         if(computer.archived == false)
-				conf_port[:allowed_macs] << computer.mac_address
-			end
+			            	conf_port[:allowed_macs] << computer.mac_address
+			            end
                     end
+                end
+                if(conf_port[:vlan_id] == nil && conf_port[:admin_status] == nil && conf_port[:allowed_macs] == nil)
+                    conf_port = nil
                 end
                 config << conf_port
             else
