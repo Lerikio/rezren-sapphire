@@ -135,7 +135,7 @@ module JuniperNetconfInterface
 	#---------------------------------------------
 	def get_ports_config(session)
 		# Récupération du mapping des VLANs
-		mapping = get_mapping_vlans(session)		
+		# mapping = get_mapping_vlans(session)		
 
 		# Récupération de la config entière du switch dans une variable
 		# get_config est l'une des méthodes de netconf
@@ -216,8 +216,7 @@ module JuniperNetconfInterface
 				# 3eme cas : le port est en access. On récupère son vlan
 					else
 						vlan = vlan_params.xpath("vlan/members").children.first.to_s
-						@nom_courant = vlan
-						@id_courant = mapping[@nom_courant].to_i
+						@id_courant = vlan.to_i
 					end
 				end
 
@@ -281,6 +280,7 @@ module JuniperNetconfInterface
 	#---------------------------------------------
 	def set_ports_config(session, config)
 
+		if(config != nil)
 		xml = Nokogiri::XML::Builder.new {|xml| xml.configuration {
 			config.length.times do |i| 
       	if(config[i] != nil)      	
@@ -310,7 +310,7 @@ module JuniperNetconfInterface
 								   		xml.send :"port-mode", "access"
 								    	xml.vlan {
 							    			xml.members('operation' => 'delete')
-						    				xml.members config[i][:vlan_id]
+						    				xml.members config[i][:vlan_id].to_s
 					    				}
     				    		end
 	    		    		}						
@@ -320,7 +320,7 @@ module JuniperNetconfInterface
 					end
 					
 					# Modification des macs
-					if (config[i][:allowed_mac] != nil)
+					if (config[i][:allowed_macs] != nil)
 						xml.send('ethernet-switching-options') do
 					  	xml.send('secure-access-port') do
 								xml.interface {
@@ -342,6 +342,7 @@ module JuniperNetconfInterface
 				end
 				end
     	}}
+		end
 
 		#**********************************************			
 		# Ecriture de la config

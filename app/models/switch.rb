@@ -90,6 +90,8 @@ scope :not_archived, -> { where(archived: false)}
 
     def get_changes(switch_conf)
         config = Array.new
+
+		#puts switch_conf
         
         self.ports.each do |p|
             if(p.managed)
@@ -119,7 +121,7 @@ scope :not_archived, -> { where(archived: false)}
                     p.room.adherent.computers.each do |computer|
                         if(computer.archived == false)
                             mac_already_configured = false
-                            switch_conf[:allowed_macs].each do |switch_mac|
+                            switch_conf[p.number-1][:allowed_macs].each do |switch_mac|
                                 if(computer.mac_address == switch_mac)
                                     mac_already_configured = true
                                 end
@@ -132,7 +134,7 @@ scope :not_archived, -> { where(archived: false)}
 
                     #Recuperation des mac à supprimer
                     conf_port[:allowed_macs][:del] = Array.new
-                    switch[:allowed_macs].each do |switch_mac|
+                    switch_conf[p.number-1][:allowed_macs].each do |switch_mac|
                         mac_to_be_deleted = true
                         p.room.adherent.computers.each do |computer|
                             if(computer.archived == false && computer.mac_address == switch_mac)
@@ -157,6 +159,8 @@ scope :not_archived, -> { where(archived: false)}
                 config << nil
             end
         end
+
+		#puts config
 
         config
     end

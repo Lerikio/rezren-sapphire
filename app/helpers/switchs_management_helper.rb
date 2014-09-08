@@ -42,16 +42,14 @@ module SwitchsManagementHelper
                     end
                 end
 
-                puts nb_changes
+                puts nb_changes.to_s + " changements"
                 
-                if(nb_changes)
+                if(nb_changes > 0)
                     JuniperNetconfInterface::set_ports_config(session, changes)
                 
-                    puts "Commiting..."
 		    		JuniperNetconfInterface::commit_config(session)
                 end
 			    JuniperNetconfInterface::deconnexion(session)
-                puts "Disconnected."
 			end
 		end
 	end
