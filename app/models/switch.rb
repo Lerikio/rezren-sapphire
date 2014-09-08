@@ -96,7 +96,7 @@ scope :not_archived, -> { where(archived: false)}
                 conf_port = Hash.new
 
                 #Vlan
-                if(switch_conf[p.number+1][:vlan_id] != p.get_authorized_vlan)
+                if(switch_conf[p.number-1][:vlan_id] != p.get_authorized_vlan)
                     conf_port[:vlan_id] = p.get_authorized_vlan
                 else
                     conf_port[:vlan_id] = nil
@@ -105,7 +105,7 @@ scope :not_archived, -> { where(archived: false)}
                 #Status admin des ports
                 #A modifier lorsque le prerezotage sera disponible.
                 if(p.room != nil && p.room.adherent != nil)
-                    if(switch_conf[p.number+1][:admin_status] != p.room.adherent.actif?)
+                    if(switch_conf[p.number-1][:admin_status] != p.room.adherent.actif?)
                         conf_port[:admin_status] = p.room.adherent.actif?
                     else
                         conf_port[:admin_status] = nil

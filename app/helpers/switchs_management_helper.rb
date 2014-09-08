@@ -38,10 +38,11 @@ module SwitchsManagementHelper
                 changes.each do |c|
                     if(c != nil)
                         nb_changes +=1
+						puts c
                     end
                 end
 
-                puts changes
+                puts nb_changes
                 
                 if(nb_changes)
                     JuniperNetconfInterface::set_ports_config(session, changes)
