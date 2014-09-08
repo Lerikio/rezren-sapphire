@@ -35,7 +35,7 @@ module SwitchsManagementHelper
                 JuniperNetconfInterface::set_ports_config(session, s.get_config_BDD)
                 
                 puts "Commiting..."
-				JuniperNetconfInterface::commit_conf(session)
+				JuniperNetconfInterface::commit_config(session)
 				JuniperNetconfInterface::deconnexion(session)
                 puts "Disconnected."
 			end

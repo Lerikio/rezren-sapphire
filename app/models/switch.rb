@@ -89,7 +89,7 @@ scope :not_archived, -> { where(archived: false)}
     end
 
     def get_config_BDD
-        config = Array.[]
+        config = Array.new
         
         this.ports.each do |p|
             #Status admin des ports
@@ -98,14 +98,18 @@ scope :not_archived, -> { where(archived: false)}
 
             #Vlan
             conf_port[:vlan_id] = p.get_authorized_vlan
+
+            conf_port[:allowed_macs] = Array.new
             
             #Mac
             p.room.adherent.computers.each do |computer|
-                conf_port[:mac_addresses] << computer.mac_address
+                conf_port[:allowed_macs] << computer.mac_address
             end
             
             config << conf_port
         end
+
+        puts "Config BDD = \n" + config.to_s
         config
     end
 
