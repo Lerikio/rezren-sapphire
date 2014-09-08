@@ -283,8 +283,8 @@ module JuniperNetconfInterface
 
 		xml = Nokogiri::XML::Builder.new {|xml| xml.configuration {
 		     	config.length.times do |i| 
-                    if(config[i] != nil)      	
-                        if(config[i][:admin_status] != nil)
+          	if(config[i] != nil)      	
+            	if(config[i][:admin_status] != nil)
     	    				xml.interfaces {
 	    				    		xml.interface {
 		    		    				xml.name "ge-0/0/#{i}"
@@ -296,7 +296,7 @@ module JuniperNetconfInterface
 			    				    		end
 		    					    }
 	    				    }
-                        end
+							end
                         if(config[i][:vlan_id] != nil)
         					xml.interfaces {
 	    					    	xml.interface {
@@ -319,21 +319,24 @@ module JuniperNetconfInterface
                         end
 					
 					    # Modification des macs
-				    	xml.send('ethernet-switching-options') do
-			    			xml.send('secure-access-port') do
-		    					xml.interface {
-	    							xml.name "ge-0/0/#{i}"
-    								xml.send('allowed-mac', 'operation' => 'delete')
-                                    if(config[i][:allowed_macs])
-								        config[i][:allowed_macs].length.times do |j|
-							    		    xml.send :'allowed-mac', config[i][:allowed_macs][j]
-						    		    end
-                                    end
-					    		}
-					    	end
-				    	end   
-                    end     	
-				end
+							if (config[i][:allowed_mac] != nil)
+						  	xml.send('ethernet-switching-options') do
+					  			xml.send('secure-access-port') do
+										xml.interface {
+												xml.name "ge-0/0/#{i}"
+
+												# Macs à ajouter										
+												config[i][:allowed_macs][:add].length.times do |j|
+													xml.send :'allowed-mac', config[i][:allowed_macs][:add][j]
+												end
+												
+												# Macs à enlever
+												config[i][:allowed_macs][:del].length.times do |j|
+													xml.send :'allowed-mac', config[i][:allowed_macs][:del][j], 'operation' => 'delete'
+												end
+						  		end   
+              	end     	
+						end
     	}}
 
 		#**********************************************			
