@@ -28,6 +28,7 @@ module SwitchsManagementHelper
 				end
 			end
 			if(port_managed > 0)
+				puts "Switch " + s.description
                 #Etablissement de la connection au switch
                 session = JuniperNetconfInterface::connexion(s.ip_admin, "root", Passwords::Juniper)
 

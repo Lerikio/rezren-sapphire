@@ -115,7 +115,9 @@ scope :not_archived, -> { where(archived: false)}
 
                     #Gestion des allowed macs
                     p.room.adherent.computers.each do |computer|
-                        conf_port[:allowed_macs] << computer.mac_address
+                        if(computer.archived == false)
+				conf_port[:allowed_macs] << computer.mac_address
+			end
                     end
                 end
                 config << conf_port
@@ -124,7 +126,6 @@ scope :not_archived, -> { where(archived: false)}
             end
         end
 
-        puts "Config BDD = \n" + config.to_s
         config
     end
 
