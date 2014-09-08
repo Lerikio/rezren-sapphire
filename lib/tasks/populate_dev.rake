@@ -68,7 +68,7 @@ namespace :populate_dev do
 		adherent.credit = credit
 
 		computer = Computer.new
-		computer.mac_address = "00:00:00:00:00:00"
+		computer.mac_address = "00:11:22:33:44:ab"
 		adherent.computers << computer
 
 
