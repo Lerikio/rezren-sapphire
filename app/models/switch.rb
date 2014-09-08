@@ -111,14 +111,42 @@ scope :not_archived, -> { where(archived: false)}
                         conf_port[:admin_status] = nil
                     end
                 
-                    conf_port[:allowed_macs] = Array.new
+                    conf_port[:allowed_macs] = Hash.new
 
                     #Gestion des allowed macs
-                    diff = false
+                    #Recuperation des macs à ajouter
+                    conf_port[:allowed_macs][:add] = Array.new
                     p.room.adherent.computers.each do |computer|
                         if(computer.archived == false)
-			            	conf_port[:allowed_macs] << computer.mac_address
+                            mac_already_configured = false
+                            switch_conf[:allowed_macs].each do |switch_mac|
+                                if(computer.mac_address == switch_mac)
+                                    mac_already_configured = true
+                                end
+                            end
+                            if(mac_already_configured == false)
+			            	    conf_port[:allowed_macs][:add] << computer.mac_address
+                            end
 			            end
+                    end
+
+                    #Recuperation des mac à supprimer
+                    conf_port[:allowed_macs][:del] = Array.new
+                    switch[:allowed_macs].each do |switch_mac|
+                        mac_to_be_deleted = true
+                        p.room.adherent.computers.each do |computer|
+                            if(computer.archived == false && computer.mac_address == switch_mac)
+                                mac_to_be_deleted = false
+                            end
+                        end
+                        if(mac_to_be_deleted == true)
+                            conf_port[:allowed_macs][:del] << switch_mac
+                        end
+                    end
+
+                    #Verification de la necessité de reconfigurer les macs
+                    if(conf_port[:allowed_macs][:add].length == 0 && conf_port[:allowed_macs][:del].length == 0)
+                        conf_port[:allowed_macs] = nil
                     end
                 end
                 if(conf_port[:vlan_id] == nil && conf_port[:admin_status] == nil && conf_port[:allowed_macs] == nil)
