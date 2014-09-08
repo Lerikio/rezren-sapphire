@@ -33,11 +33,22 @@ module SwitchsManagementHelper
                 session = JuniperNetconfInterface::connexion(s.ip_admin, "root", Passwords::Juniper)
 
 				#Configuration du switch
-                JuniperNetconfInterface::set_ports_config(session, s.get_changes(JuniperNetconfInterface::get_ports_config(session)))
+                changes = s.get_changes(JuniperNetconfInterface::get_ports_config(session))
+                nb_changes = 0
+                changes.each do |c|
+                    if(c != nil)
+                        nb_changes +=1
+                        puts nb_changes
+                    end
+                end
                 
-                puts "Commiting..."
-				JuniperNetconfInterface::commit_config(session)
-				JuniperNetconfInterface::deconnexion(session)
+                if(nb_changes)
+                    JuniperNetconfInterface::set_ports_config(session, changes)
+                
+                    puts "Commiting..."
+		    		JuniperNetconfInterface::commit_config(session)
+                end
+			    JuniperNetconfInterface::deconnexion(session)
                 puts "Disconnected."
 			end
 		end
