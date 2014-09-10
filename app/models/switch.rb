@@ -121,13 +121,13 @@ scope :not_archived, -> { where(archived: false)}
     	                conf_port[:allowed_macs][:add] = Array.new
         	            p.room.adherent.computers.each do |computer|
             	            if(computer.archived == false)
-                	            mac_already_configured = false
+                	            to_be_added = true
                     	        switch_conf[p.number-1][:allowed_macs].each do |switch_mac|
                         	        if(computer.mac_address == switch_mac)
-                            	        mac_already_configured = true
+                            	        to_be_added = false
                                 	end
 	                            end
-    	                        if(mac_already_configured == false)
+    	                        if(to_be_added == true)
 				            	    conf_port[:allowed_macs][:add] << computer.mac_address
             	                end
 			    	        end
@@ -136,16 +136,19 @@ scope :not_archived, -> { where(archived: false)}
 	                    #Recuperation des mac à supprimer
     	                conf_port[:allowed_macs][:del] = Array.new
         	            switch_conf[p.number-1][:allowed_macs].each do |switch_mac|
-            	            mac_to_be_deleted = true
+            	            to_be_deleted = true
                 	        p.room.adherent.computers.each do |computer|
                     	        if(computer.archived == false && computer.mac_address == switch_mac)
-                        	        mac_to_be_deleted = false
+                        	        to_be_deleted = false
                             	end
 	                        end
-    	                    if(mac_to_be_deleted == true)
+    	                    if(to_be_deleted == true)
         	                    conf_port[:allowed_macs][:del] << switch_mac
             	            end
                 	    end
+
+						#Nombre de macs
+						conf_port[:allowed_macs][:number] = p.room.adherent.computers.length
 					else
 						#Recuperation des macs à ajouter
     	                conf_port[:allowed_macs][:add] = Array.new
@@ -155,6 +158,9 @@ scope :not_archived, -> { where(archived: false)}
         	            switch_conf[p.number-1][:allowed_macs].each do |switch_mac|
         	                conf_port[:allowed_macs][:del] << switch_mac
                 	    end
+
+						#Nombre de macs indéfini pour rezoman
+						conf_port[:allowed_macs][:number] = -1
 					end
 
                     #Verification de la necessité de reconfigurer les macs

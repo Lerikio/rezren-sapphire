@@ -139,4 +139,36 @@ namespace :console do
 			
 			deconnexion(session)
 	end
+
+	task :maj_mac_limit => :environment do
+		Switch.not_archived.each do |s|
+			session = connexion(s.ip_admin, "root", Passwords::Juniper)
+
+			xml = Nokogiri::XML::Builder.new {|xml| xml.configuration {
+				xml.send('ethernet-switching-options') do
+					xml.send('secure-access-port') do
+						s.ports.each do |p|
+							if(p.managed && p.room.adherent != nil)
+								xml.interface {
+									xml.name "ge-0/0/#{p.number - 1}"
+									xml.send :'mac-limit', 'operation' => "delete"
+									if(p.room.adherent.rezoman == false)
+										xml.send :'mac-limit', p.room.adherent.computers.length
+									end
+								}
+							end
+						end
+					end
+				end
+			}}
+
+			session.rpc.lock 'candidate'
+
+			session.rpc.edit_config(xml)
+
+			commit_config(session)
+			deconnexion(session)
+			
+		end
+	end
 end

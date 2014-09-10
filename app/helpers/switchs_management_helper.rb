@@ -41,8 +41,12 @@ module SwitchsManagementHelper
 						puts c
                     end
                 end
-
-                puts nb_changes.to_s + " changements"
+				
+				if(nb_changes > 1)
+               		puts nb_changes.to_s + " changements"
+				else
+					puts nb_changes.to_s + " changement"
+				end
                 
                 if(nb_changes > 0)
                     JuniperNetconfInterface::set_ports_config(session, changes)

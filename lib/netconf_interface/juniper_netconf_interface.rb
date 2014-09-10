@@ -335,6 +335,13 @@ module JuniperNetconfInterface
 										config[i][:allowed_macs][:del].length.times do |j|
 											xml.send :'allowed-mac', config[i][:allowed_macs][:del][j], 'operation' => 'delete'
 										end
+
+									# Nombre de macs autorisées
+										xml.send :'mac-limit', 'operation' => "delete"
+										# Adhérent de base
+										if (config[i][:allowed_macs][:number] != -1)
+											xml.send :'mac-limit', config[i][:allowed_macs][:number]
+										end
 								}
 						  end   
 						end     	
