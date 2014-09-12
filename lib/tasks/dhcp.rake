@@ -33,5 +33,4 @@ namespace :regenerate do
 		Rake::Task["regenerate:refresh_file_dhcp"].invoke
 		Rake::Task["regenerate:upload_dhcp"].invoke
 	end
-
 end
