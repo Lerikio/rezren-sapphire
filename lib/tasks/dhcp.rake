@@ -14,6 +14,7 @@ namespace :regenerate do
 	task :refresh_file_dhcp => :environment do
 		File.open("#{Rails.root}/tmp/hosts_dhcp.conf",'w+') do |f|
 			f.write(DhcpConf.new(Computer.supelec).output)
+			f.write(DhcpConf.new(Computer.others).output)
 		end
 	end
 
