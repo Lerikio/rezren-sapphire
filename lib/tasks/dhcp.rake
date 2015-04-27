@@ -21,10 +21,10 @@ namespace :regenerate do
 	desc "Upload des fichiers sur le serveur"
 	task :upload_dhcp => :environment do
 		lemuria_password = Passwords::Lemuria
-		Net::SCP.start("10.2.0.2", "sapphire", :password => lemuria_password) do |scp|
+		Net::SCP.start("lemuria.rez", "sapphire", :password => lemuria_password) do |scp|
 			scp.upload! "#{Rails.root}/tmp/hosts_dhcp.conf", "/etc/dhcp/users.conf"
 		end
-		Net::SSH.start('10.2.0.2', 'sapphire', :password => lemuria_password) do |ssh|
+		Net::SSH.start('lemuria.rez', 'sapphire', :password => lemuria_password) do |ssh|
 			ssh.exec("sudo service isc-dhcp-server restart")
 		end
 	end
